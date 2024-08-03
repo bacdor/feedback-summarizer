@@ -3,27 +3,20 @@
 import Button from '@/components/ui/Button';
 import { signInWithOAuth } from '@/utils/auth-helpers/client';
 import { type Provider } from '@supabase/supabase-js';
-import { Github } from 'lucide-react';
-// import GoogleProvider from "next-auth/providers/google";
 import { useState } from 'react';
 
 type OAuthProviders = {
   name: Provider;
   displayName: string;
-  icon: JSX.Element;
+  // icon: JSX.Element;
 };
 
 export default function OauthSignIn() {
   const oAuthProviders: OAuthProviders[] = [
     {
-      name: 'github',
-      displayName: 'GitHub',
-      icon: <Github className="h-5 w-5" />
-    },
-    {
       name: 'google',
-      displayName: 'Google',
-      icon: <Github className="h-5 w-5" />
+      displayName: 'Google'
+      // icon: <Github className="h-5 w-5" />
     }
     /* Add desired OAuth providers here */
   ];
@@ -50,8 +43,8 @@ export default function OauthSignIn() {
             className="w-full"
             loading={isSubmitting}
           >
-            <span className="mr-2">{provider.icon}</span>
-            <span>{provider.displayName}</span>
+            {/* <span className="mr-2">{provider.icon}</span> */}
+            <span>Log in with {provider.displayName}</span>
           </Button>
         </form>
       ))}
