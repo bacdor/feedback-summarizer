@@ -2,7 +2,6 @@
 
 // import Button from '@/components/ui/Button';
 // import { useRouter, usePathname } from 'next/navigation';
-// import { useState } from 'react';
 // import { createStripePortal } from '@/utils/stripe/server';
 // import Link from 'next/link';
 // import Card from '@/components/ui/Card';
@@ -166,8 +165,14 @@ export default function DashboardLayout() {
       </div>
       <div className="md:w-1/2 w-full">
         {file ? (
-          <div className="max-w-9/10 bg-white shadow-md rounded-lg p-6 m-2">
-            {/* <PdfViewer fileUrl={URL.createObjectURL(file)} /> */}
+          <div className="max-w-9/10 shadow-md rounded-lg p-6 m-2">
+            <iframe
+              src={URL.createObjectURL(file)}
+              width="600"
+              height="800"
+              title="PDF Viewer"
+              style={{ border: 'none' }}
+            />
           </div>
         ) : (
           <div className="text-center mt-10">
