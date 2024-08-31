@@ -168,10 +168,9 @@ export default function DashboardLayout() {
           <div className="max-w-9/10 shadow-md rounded-lg p-6 m-2">
             <iframe
               src={URL.createObjectURL(file)}
-              width="600"
-              height="800"
+              width="100%"
+              height="650"
               title="PDF Viewer"
-              style={{ border: 'none' }}
             />
           </div>
         ) : (
