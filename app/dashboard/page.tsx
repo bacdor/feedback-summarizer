@@ -1,3 +1,4 @@
+import DashboardLayout from '@/components/ui/DashboardForms/DashboardLayout';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import {
@@ -31,7 +32,7 @@ export default async function Account() {
         </div>
       </div>
       <div className="p-4">
-        <h1>Hello World!</h1>
+        <DashboardLayout />{' '}
       </div>
     </section>
   );
