@@ -1,4 +1,4 @@
-import Logo from '@/components/icons/Logo';
+import Image from 'next/image';
 import { createClient } from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -57,8 +57,13 @@ export default async function SignIn({
   return (
     <div className="flex justify-center height-screen-helper">
       <div className="flex flex-col justify-between max-w-lg p-3 m-auto w-80 ">
-        <div className="flex justify-center pb-12 ">
-          <Logo width="64px" height="64px" />
+        <div className="flex justify-center">
+          <Image
+            src="/logo-pdf500.svg"
+            alt="Citing App Logo"
+            width={101}
+            height={101}
+          />
         </div>
         <Card
           title={
