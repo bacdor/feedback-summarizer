@@ -22,9 +22,6 @@ export default function Navlinks({ user }: NavlinksProps) {
           <Logo />
         </Link>
         <nav className="ml-6 space-x-2 lg:block">
-          <Link href="/" className={s.link}>
-            Pricing
-          </Link>
           {user && (
             <>
               <Link href="/dashboard" className={s.link}>
@@ -35,6 +32,9 @@ export default function Navlinks({ user }: NavlinksProps) {
               </Link>
             </>
           )}
+          <Link href="/" className={s.link}>
+            Pricing
+          </Link>
         </nav>
       </div>
       <div className="flex justify-end space-x-8">
