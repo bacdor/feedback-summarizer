@@ -22,7 +22,9 @@ export default function Footer() {
 
         <p>
           Get the right in-text citation from PDF files easily. <br />
-          Copyright &copy; {new Date().getFullYear()} - All rights reserved
+          <span style={{ opacity: 0.6 }}>
+            Copyright &copy; {new Date().getFullYear()} - All rights reserved
+          </span>
         </p>
       </aside>
 
