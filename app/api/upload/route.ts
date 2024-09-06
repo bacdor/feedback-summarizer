@@ -26,13 +26,24 @@ export async function POST(req: NextRequest) {
       text: textContent.text
     });
   } catch (error) {
-    console.error('Error processing file:', error);
-    return NextResponse.json(
-      {
-        message: 'Failed to process the file, your file is too large.',
-        error: error
-      },
-      { status: 500 }
-    );
+    // Check if error is an instance of Error
+    if (error instanceof Error) {
+      if (error.message.includes('Timeout')) {
+        return NextResponse.json(
+          {
+            message:
+              'Failed to process the file, your file is too large or the process took too long. Please try again.'
+          },
+          { status: 504 }
+        );
+      }
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    } else {
+      // Handle unknown error types
+      return NextResponse.json(
+        { message: 'An unknown error occurred.' },
+        { status: 500 }
+      );
+    }
   }
 }

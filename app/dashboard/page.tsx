@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export default function DashboardPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -16,6 +16,22 @@ export default function DashboardPage() {
     setFile(selectedFile);
   };
 
+  const memoizedIframe = useMemo(() => {
+    if (file) {
+      return (
+        <div className="max-w-9/10 shadow-md mt-6 mb-6">
+          <iframe
+            src={URL.createObjectURL(file)}
+            width="100%"
+            height="650"
+            title="PDF Viewer"
+          />
+        </div>
+      );
+    }
+    return null;
+  }, [file]);
+
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -26,8 +42,6 @@ export default function DashboardPage() {
 
     setLoading(true);
     setError(null);
-
-    alert('test');
 
     const formData = new FormData();
     formData.append('file', file);
@@ -90,8 +104,21 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">PDF Question Answering</h1>
+    <section className="container mx-auto pb-32 p-4 bg-black">
+      <div className="max-w-6xl px-4 py-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
+        <div className="sm:align-center sm:flex sm:flex-col">
+          <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
+            Find your quote!
+          </h1>
+          <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
+            1. Upload your PDF file below,
+            <br />
+            2. Process your PDF file,
+            <br />
+            3. Ask questions to get your in-text citations with ease!
+          </p>
+        </div>
+      </div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -103,52 +130,85 @@ export default function DashboardPage() {
         }}
         className="space-y-4"
       >
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Upload PDF
-          </label>
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={handleFileChange}
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Your Question
-          </label>
-          <input
-            type="text"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Enter your question"
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
-        {error && <p className="text-red-500">{error}</p>}
-        <div>
-          <button
-            type="submit"
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            disabled={loading}
-          >
-            {loading ? 'Processing...' : 'Submit'}
-          </button>
+        <div className="w-full max-w-3xl m-auto my-8 border rounded-md p border-zinc-700">
+          {text && (
+            <div className="px-5 py-4">
+              <label className="mb-1 text-2xl font-medium">Your Question</label>
+              <input
+                type="text"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                placeholder="Enter your question"
+                className="mt-1 block w-full border border-gray-300 rounded-md text-black bg-gray-100 shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm min-h-14 p-4"
+              />
+            </div>
+          )}
+          {answer && (
+            <div className="w-full max-w-3xl m-auto px-5 py-4">
+              <h2 className="mb-1 text-2xl font-medium">Answer</h2>
+              <p className="mt-1 block w-full border border-gray-300 rounded-md text-black shadow-sm bg-gray-100 p-4 sm:text-sm whitespace-pre-wrap min-h-14">
+                {answer[0]}
+              </p>
+              <h2 className="mb-1 text-2xl font-medium mt-4">Citation</h2>
+              <p className="mt-1 block w-full border border-gray-300 rounded-md text-black shadow-sm bg-gray-100 p-4 sm:text-sm whitespace-pre-wrap min-h-14">
+                {answer[1]}
+              </p>
+              {/* <div className="relative">
+                <p
+                  id="citation-text"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100 p-4 sm:text-sm whitespace-pre-wrap text-black min-h-[64px]"
+                >
+                  {answer[1]}
+                </p>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(answer[1]);
+                    alert('Citation copied to clipboard!');
+                  }}
+                  className="absolute right-2 top-2 text-white bg-pink-500 hover:bg-pink-600 px-3 py-1 rounded-md text-sm"
+                >
+                  Copy
+                </button>
+              </div> */}
+            </div>
+          )}
+
+          {error && <p className="text-red-500">{error}</p>}
+          {file && (
+            <div className="p-4 border-t rounded-b-md border-zinc-700 bg-zinc-900 text-zinc-500">
+              <div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
+                <button
+                  type="submit"
+                  className={`mx-auto inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500  ${
+                    loading ? 'cursor-not-allowed bg-pink-400' : ''
+                  }`}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <span className="loading loading-spinner loading-md"></span>
+                  ) : text ? (
+                    'Ask PDF'
+                  ) : (
+                    'Process PDF'
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </form>
-      <div className="w-full">
+      <div className="w-full max-w-3xl m-auto">
         {file ? (
-          <div className="max-w-9/10 shadow-md rounded-lg p-6 m-2">
-            <iframe
-              src={URL.createObjectURL(file)}
-              width="100%"
-              height="650"
-              title="PDF Viewer"
-            />
-          </div>
+          memoizedIframe
         ) : (
           <div className="text-center mt-10">
+            <input
+              type="file"
+              id="file"
+              className="hidden"
+              accept="application/pdf"
+              onChange={handleFileChange}
+            />
             <label htmlFor="file">
               <div className="border-4 border-dashed border-gray-300 rounded-lg p-12 bg-white shadow-md cursor-pointer">
                 <div className="text-6xl text-gray-400 mb-4">+</div>
@@ -158,97 +218,6 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
-      {text && (
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold">Answer:</h2>
-          <p className="whitespace-pre-wrap bg-green-100 p-4 rounded">{text}</p>
-        </div>
-      )}
-      {answer && (
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold">Answer:</h2>
-          <p className="whitespace-pre-wrap bg-green-100 p-4 rounded">
-            {answer[0]}
-          </p>
-          <h2 className="text-lg font-semibold">Answer:</h2>
-          <p className="whitespace-pre-wrap bg-green-100 p-4 rounded">
-            {answer[1]}
-          </p>
-        </div>
-      )}
-    </div>
+    </section>
   );
 }
-
-// 'use client';
-
-// import { useState } from 'react';
-// import axios from 'axios';
-
-// const DashboardLayout = () => {
-//   const [pdfFile, setPdfFile] = useState<File | null>(null);
-//   const [pdfText, setPdfText] = useState<string>('');
-//   const [question, setQuestion] = useState<string>('');
-//   const [answer, setAnswer] = useState<string>('');
-
-//   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     if (e.target.files && e.target.files[0]) {
-//       setPdfFile(e.target.files[0]);
-//     }
-//   };
-
-//   const handleFileUpload = async () => {
-//     if (pdfFile) {
-//       const formData = new FormData();
-//       formData.append('file', pdfFile);
-
-//       const response = await axios.post(
-//         '/api/parse-pdf'
-//         // , formData, {
-//         // headers: {
-//         //   'Content-Type': 'multipart/form-data'
-//         // }
-//         // }
-//       );
-
-//       setPdfText(response.data.text);
-//     }
-//   };
-
-//   const handleQuestionSubmit = async () => {
-//     // Implement logic to send the question and extracted text to a language model
-//     // For example, using OpenAI's API or a custom NLP model.
-//     const response = await axios.post('/api/answer-question', {
-//       question,
-//       text: pdfText
-//     });
-
-//     setAnswer(response.data.answer);
-//   };
-
-//   return (
-//     <div>
-//       <h1>Upload PDF and Ask Questions</h1>
-//       <input type="file" onChange={handleFileChange} />
-//       <button onClick={handleFileUpload}>Extract Text</button>
-
-//       <textarea
-//         value={pdfText}
-//         readOnly
-//         placeholder="Extracted text will appear here..."
-//       />
-
-//       <input
-//         type="text"
-//         value={question}
-//         onChange={(e) => setQuestion(e.target.value)}
-//         placeholder="Ask a question"
-//       />
-//       <button onClick={handleQuestionSubmit}>Get Answer</button>
-
-//       <p>Answer: {answer}</p>
-//     </div>
-//   );
-// };
-
-// export default DashboardLayout;

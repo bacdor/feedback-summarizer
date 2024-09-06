@@ -42,6 +42,12 @@ export async function POST(req: NextRequest) {
         },
         {
           role: 'system',
+          content:
+            // 'Answer only if you find the answer in the provided text. If you did not find the answer in the provided text say: The provided text does not answer your question.|"No in-text citation available"'
+            'If there is no citation that supports your answer say "No in-text citation available"'
+        },
+        {
+          role: 'system',
           content: `The uploaded text is: ${text}. Provide user with an answer and a quote that proves the answer in a format: answer|"citation".`
         },
         {
