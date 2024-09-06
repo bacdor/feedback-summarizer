@@ -116,6 +116,15 @@ export default function DashboardPage() {
             2. Process your PDF file,
             <br />
             3. Ask questions to get your in-text citations with ease!
+            <br />
+            4.{' '}
+            <span
+              onClick={() => window.location.reload()}
+              className="cursor-pointer text-pink-500 hover:underline"
+            >
+              Reload
+            </span>{' '}
+            to use different file.
           </p>
         </div>
       </div>
