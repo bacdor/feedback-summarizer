@@ -6,6 +6,9 @@ import {
 } from '@/utils/supabase/queries';
 import Pricing from '@/components/ui/Landing/Pricing';
 import Hero from '@/components/ui/Landing/Hero';
+import Features from '@/components/ui/Landing/Features';
+import FAQ from '@/components/ui/Landing/Faq';
+import CallToAction from '@/components/ui/Landing/CallToAction';
 
 export default async function PricingPage() {
   const supabase = createClient();
@@ -18,11 +21,14 @@ export default async function PricingPage() {
   return (
     <>
       <Hero />
+      <Features />
       <Pricing
         user={user}
         products={products ?? []}
         subscription={subscription}
       />
+      <FAQ />
+      <CallToAction />
     </>
   );
 }

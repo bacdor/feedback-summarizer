@@ -1,9 +1,10 @@
-// components/ui/Hero.tsx
+'use client';
+
 import Button from '@/components/ui/Button';
 
 export default function Hero() {
   return (
-    <section className="bg-indigo-900 text-white py-20">
+    <section className="bg-black text-white py-20">
       <div className="container mx-auto text-center">
         <h1 className="text-5xl font-extrabold mb-4">
           Welcome to Our Service!
