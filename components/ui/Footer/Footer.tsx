@@ -14,8 +14,8 @@ export default function Footer() {
           <Image
             src="/logo-pdf500.svg"
             alt="Citing App Logo"
-            width={36}
-            height={36}
+            width={64}
+            height={64}
           />
           <h3 className="text-3xl font-bold text-zinc-200">citing.app</h3>
         </Link>
