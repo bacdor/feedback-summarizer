@@ -82,7 +82,7 @@ export default function Pricing({ user, products, subscription }: Props) {
 
   if (!products.length) {
     return (
-      <section className="bg-black" id="pricing">
+      <section className="bg-zinc-800 pb-32" id="pricing">
         <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8">
           <div className="sm:flex sm:flex-col sm:align-center"></div>
           <p className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
@@ -93,14 +93,15 @@ export default function Pricing({ user, products, subscription }: Props) {
     );
   } else {
     return (
-      <section className="bg-black" id="pricing">
+      <section className="bg-zinc-800 pb-16" id="pricing">
         <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8">
           <div className="sm:flex sm:flex-col sm:align-center">
             <h1 className="text-2xl font-extrabold text-white sm:text-center sm:text-3xl">
               Pricing Plans
             </h1>
             <p className="max-w-2xl m-auto mt-5 text-l text-zinc-200 sm:text-center sm:text-xl">
-              No subscriptions! Save your budget and pay only when you need it.
+              <b>No subscriptions!</b> Save your budget and pay only when you
+              need it.
             </p>
             {/* <div className="relative self-center mt-6 bg-zinc-900 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-800">
               {intervals.includes('month') && (
@@ -146,7 +147,7 @@ export default function Pricing({ user, products, subscription }: Props) {
                 <div
                   key={product.id}
                   className={cn(
-                    'flex flex-col rounded-lg shadow-sm divide-y divide-zinc-600 bg-zinc-900',
+                    'flex flex-col rounded-lg shadow-sm divide-y divide-indigo-600 bg-indigo-900',
                     {
                       'border border-indigo-500': subscription
                         ? product.name === subscription?.prices?.products?.name
@@ -175,7 +176,7 @@ export default function Pricing({ user, products, subscription }: Props) {
                       type="button"
                       loading={priceIdLoading === price.id}
                       onClick={() => handleStripeCheckout(price)}
-                      className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white rounded-md hover:bg-zinc-900"
+                      className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white rounded-md hover:bg-indigo-900"
                     >
                       {subscription ? 'Manage' : 'Subscribe'}
                     </Button>

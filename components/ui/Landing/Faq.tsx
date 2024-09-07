@@ -38,19 +38,22 @@ export default function FAQ() {
   };
 
   return (
-    <section className="bg-gray-100 py-16" id="faq">
-      <div className="container mx-auto">
-        <h2 className="text-4xl font-extrabold text-center mb-10">
-          Frequently Asked Questions
+    <section className="bg-zinc-800 py-16" id="faq">
+      <div className="container mx-auto w-full lg:w-3/4">
+        <h2 className="text-3xl text-left mb-10">
+          <span className="font-extrabold">FAQ:</span>{' '}
+          <span className="font-bold">Frequently Asked Questions</span>
         </h2>
-        <div className="max-w-3xl mx-auto">
+        <div className="mx-auto">
           {faqs.map((faq, index) => (
             <div key={index} className="mb-4">
               <button
                 onClick={() => toggleOpen(index)}
-                className="w-full text-left bg-white p-4 rounded-lg shadow-md focus:outline-none"
+                className="w-full text-left p-4 rounded-lg shadow-md focus:outline-none"
               >
-                <h3 className="text-xl font-semibold">{faq.question}</h3>
+                <h3 className="text-lg font-semibold">
+                  <span className="mr-2">+</span> {faq.question}
+                </h3>
               </button>
               {openIndex === index && (
                 <div className="mt-2 p-4 bg-white rounded-lg shadow-md">
