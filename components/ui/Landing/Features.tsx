@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Features() {
   return (
@@ -15,7 +16,11 @@ export default function Features() {
             <li>Choose a journal, magazine or any other document</li>
             <li>Upload it in a PDF format</li>
             <li>
-              Ask <u>unlimited</u> amount of questions
+              Ask{' '}
+              <Link href="/#pricing">
+                <u>unlimited</u>
+              </Link>{' '}
+              amount of questions
             </li>
             <li>Copy and paste the extracted citation</li>
             <li>

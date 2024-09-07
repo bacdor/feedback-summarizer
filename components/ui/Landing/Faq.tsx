@@ -38,7 +38,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="bg-zinc-800 py-16" id="faq">
+    <section className="bg-zinc-800 py-16 text-zinc-100" id="faq">
       <div className="container mx-auto w-full lg:w-3/4">
         <h2 className="text-3xl text-left mb-10">
           <span className="font-extrabold">FAQ:</span>{' '}
@@ -57,7 +57,7 @@ export default function FAQ() {
               </button>
               {openIndex === index && (
                 <div className="mt-2 p-4 bg-white rounded-lg shadow-md">
-                  <p className="text-gray-600">{faq.answer}</p>
+                  <p className="text-zinc-800">{faq.answer}</p>
                 </div>
               )}
             </div>

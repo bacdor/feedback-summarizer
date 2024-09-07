@@ -15,7 +15,7 @@ export default function Hero() {
           className={`text-lg sm:text-2xl lg:w-1/2 mx-auto mb-8 transition-transform duration-400 transform hover:scale-105`}
         >
           Upload a <b>PDF document</b>, ask a question, and get the <b>quote</b>{' '}
-          you needed.
+          you need.
         </p>
         <div className="flex flex-col items-center space-y-4 mb-8 ">
           <FeatureItem text="AI powered tool" />
