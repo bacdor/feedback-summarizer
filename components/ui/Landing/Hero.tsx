@@ -19,7 +19,7 @@ export default function Hero() {
         </p>
         <div className="flex flex-col items-center space-y-4 mb-8 ">
           <FeatureItem text="AI powered tool" />
-          <FeatureItem text="No subscription plans" />
+          <FeatureItem text="Lifetime access" />
           <FeatureItem text="Unlimited interaction" />
         </div>
         <Link href="/#pricing">

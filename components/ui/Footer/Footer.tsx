@@ -21,7 +21,7 @@ export default function Footer() {
         </Link>
 
         <p>
-          Get the right in-text citation from PDF files easily. <br />
+          Get the right in-text citation from PDF files. <br />
           <span style={{ opacity: 0.6 }}>
             Copyright &copy; {new Date().getFullYear()} - All rights reserved
           </span>
