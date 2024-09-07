@@ -1,10 +1,10 @@
 // components/ui/Hero.tsx
 import Button from '@/components/ui/Button';
-import styles from './Hero.module.css'; // Import CSS module
+import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="bg-black text-zinc-200 py-20">
+    <section className="bg-black text-zinc-200 py-20" id="main">
       <div className="container mx-auto text-center">
         <h1
           className={`text-4xl sm:text-7xl font-extrabold mb-6 transition-transform duration-400 transform hover:scale-105`}
@@ -22,9 +22,11 @@ export default function Hero() {
           <FeatureItem text="No subscription plans" />
           <FeatureItem text="Unlimited interaction" />
         </div>
-        <Button variant="slim" className="text-lg mb-8">
-          Get Started
-        </Button>
+        <Link href="/#pricing">
+          <Button variant="slim" className="text-lg mb-8">
+            Get Started
+          </Button>
+        </Link>
       </div>
     </section>
   );

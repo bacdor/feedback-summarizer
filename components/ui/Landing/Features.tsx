@@ -1,42 +1,51 @@
 'use client';
+import Image from 'next/image';
 
 export default function Features() {
   return (
-    <section className="bg-indigo-700 py-16">
-      <div className="container mx-auto">
-        <h2 className="text-4xl font-extrabold text-center mb-10">
-          Features that Matter
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <FeatureItem
-            title="Fast Performance"
-            description="Blazing fast speeds with modern technology."
-          />
-          <FeatureItem
-            title="Secure and Reliable"
-            description="We prioritize your data privacy and security."
-          />
-          <FeatureItem
-            title="Easy to Use"
-            description="User-friendly interface for all skill levels."
-          />
+    <section className="bg-indigo-900 py-16" id="features">
+      <div className="container w-3/4 mx-auto">
+        {/* Centered Section */}
+        <div className="lg:w-full text-center text-zinc-200 mx-auto">
+          {/* Text Section */}
+          <h2 className="text-5xl font-extrabold mb-6 text-left">
+            Easy to use app
+          </h2>
+          <ul className="list-disc list-inside text-xl mb-10 text-left">
+            <li>Choose a journal, magazine or any other document</li>
+            <li>Upload it in a PDF format</li>
+            <li>
+              Ask <u>unlimited</u> amount of questions
+            </li>
+            <li>Copy and paste the extracted citation</li>
+            <li>
+              Don't forget to <u>cite the author!</u>
+            </li>
+          </ul>
+
+          {/* Carousel Section */}
+          <div className="carousel carousel-center rounded-box mx-auto max-w-6xl">
+            <FeatureItem src="/car1.svg" />
+            <FeatureItem src="/car2.svg" />
+            <FeatureItem src="/car3.svg" />
+            <FeatureItem src="/car4.svg" />
+            <FeatureItem src="/car5.svg" />
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function FeatureItem({
-  title,
-  description
-}: {
-  title: string;
-  description: string;
-}) {
+function FeatureItem({ src }: { src: string }) {
   return (
-    <div className="text-center p-6 bg-white rounded-lg shadow-md">
-      <h3 className="text-2xl font-bold mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+    <div className="carousel-item">
+      <Image
+        src={src}
+        alt="a screenshot that shows how the app works"
+        width={500}
+        height={500}
+      />
     </div>
   );
 }
