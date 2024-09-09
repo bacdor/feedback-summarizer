@@ -29,19 +29,8 @@ interface Props {
   subscription: SubscriptionWithProduct | null;
 }
 
-type BillingInterval = 'lifetime' | 'year' | 'month';
-
 export default function Pricing({ user, products, subscription }: Props) {
-  const intervals = Array.from(
-    new Set(
-      products.flatMap((product) =>
-        product?.prices?.map((price) => price?.interval)
-      )
-    )
-  );
   const router = useRouter();
-  const [billingInterval, setBillingInterval] =
-    useState<BillingInterval>('month');
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
   const currentPath = usePathname();
 
@@ -86,7 +75,8 @@ export default function Pricing({ user, products, subscription }: Props) {
         <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8">
           <div className="sm:flex sm:flex-col sm:align-center"></div>
           <p className="text-4xl font-extrabold sm:text-center sm:text-6xl">
-            Oops! No subscription pricing plans found. We'll that for you soon!
+            Oops! No subscription pricing plans found. We'll fix that for you
+            soon!
           </p>
         </div>
       </section>
@@ -100,90 +90,87 @@ export default function Pricing({ user, products, subscription }: Props) {
               Pricing Plans
             </h1>
             <p className="max-w-2xl m-auto mt-5 text-l text-zinc-200 sm:text-center sm:text-xl">
-              <b>No subscriptions!</b> Save your budget and pay only when you
-              need it.
+              <b>Pay only once!</b> Choose our <b>Lifetime Deal</b> and enjoy
+              XYZ forever.
             </p>
-            {/* <div className="relative self-center mt-6 bg-zinc-900 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-800">
-              {intervals.includes('month') && (
-                <button
-                  onClick={() => setBillingInterval('month')}
-                  type="button"
-                  className={`${
-                    billingInterval === 'month'
-                      ? 'relative w-1/2 bg-zinc-700 border-zinc-800 shadow-sm text-white'
-                      : 'ml-0.5 relative w-1/2 border border-transparent text-zinc-400'
-                  } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
-                >
-                  Monthly billing
-                </button>
-              )}
-              {intervals.includes('year') && (
-                <button
-                  onClick={() => setBillingInterval('year')}
-                  type="button"
-                  className={`${
-                    billingInterval === 'year'
-                      ? 'relative w-1/2 bg-zinc-700 border-zinc-800 shadow-sm text-white'
-                      : 'ml-0.5 relative w-1/2 border border-transparent text-zinc-400'
-                  } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
-                >
-                  Yearly billing
-                </button>
-              )}
-            </div> */}
           </div>
           <div className="mt-12 space-y-0 sm:mt-16 flex flex-wrap justify-center gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0">
-            {products.map((product) => {
-              const price = product?.prices?.find(
-                (price) => price.interval === billingInterval
-              );
-              if (!price) return null;
-              const priceString = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: price.currency!,
-                minimumFractionDigits: 0
-              }).format((price?.unit_amount || 0) / 100);
-              return (
-                <div
-                  key={product.id}
-                  className={cn(
-                    'flex flex-col rounded-lg shadow-sm divide-y divide-indigo-600 bg-indigo-900',
-                    {
-                      'border border-indigo-500': subscription
-                        ? product.name === subscription?.prices?.products?.name
-                        : product.name === 'Freelancer'
-                    },
-                    'flex-1', // This makes the flex item grow to fill the space
-                    'basis-1/3', // Assuming you want each card to take up roughly a third of the container's width
-                    'max-w-xs' // Sets a maximum width to the cards to prevent them from getting too large
-                  )}
-                >
-                  <div className="p-6">
-                    <h2 className="text-2xl font-semibold leading-6 text-white">
-                      {product.name}
-                    </h2>
-                    <p className="mt-4 text-zinc-300">{product.description}</p>
-                    <p className="mt-8">
-                      <span className="text-5xl font-extrabold white">
-                        {priceString}
-                      </span>
-                      <span className="text-base font-medium text-zinc-100">
-                        /{billingInterval}
-                      </span>
-                    </p>
-                    <Button
-                      variant="slim"
-                      type="button"
-                      loading={priceIdLoading === price.id}
-                      onClick={() => handleStripeCheckout(price)}
-                      className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white rounded-md hover:bg-indigo-900"
-                    >
-                      {subscription ? 'Manage' : 'Subscribe'}
-                    </Button>
+            {products.map((product) =>
+              product?.prices?.map((price) => {
+                const priceString = new Intl.NumberFormat('en-US', {
+                  style: 'currency',
+                  currency: price.currency!,
+                  minimumFractionDigits: 0
+                }).format((price?.unit_amount || 0) / 100);
+                return (
+                  <div
+                    key={`${product.id}-${price.interval}`}
+                    className={cn(
+                      'flex flex-col rounded-lg shadow-sm divide-y divide-indigo-600 bg-indigo-900',
+                      {
+                        'border border-indigo-500': subscription
+                          ? product.name ===
+                            subscription?.prices?.products?.name
+                          : product.name === 'Freelancer'
+                      },
+                      'flex-1',
+                      'basis-1/3',
+                      'max-w-xs'
+                    )}
+                  >
+                    <div className="p-6">
+                      <h2 className="text-3xl pb-6 font-semibold leading-6 text-white">
+                        {product.name}
+                      </h2>
+                      <div className="mt-4 text-lg text-zinc-300">
+                        {product.description
+                          ? product.description
+                              .split('|')
+                              .map((line, index) => (
+                                <p key={index} className="flex items-center">
+                                  <span className="text-zinc-300 mr-2">
+                                    <svg
+                                      className="w-6 h-6 text-zinc-300"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M5 13l4 4L19 7"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                  <span>{line.trim()}</span>
+                                </p>
+                              ))
+                          : 'No description available.'}
+                      </div>
+                      <p className="mt-8">
+                        <span className="text-5xl font-extrabold white">
+                          {priceString}
+                        </span>
+                        <span className="text-base font-medium text-zinc-100">
+                          /{price.interval ? price.interval : 'lifetime'}
+                        </span>
+                      </p>
+                      <Button
+                        variant="slim"
+                        type="button"
+                        loading={priceIdLoading === price.id}
+                        onClick={() => handleStripeCheckout(price)}
+                        className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white rounded-md hover:bg-indigo-900"
+                      >
+                        {subscription ? 'Manage' : 'Subscribe'}
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </div>
       </section>
