@@ -1,5 +1,6 @@
 'use client';
 
+import GoogleIcon from '@/components/icons/GoogleIcon';
 import Button from '@/components/ui/Button';
 import { signInWithOAuth } from '@/utils/auth-helpers/client';
 import { type Provider } from '@supabase/supabase-js';
@@ -8,15 +9,15 @@ import { useState } from 'react';
 type OAuthProviders = {
   name: Provider;
   displayName: string;
-  // icon: JSX.Element;
+  icon: JSX.Element;
 };
 
 export default function OauthSignIn() {
   const oAuthProviders: OAuthProviders[] = [
     {
       name: 'google',
-      displayName: 'Google'
-      // icon: <Github className="h-5 w-5" />
+      displayName: 'Google',
+      icon: <GoogleIcon className="h-5 w-5" />
     }
     /* Add desired OAuth providers here */
   ];
@@ -43,7 +44,7 @@ export default function OauthSignIn() {
             className="w-full"
             loading={isSubmitting}
           >
-            {/* <span className="mr-2">{provider.icon}</span> */}
+            <span className="mr-2">{provider.icon}</span>
             <span>Log in with {provider.displayName}</span>
           </Button>
         </form>
