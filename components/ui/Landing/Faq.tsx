@@ -35,7 +35,8 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'How can I contact support?',
-    answer: 'You can contact our support team via email at support@example.com.'
+    answer:
+      'You can contact our support team via email at bacdor.development@gmail.com.'
   }
 ];
 

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-// import GitHub from '@/components/icons/GitHub';
+import GitHub from '@/components/icons/GitHub';
 
 export default function Footer() {
   return (
@@ -89,7 +89,7 @@ export default function Footer() {
           </li>
         </ul>
       </nav>
-      {/* <nav>
+      <nav>
         <ul className="flex flex-col flex-initial md:flex-1">
           <li className="py-3 md:py-0 md:pb-4">
             <p className="font-bold text-white transition duration-150 ease-in-out hover:text-zinc-200">
@@ -106,7 +106,7 @@ export default function Footer() {
             </a>
           </li>
         </ul>
-      </nav> */}
+      </nav>
     </footer>
   );
 }
