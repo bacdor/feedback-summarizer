@@ -11,7 +11,7 @@ const faqs: FAQItem[] = [
   {
     question: 'How does it work?',
     answer:
-      'XYZ allows you to interact with any PDF file. Simply upload your document, and the app will analyze the text to answer your questions, extracting relevant citations related to your topic.'
+      'DocuQuote allows you to interact with any PDF file. Simply upload your document, and the app will analyze the text to answer your questions, extracting relevant citations related to your topic.'
   },
   {
     question: 'How to get the citation I need?',
@@ -26,7 +26,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What is the "lifetime deal" plan?',
     answer:
-      'Lifetime Deal is our special offer for dedicated users. You pay only one time to get access to all XYZ funcionalities for the lifetime.'
+      'Lifetime Deal is our special offer for dedicated users. You pay only one time to get access to all DocuQuote funcionalities for the lifetime.'
   },
   {
     question: 'Can I cancel my subscription?',

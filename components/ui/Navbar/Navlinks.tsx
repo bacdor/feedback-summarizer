@@ -21,10 +21,13 @@ export default function Navlinks({ user }: NavlinksProps) {
         <Link href="/" className={s.logo} aria-label="Logo">
           <Image
             src="/logo-pdf500.svg"
-            alt="Citing App Logo"
+            alt="DocuQuote Logo"
             width={32}
             height={32}
           />
+        </Link>
+        <Link href="/" className={s.link}>
+          <span className="ml-2 text-lg font-bold">DocuQuote</span>
         </Link>
         <nav className="ml-6 space-x-2 lg:block">
           {user && (

@@ -2,12 +2,12 @@ function TermsOfServices() {
   return (
     <div className="lg:w-3/5 w-full mx-auto p-5 shadow-lg">
       <h1 className="text-2xl font-bold mb-5">
-        Terms of Service for [PDF Extraction Platform]
+        Terms of Service for DocuQuote
       </h1>
       <p className="mb-3">Effective Date: 6/24/2024</p>
       <p className="mb-3">
-        Welcome to [PDF Extraction Platform] ("we," "our," "us"). These Terms of
-        Service ("Terms") govern your access to and use of our paid service for
+        Welcome to DocuQuote ("we," "our," "us"). These Terms of Service
+        ("Terms") govern your access to and use of our paid service for
         extracting information from uploaded PDFs through our website, mobile
         application, or any other related services (collectively, the
         "Service"). By using the Service, you agree to be bound by these Terms
@@ -66,8 +66,8 @@ function TermsOfServices() {
         <li>
           Ownership: All content and materials available through the Service,
           including but not limited to text, graphics, logos, images, and
-          software, are the property of [PDF Extraction Platform] or its
-          licensors and are protected by intellectual property laws.
+          software, are the property of DocuQuote or its licensors and are
+          protected by intellectual property laws.
         </li>
         <li>
           License: Subject to your compliance with these Terms, we grant you a
@@ -97,10 +97,10 @@ function TermsOfServices() {
           PURPOSE, AND NON-INFRINGEMENT.
         </li>
         <li>
-          Limitation of Liability: IN NO EVENT SHALL [PDF Extraction Platform],
-          ITS OFFICERS, DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY
-          INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES
-          ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE SERVICE.
+          Limitation of Liability: IN NO EVENT SHALL DOCUQOTE, ITS OFFICERS,
+          DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY INDIRECT,
+          INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF
+          OR IN CONNECTION WITH YOUR USE OF THE SERVICE.
         </li>
       </ul>
       <h2 className="mb-3">7. Miscellaneous</h2>
@@ -122,7 +122,7 @@ function TermsOfServices() {
         </li>
       </ul>
       <p className="mb-3">
-        By using [PDF Extraction Platform], you agree to these Terms of Service.
+        By using DocuQuote, you agree to these Terms of Service.
       </p>
     </div>
   );

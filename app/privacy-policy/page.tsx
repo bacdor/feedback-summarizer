@@ -1,18 +1,16 @@
 function PrivacyPolicy() {
   return (
     <div className="lg:w-3/5 w-full mx-auto p-5 shadow-lg">
-      <h1 className="text-2xl font-bold mb-5">
-        Privacy Policy for [PDF Extraction Platform]
-      </h1>
+      <h1 className="text-2xl font-bold mb-5">Privacy Policy for DocuQuote</h1>
       <p className="mb-3">Effective Date: 6/24/2024</p>
       <p className="mb-3">
-        Welcome to [PDF Extraction Platform] ("we," "our," "us"). We are
-        committed to protecting and respecting your privacy. This Privacy Policy
-        explains how we collect, use, disclose, and safeguard your information
-        when you use our paid service for extracting information from uploaded
-        PDFs through our website, mobile application, or any other related
-        services (collectively, the "Service"). By using the Service, you agree
-        to the collection and use of information in accordance with this Privacy
+        Welcome to DocuQuote ("we," "our," "us"). We are committed to protecting
+        and respecting your privacy. This Privacy Policy explains how we
+        collect, use, disclose, and safeguard your information when you use our
+        paid service for extracting information from uploaded PDFs through our
+        website, mobile application, or any other related services
+        (collectively, the "Service"). By using the Service, you agree to the
+        collection and use of information in accordance with this Privacy
         Policy.
       </p>
       <p className="mb-3">

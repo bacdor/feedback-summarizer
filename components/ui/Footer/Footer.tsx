@@ -17,11 +17,11 @@ export default function Footer() {
             width={64}
             height={64}
           />
-          <h3 className="text-3xl font-bold text-zinc-200">citing.app</h3>
+          <h3 className="text-3xl font-bold text-zinc-200">DocuQuote.io</h3>
         </Link>
 
         <p>
-          Get the right in-text citation from PDF files. <br />
+          Get the right quotes to your in-text citations. <br />
           <span style={{ opacity: 0.6 }}>
             Copyright &copy; {new Date().getFullYear()} - All rights reserved
           </span>
