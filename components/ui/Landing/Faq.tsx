@@ -9,24 +9,33 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: 'How does your service work?',
+    question: 'How does it work?',
     answer:
-      'Our service works by providing users with easy-to-use tools for managing their tasks and projects efficiently. Sign up today to get started!'
+      'XYZ allows you to interact with any PDF file. Simply upload your document, and the app will analyze the text to answer your questions, extracting relevant citations related to your topic.'
   },
   {
-    question: 'What is your pricing model?',
+    question: 'How to get the citation I need?',
     answer:
-      'We offer a range of pricing plans to suit different needs. You can choose between monthly and yearly billing options. Check out our Pricing section for more details.'
+      'Simply ask a question after uploading a PDF and a citation related to your topic will be extracted.'
+  },
+  {
+    question: 'Can I use extracted quotes in my essay?',
+    answer:
+      'Yes, of course! Just remember to provide proper in-text citations in your work to avoid plagiarism.'
+  },
+  {
+    question: 'What is the "lifetime deal" plan?',
+    answer:
+      'Lifetime Deal is our special offer for dedicated users. You pay only one time to get access to all XYZ funcionalities for the lifetime.'
   },
   {
     question: 'Can I cancel my subscription?',
     answer:
-      'Yes, you can cancel your subscription at any time through your account settings. If you have any issues, feel free to contact our support team.'
+      'Yes, if you choose to use weekly plan, you can cancel your subscription at any time through your account settings. If you have any issues, feel free to reach out.'
   },
   {
     question: 'How can I contact support?',
-    answer:
-      'You can contact our support team via email at support@example.com or through the contact form on our website.'
+    answer: 'You can contact our support team via email at support@example.com.'
   }
 ];
 
