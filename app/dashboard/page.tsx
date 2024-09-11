@@ -19,6 +19,10 @@ export default async function DashboardPage() {
     return redirect('/signin');
   }
 
+  if (!subscription) {
+    return redirect('/#pricing');
+  }
+
   return (
     <section className="container mx-auto pb-32 p-4 bg-black">
       <DashboardForm />
