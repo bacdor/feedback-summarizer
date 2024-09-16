@@ -54,7 +54,7 @@ export default function Navlinks({ user }: NavlinksProps) {
             </button>
           </form>
         ) : (
-          <Link href="/signin" className={s.link}>
+          <Link href="/signin/password_signin" className={s.link}>
             Sign In
           </Link>
         )}

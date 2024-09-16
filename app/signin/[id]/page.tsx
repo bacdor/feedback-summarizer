@@ -82,13 +82,13 @@ export default async function SignIn({
               redirectMethod={redirectMethod}
             />
           )}
-          {viewProp === 'email_signin' && (
+          {/* {viewProp === 'email_signin' && (
             <EmailSignIn
               allowPassword={allowPassword}
               redirectMethod={redirectMethod}
               disableButton={searchParams.disable_button}
             />
-          )}
+          )} */}
           {viewProp === 'forgot_password' && (
             <ForgotPassword
               allowEmail={allowEmail}
