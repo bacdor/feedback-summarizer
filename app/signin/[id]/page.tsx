@@ -82,13 +82,13 @@ export default async function SignIn({
               redirectMethod={redirectMethod}
             />
           )}
-          {/* {viewProp === 'email_signin' && (
+          {viewProp === 'email_signin' && (
             <EmailSignIn
               allowPassword={allowPassword}
               redirectMethod={redirectMethod}
               disableButton={searchParams.disable_button}
             />
-          )} */}
+          )}
           {viewProp === 'forgot_password' && (
             <ForgotPassword
               allowEmail={allowEmail}
@@ -102,14 +102,14 @@ export default async function SignIn({
           {viewProp === 'signup' && (
             <SignUp allowEmail={allowEmail} redirectMethod={redirectMethod} />
           )}
-          {viewProp !== 'update_password' &&
+          {/* {viewProp !== 'update_password' &&
             viewProp !== 'signup' &&
             allowOauth && (
               <>
                 <Separator text="Third-party sign-in" />
                 <OauthSignIn />
               </>
-            )}
+            )} */}
         </Card>
       </div>
     </div>
