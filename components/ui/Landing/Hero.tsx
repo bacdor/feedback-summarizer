@@ -9,7 +9,7 @@ export default function Hero() {
         <h1
           className={`text-4xl sm:text-7xl font-extrabold mb-6 transition-transform duration-400 transform hover:scale-105`}
         >
-          Get it done faster 🚀
+          Get your quotes faster 🚀
         </h1>
         <p
           className={`text-lg sm:text-2xl lg:w-1/2 mx-auto mb-8 transition-transform duration-400 transform hover:scale-105`}
