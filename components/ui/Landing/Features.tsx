@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Features() {
   return (
-    <section className="bg-indigo-900 py-10 sm:py-16" id="features">
+    <section className="bg-indigo-900 py-16 sm:py-32" id="features">
       <div className="container mx-auto px-4 sm:px-0 w-full sm:w-3/4">
         {/* Centered Section */}
         <div className="lg:w-full text-center text-zinc-200 mx-auto">
