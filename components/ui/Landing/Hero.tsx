@@ -4,7 +4,10 @@ import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="bg-black text-zinc-200 py-20" id="main">
+    <section
+      className="bg-black text-zinc-200 pb-20 pt-20 min-h-screen"
+      id="main"
+    >
       <div className="container mx-auto text-center">
         <h1
           className={`text-4xl sm:text-7xl font-extrabold mb-6 transition-transform duration-400 transform hover:scale-105`}
