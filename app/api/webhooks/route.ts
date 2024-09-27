@@ -8,6 +8,7 @@ import {
   deletePriceRecord,
   handleOneTimePayment
 } from '@/utils/supabase/admin';
+import { updateName } from '@/utils/auth-helpers/server';
 
 const relevantEvents = new Set([
   'product.created',
@@ -77,26 +78,7 @@ export async function POST(req: Request) {
             );
           } else if (checkoutSession.mode === 'payment') {
             // Handle one-time payments
-            // const paymentId = checkoutSession.payment_intent;
-            // alert('test');
-            await handleOneTimePayment(
-              checkoutSession.customer as string
-              // true
-            );
-            console.log('Pay');
-            // const subscriptionId = checkoutSession.payment_intent;
-            // await manageSubscriptionStatusChange(
-            //   subscriptionId as string,
-            //   checkoutSession.customer as string,
-            //   true
-            // );
-
-            // const subscriptionId = checkoutSession.subscription;
-            // await manageSubscriptionStatusChange(
-            //   subscriptionId as string,
-            //   checkoutSession.customer as string,
-            //   true
-            // );
+            await handleOneTimePayment(checkoutSession.customer as string);
           }
           break;
         default:

@@ -31,8 +31,11 @@ export default async function Account() {
         </div>
       </div>
       <div className="p-4">
-        <CustomerPortalForm subscription={subscription} />
-        <NameForm userName={userDetails?.full_name ?? ''} />
+        <CustomerPortalForm
+          subscription={subscription}
+          payment={userDetails?.avatar_url}
+        />
+        {/* <NameForm userName={userDetails?.full_name ?? ''} /> */}
         <EmailForm userEmail={user.email} />
       </div>
     </section>

@@ -22,9 +22,10 @@ type SubscriptionWithPriceAndProduct = Subscription & {
 
 interface Props {
   subscription: SubscriptionWithPriceAndProduct | null;
+  payment: boolean | null;
 }
 
-export default function CustomerPortalForm({ subscription }: Props) {
+export default function CustomerPortalForm({ subscription, payment }: Props) {
   const router = useRouter();
   const currentPath = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,11 +51,17 @@ export default function CustomerPortalForm({ subscription }: Props) {
       description={
         subscription
           ? `You are currently on the ${subscription?.prices?.products?.name} plan.`
-          : 'You are not currently subscribed to any plan.'
+          : payment
+            ? "Congratulations! You've unlocked unlitimited access with our Lifetime Plan!"
+            : 'You are not currently subscribed to any plan.'
       }
       footer={
         <div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
-          <p className="pb-4 sm:pb-0">Manage your subscription.</p>
+          {payment ? (
+            <p></p>
+          ) : (
+            <p className="pb-4 sm:pb-0">Manage your subscription.</p>
+          )}
           <Button
             variant="slim"
             onClick={handleStripePortalRequest}
@@ -68,8 +75,10 @@ export default function CustomerPortalForm({ subscription }: Props) {
       <div className="mt-8 mb-4 text-xl font-semibold">
         {subscription ? (
           `${subscriptionPrice}/${subscription?.prices?.interval}`
+        ) : payment ? (
+          ''
         ) : (
-          <Link href="/">Choose your plan</Link>
+          <Link href="/#pricing">Choose your plan</Link>
         )}
       </div>
     </Card>

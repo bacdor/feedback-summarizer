@@ -19,7 +19,7 @@ export default async function DashboardPage() {
     return redirect('/signin');
   }
 
-  if (!subscription) {
+  if (!subscription && !userDetails.avatar_url) {
     return redirect('/#pricing');
   }
 
