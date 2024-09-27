@@ -88,7 +88,8 @@ const deletePriceRecord = async (price: Stripe.Price) => {
     .from('prices')
     .delete()
     .eq('id', price.id);
-  if (deletionError) throw new Error(`Price deletion failed: ${deletionError.message}`);
+  if (deletionError)
+    throw new Error(`Price deletion failed: ${deletionError.message}`);
   console.log(`Price deleted: ${price.id}`);
 };
 
@@ -98,7 +99,9 @@ const upsertCustomerToSupabase = async (uuid: string, customerId: string) => {
     .upsert([{ id: uuid, stripe_customer_id: customerId }]);
 
   if (upsertError)
-    throw new Error(`Supabase customer record creation failed: ${upsertError.message}`);
+    throw new Error(
+      `Supabase customer record creation failed: ${upsertError.message}`
+    );
 
   return customerId;
 };
@@ -205,8 +208,92 @@ const copyBillingDetailsToCustomer = async (
       payment_method: { ...payment_method[payment_method.type] }
     })
     .eq('id', uuid);
-  if (updateError) throw new Error(`Customer update failed: ${updateError.message}`);
+  if (updateError)
+    throw new Error(`Customer update failed: ${updateError.message}`);
 };
+
+// change!!
+const handleOneTimePayment = async (customerId: string) => {
+  // Get customer's UUID from mapping table.
+  const { data: customerData, error: noCustomerError } = await supabaseAdmin
+    .from('customers')
+    .select('id')
+    .eq('stripe_customer_id', customerId)
+    .single();
+
+  if (noCustomerError)
+    throw new Error(`Customer lookup failed: ${noCustomerError.message}`);
+
+  const { id: uuid } = customerData!;
+  // //Todo: check this assertion
+  // const customer = payment_method.customer as string;
+  // const { name, phone, address } = payment_method.billing_details;
+  // if (!name || !phone || !address) return;
+  //@ts-ignore
+  // await stripe.customers.update(customer, { name, phone, address });
+  const { error: updateError } = await supabaseAdmin
+    .from('users')
+    .update({
+      avatar_url: 'PAID'
+    })
+    .eq('id', uuid);
+  if (updateError)
+    throw new Error(`Customer update failed: ${updateError.message}`);
+};
+
+// const handleOneTimePayment = async (customerId: string, success: boolean) => {
+//   try {
+//     if (!success) {
+//       throw new Error('Payment not successful');
+//     }
+
+//     // Retrieve the user’s UUID from the customers table using the Stripe customer ID
+//     const { data: customerData, error: customerError } = await supabaseAdmin
+//       .from('customers')
+//       .select('id')  // Fetch the 'id' (UUID) from the customers table
+//       .eq('stripe_customer_id', customerId)
+//       .single();
+
+//     if (customerError || !customerData) {
+//       throw new Error(`Customer lookup failed: ${customerError?.message || 'Customer not found'}`);
+//     }
+
+//     const { id: uuid } = customerData;  // This is your user's UUID
+
+//     // Retrieve the user and check if they have already paid the one-time fee
+//     const { data: userData, error: userError } = await supabaseAdmin
+//       .from('users')
+//       .select('has_paid_one_time_fee')  // Ensure this is the exact column name
+//       .eq('id', uuid)
+//       .single();
+
+//     if (userError || !userData) {
+//       throw new Error(`User lookup failed: ${userError?.message || 'User not found'}`);
+//     }
+
+//     const { has_paid_one_time_fee } = userData;  // Access the 'has_paid_one_time_fee' column
+
+//     if (has_paid_one_time_fee) {
+//       console.log(`User ${uuid} has already paid the one-time fee.`);
+//       return;
+//     }
+
+//     // Update the `has_paid_one_time_fee` property in the users table
+//     const { error: updateError } = await supabaseAdmin
+//       .from('users')
+//       .update({ has_paid_one_time_fee: true })
+//       .eq('id', uuid);
+
+//     if (updateError) {
+//       throw new Error(`Failed to update user: ${updateError.message}`);
+//     }
+
+//     console.log(`User ${uuid} has been updated with has_paid_one_time_fee = true`);
+//   } catch (error) {
+//     console.error(`Error in handleOneTimePayment: ${error.message}`);
+//     throw new Error('Failed to handle one-time payment');
+//   }
+// };
 
 const manageSubscriptionStatusChange = async (
   subscriptionId: string,
@@ -267,7 +354,9 @@ const manageSubscriptionStatusChange = async (
     .from('subscriptions')
     .upsert([subscriptionData]);
   if (upsertError)
-    throw new Error(`Subscription insert/update failed: ${upsertError.message}`);
+    throw new Error(
+      `Subscription insert/update failed: ${upsertError.message}`
+    );
   console.log(
     `Inserted/updated subscription [${subscription.id}] for user [${uuid}]`
   );
@@ -288,5 +377,6 @@ export {
   deleteProductRecord,
   deletePriceRecord,
   createOrRetrieveCustomer,
-  manageSubscriptionStatusChange
+  manageSubscriptionStatusChange,
+  handleOneTimePayment //change
 };

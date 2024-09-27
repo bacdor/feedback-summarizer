@@ -5,7 +5,8 @@ import {
   upsertPriceRecord,
   manageSubscriptionStatusChange,
   deleteProductRecord,
-  deletePriceRecord
+  deletePriceRecord,
+  handleOneTimePayment
 } from '@/utils/supabase/admin';
 
 const relevantEvents = new Set([
@@ -73,6 +74,28 @@ export async function POST(req: Request) {
               checkoutSession.customer as string,
               true
             );
+          } else if (checkoutSession.mode === 'payment') {
+            // Handle one-time payments
+            // const paymentId = checkoutSession.payment_intent;
+            alert('test');
+            await handleOneTimePayment(
+              checkoutSession.customer as string
+              // true
+            );
+
+            // const subscriptionId = checkoutSession.payment_intent;
+            // await manageSubscriptionStatusChange(
+            //   subscriptionId as string,
+            //   checkoutSession.customer as string,
+            //   true
+            // );
+
+            // const subscriptionId = checkoutSession.subscription;
+            // await manageSubscriptionStatusChange(
+            //   subscriptionId as string,
+            //   checkoutSession.customer as string,
+            //   true
+            // );
           }
           break;
         default:
