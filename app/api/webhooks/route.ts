@@ -68,6 +68,7 @@ export async function POST(req: Request) {
         case 'checkout.session.completed':
           const checkoutSession = event.data.object as Stripe.Checkout.Session;
           if (checkoutSession.mode === 'subscription') {
+            console.log('Sub');
             const subscriptionId = checkoutSession.subscription;
             await manageSubscriptionStatusChange(
               subscriptionId as string,
@@ -82,7 +83,7 @@ export async function POST(req: Request) {
             //   checkoutSession.customer as string
             //   // true
             // );
-
+            console.log('Pay');
             const subscriptionId = checkoutSession.payment_intent;
             await manageSubscriptionStatusChange(
               subscriptionId as string,
