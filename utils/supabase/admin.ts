@@ -223,7 +223,7 @@ const handleOneTimePayment = async (customerId: string) => {
 
   if (noCustomerError)
     throw new Error(`Customer lookup failed: ${noCustomerError.message}`);
-
+  console.log('test');
   const { id: uuid } = customerData!;
   // //Todo: check this assertion
   // const customer = payment_method.customer as string;
