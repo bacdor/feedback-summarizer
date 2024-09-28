@@ -52,7 +52,8 @@ export default function CustomerPortalForm({ subscription, payment }: Props) {
         subscription
           ? `You are currently on the ${subscription?.prices?.products?.name} plan.`
           : payment
-            ? "Congratulations! You've unlocked unlitimited access with our Lifetime Plan!"
+            ? // ? "Congratulations! You've unlocked unlitimited access with our Lifetime Plan!"
+              "Congratulations! You've unlocked unlitimited access!"
             : 'You are not currently subscribed to any plan.'
       }
       footer={

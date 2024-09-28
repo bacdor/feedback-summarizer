@@ -89,9 +89,13 @@ export default function Pricing({ user, products, subscription }: Props) {
             <h1 className="text-2xl font-extrabold sm:text-center sm:text-3xl">
               Pricing Plans
             </h1>
-            <p className="max-w-2xl m-auto mt-5 text-l text-zinc-200 sm:text-center sm:text-xl">
+            {/* <p className="max-w-2xl m-auto mt-5 text-l text-zinc-200 sm:text-center sm:text-xl">
               <b>Pay only once!</b> Choose our <b>Lifetime Deal</b> and enjoy
               DocuQuote forever.
+            </p> */}
+            <p className="max-w-2xl m-auto mt-5 text-l text-zinc-200 sm:text-center sm:text-xl">
+              Join DocuQuote now and enjoy unlitimited interaction with newest
+              AI technology for free!
             </p>
           </div>
           <div className="mt-12 space-y-0 sm:mt-16 flex flex-wrap justify-center gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0">

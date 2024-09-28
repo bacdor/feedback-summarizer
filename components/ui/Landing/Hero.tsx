@@ -10,7 +10,7 @@ export default function Hero() {
     >
       <div className="container mx-auto text-center">
         <h1
-          className={`text-4xl sm:text-7xl font-extrabold mb-6 transition-transform duration-400 transform hover:scale-105`}
+          className={`text-4xl sm:text-7xl font-extrabold mb-20 transition-transform duration-400 transform hover:scale-105`}
         >
           Get your quotes faster 🚀
         </h1>
