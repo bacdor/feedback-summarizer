@@ -6,9 +6,9 @@ import { PropsWithChildren, Suspense } from 'react';
 import { getURL } from '@/utils/helpers';
 import 'styles/main.css';
 
-const title = 'AI Quotes Extractor Online';
+const title = 'Free Online AI Quotes Extractor';
 const description =
-  'Upload a PDF document, ask a question, and get the quote you need for your in-text citations.';
+  'Tool to interact with PDF files. Upload a PDF document, ask a question, and get the quote you need for your in-text citations.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(getURL()),
