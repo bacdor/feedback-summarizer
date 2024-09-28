@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         },
         {
           role: 'system',
-          content: `The uploaded text is: Hello, Im Dorian. Provide user with an answer and a quote that proves the answer in a format: answer|"citation".`
+          content: `The uploaded text is: ${text}. Provide user with an answer and a quote that proves the answer in a format: answer|"citation".`
         },
         {
           role: 'user',
