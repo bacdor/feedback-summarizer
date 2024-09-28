@@ -164,7 +164,8 @@ export default function Pricing({ user, products, subscription }: Props) {
                           {priceString}
                         </span>
                         <span className="text-base font-medium text-zinc-100">
-                          /{price.interval ? price.interval : 'lifetime'}
+                          {price.interval ? price.interval : ''}{' '}
+                          {/* lifetime here */}
                         </span>
                       </p>
                       <Button
