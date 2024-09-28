@@ -23,16 +23,16 @@ const faqs: FAQItem[] = [
     answer:
       'Yes, of course! Just remember to provide proper in-text citations in your work to avoid plagiarism.'
   },
-  {
-    question: 'What is the "lifetime deal" plan?',
-    answer:
-      'Lifetime Deal is our special offer for dedicated users. You pay only one time to get access to all DocuQuote funcionalities for the lifetime.'
-  },
-  {
-    question: 'Can I cancel my subscription?',
-    answer:
-      'Yes, if you choose to use weekly plan, you can cancel your subscription at any time through your account settings. If you have any issues, feel free to reach out.'
-  },
+  // {
+  //   question: 'What is the "lifetime deal" plan?',
+  //   answer:
+  //     'Lifetime Deal is our special offer for dedicated users. You pay only one time to get access to all DocuQuote funcionalities for the lifetime.'
+  // },
+  // {
+  //   question: 'Can I cancel my subscription?',
+  //   answer:
+  //     'Yes, if you choose to use weekly plan, you can cancel your subscription at any time through your account settings. If you have any issues, feel free to reach out.'
+  // },
   {
     question: 'How can I contact support?',
     answer:
