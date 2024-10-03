@@ -143,3 +143,46 @@ create policy "Can only view own subs data." on subscriptions for select using (
  */
 drop publication if exists supabase_realtime;
 create publication supabase_realtime for table products, prices;
+
+-- SURVEYS
+-- This table contains the survey data, including user ID and survey responses.
+create table surveys (
+  -- Unique survey ID
+  id uuid primary key default gen_random_uuid(),
+  -- Survey name or title
+  name text not null,
+  -- Description of the survey
+  description text,
+  -- The user ID of the creator (UUID from users table)
+  user_id uuid references users(id) not null
+);
+
+-- SURVEY QUESTIONS
+-- This table holds individual questions for each survey.
+create table survey_questions (
+  -- Unique question ID
+  id uuid primary key default gen_random_uuid(),
+  -- The survey this question belongs to
+  survey_id uuid references surveys(id) on delete cascade,
+  -- The question text
+  question_text text not null,
+  -- Type of question (e.g., multiple_choice, text, rating)
+  question_type text check (question_type in ('multiple_choice', 'text', 'rating')) not null,
+  -- Possible options for multiple choice questions, stored as JSON
+  options jsonb
+);
+
+-- SURVEY RESPONSES
+-- This table stores the responses for each survey.
+create table survey_responses (
+  -- Unique response ID
+  id uuid primary key default gen_random_uuid(),
+  -- The survey this response belongs to
+  survey_id uuid references surveys(id) on delete cascade,
+  -- The user ID of the respondent (nullable if anonymous)
+  user_id uuid references users(id),
+  -- Timestamp when the response was submitted
+  submitted_at timestamp with time zone default now(),
+  -- JSON data storing the responses (question_id: response)
+  responses jsonb not null
+);
