@@ -2,30 +2,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 
-// export async function POST(req: Request) {
-//   try {
-//     const supabase = createClient();
-
-//     // Test with hardcoded values
-//     const { error } = await supabase.from('surveys').insert([
-//       {
-//         name: 'Test Survey',
-//         description: 'Test description',
-//         user_id: 'test_user_id'
-//       }
-//     ]);
-
-//     if (error) {
-//       throw new Error(error.message);
-//     }
-
-//     return NextResponse.json({ message: 'Survey created successfully' });
-//   } catch (error) {
-//     console.error('Error creating survey:', error);
-//     return new NextResponse('Error creating survey', { status: 500 });
-//   }
-// }
-
 export async function POST(req: Request) {
   const supabase = createClient();
   const { surveyTitle, surveyDescription } = await req.json();
@@ -60,4 +36,19 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  const supabase = createClient();
+
+  const { data: surveys, error } = await supabase.from('surveys').select('*');
+
+  if (error) {
+    return NextResponse.json(
+      { error: 'Error fetching surveys' },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json(surveys);
 }

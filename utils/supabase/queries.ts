@@ -37,3 +37,15 @@ export const getUserDetails = cache(async (supabase: SupabaseClient) => {
     .single();
   return userDetails;
 });
+
+export const getSurveys = cache(async (supabase: SupabaseClient) => {
+  const { data: surveys } = await supabase.from('surveys').select('*');
+  return surveys;
+});
+
+export const getSurveyQuestions = cache(async (supabase: SupabaseClient) => {
+  const { data: surveyQuestions } = await supabase
+    .from('survey_questions')
+    .select('*');
+  return surveyQuestions;
+});

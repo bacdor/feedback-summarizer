@@ -5,7 +5,9 @@ import {
   getSubscription,
   getUser
 } from '@/utils/supabase/queries';
-import DashboardForm from '@/components/ui/Dashboard/DashboardForm';
+import DashboardSurveyCreator from '@/components/ui/Dashboard/DashboardSurveyCreator';
+import SurveyQuestionForm from '@/components/ui/Dashboard/SurveyQuestionForm';
+import DashboardSurveyList from '@/components/ui/Dashboard/DashbaordSurveyList';
 
 export default async function DashboardPage() {
   const supabase = createClient();
@@ -25,7 +27,9 @@ export default async function DashboardPage() {
 
   return (
     <section className="container mx-auto pb-32 p-4 bg-yellow">
-      <DashboardForm />
+      <DashboardSurveyList userId={user.id} />
+      <DashboardSurveyCreator />
+      {/* <SurveyQuestionForm /> */}
     </section>
   );
 }

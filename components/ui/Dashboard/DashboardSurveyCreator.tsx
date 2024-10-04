@@ -1,9 +1,9 @@
-// components/ui/Dashboard/DashboardForm.tsx
+// components/ui/Dashboard/DashboardSurveyCreator.tsx
 'use client';
 
 import { useState } from 'react';
 
-export default function DashboardForm() {
+export default function DashboardSurveyCreator() {
   const [formData, setFormData] = useState({
     surveyTitle: '',
     surveyDescription: ''
@@ -91,7 +91,7 @@ export default function DashboardForm() {
 
 // import { useMemo, useState } from 'react';
 
-// export default function DashboardForm() {
+// export default function DashboardSurveyCreator() {
 //   const [file, setFile] = useState<File | null>(null);
 //   const [text, setText] = useState<string>('');
 //   const [question, setQuestion] = useState<string>('');
