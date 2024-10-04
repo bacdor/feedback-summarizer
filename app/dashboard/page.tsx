@@ -24,7 +24,7 @@ export default async function DashboardPage() {
   // }
 
   return (
-    <section className="container mx-auto pb-32 p-4 bg-black">
+    <section className="container mx-auto pb-32 p-4 bg-yellow">
       <DashboardForm />
     </section>
   );
