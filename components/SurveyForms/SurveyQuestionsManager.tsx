@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { UUID } from 'crypto';
+import QuestionCard from './QuestionCard';
 
 interface Props {
   surveyId: UUID;
@@ -52,14 +53,22 @@ export default function SurveyQuestionsManager({
       <h1 className="text-2xl font-bold">{surveyId}</h1>
       {surveyQuestions &&
         surveyQuestions.map((question, index) => (
-          <div key={index} className="mt-4">
-            {Object.entries(question).map(([key, value]) => (
-              <p key={key} className="mt-2">
-                <strong>{key}:</strong> {String(value)}
-              </p>
-            ))}
+          <div>
+            <div>
+              <QuestionCard surveyQuestion={question} />
+            </div>
+            {/* <div key={index} className="mt-4">
+              {Object.entries(question).map(([key, value]) => (
+                <p key={key} className="mt-2">
+                  <strong>{key}:</strong> {String(value)}
+                </p>
+              ))}
+            </div> */}
           </div>
         ))}
+      {/* {surveyQuestions && surveyQuestions.length > 0 && (
+          <QuestionCard surveyQuestion={surveyQuestions[0]} />
+        )} */}
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-4">Add New Question</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
