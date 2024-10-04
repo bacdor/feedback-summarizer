@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { UUID } from 'crypto';
 
 interface Survey {
   id: string;
@@ -10,13 +11,13 @@ interface Survey {
 }
 
 interface Props {
-  surveyTitle: string;
-  surveyDescription: string;
+  surveyId: UUID;
+  surveyQuestions: any[] | null;
 }
 
-export default function SurveySingleManager({
-  surveyTitle,
-  surveyDescription
+export default function SurveyQuestionsManager({
+  surveyId,
+  surveyQuestions
 }: Props) {
   //   const router = useRouter();
   //   //   const id = router.searchParams?.get('id') || '5e905285-561b-42e2-ac70-bed845d0e90a';
@@ -51,8 +52,18 @@ export default function SurveySingleManager({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">{surveyTitle}</h1>
-      <p className="mt-2">{surveyDescription}</p>
+      <h1 className="text-2xl font-bold">{surveyId}</h1>
+      {surveyQuestions &&
+        surveyQuestions.map((question, index) => (
+          <div key={index} className="mt-4">
+            {Object.entries(question).map(([key, value]) => (
+              <p key={key} className="mt-2">
+                <strong>{key}:</strong> {String(value)}
+              </p>
+            ))}
+          </div>
+        ))}
+      {/* <p className="mt-2">{surveyQuestions.id}</p> */}
     </div>
   );
 }

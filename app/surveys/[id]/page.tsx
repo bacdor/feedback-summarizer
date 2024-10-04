@@ -1,7 +1,12 @@
 import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
-import { getUser, getSurveys } from '@/utils/supabase/queries';
+import {
+  getUser,
+  getSurveys,
+  getSurveyQuestions
+} from '@/utils/supabase/queries';
 import SurveySingleManager from '@/components/SurveyForms/SurveySingleManager';
+import SurveyQuestionsManager from '@/components/SurveyForms/SurveyQuestionsManager';
 
 export default async function SurveyDetailPage({
   params
@@ -9,12 +14,22 @@ export default async function SurveyDetailPage({
   params: { id: string };
 }) {
   const supabase = createClient();
-  const [user, surveys] = await Promise.all([
+  const [user, surveys, surveyQuestions] = await Promise.all([
     getUser(supabase),
-    getSurveys(supabase)
+    getSurveys(supabase),
+    getSurveyQuestions(supabase)
   ]);
   const { id } = params;
   const survey = surveys?.find((s) => s.id === id);
+
+  // Extracts questions related only to accessed survey
+  const surveyQuestionsForId = surveyQuestions?.filter(
+    (question) => question.survey_id === id
+  );
+
+  if (!surveyQuestionsForId) {
+    throw new Error('Failed to fetch survey questions');
+  }
 
   if (!user) {
     return redirect('/signin');
@@ -41,6 +56,10 @@ export default async function SurveyDetailPage({
         <SurveySingleManager
           surveyTitle={survey.name}
           surveyDescription={survey.description}
+        />
+        <SurveyQuestionsManager
+          surveyId={survey.id}
+          surveyQuestions={surveyQuestions}
         />
       </div>
     </section>
