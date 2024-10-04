@@ -59,7 +59,7 @@ export default async function SurveyDetailPage({
         />
         <SurveyQuestionsManager
           surveyId={survey.id}
-          surveyQuestions={surveyQuestions}
+          surveyQuestions={surveyQuestionsForId}
         />
       </div>
     </section>

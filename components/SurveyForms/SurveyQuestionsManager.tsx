@@ -4,12 +4,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { UUID } from 'crypto';
 
-interface Survey {
-  id: string;
-  name: string;
-  description: string;
-}
-
 interface Props {
   surveyId: UUID;
   surveyQuestions: any[] | null;
@@ -19,37 +13,40 @@ export default function SurveyQuestionsManager({
   surveyId,
   surveyQuestions
 }: Props) {
-  //   const router = useRouter();
-  //   //   const id = router.searchParams?.get('id') || '5e905285-561b-42e2-ac70-bed845d0e90a';
-  //   const [survey, setSurvey] = useState<Survey | null>(null);
-  //   const [loading, setLoading] = useState(true);
-  //   const [error, setError] = useState<string | null>(null);
+  const [questionText, setQuestionText] = useState('');
+  const [questionType, setQuestionType] = useState('text');
+  const [options, setOptions] = useState('');
+  const router = useRouter();
 
-  //   useEffect(() => {
-  //     const fetchSurvey = async () => {
-  //       try {
-  //         const response = await fetch(`/api/surveys/${id}`);
-  //         if (!response.ok) {
-  //           throw new Error('Failed to fetch survey');
-  //         }
-  //         const data = await response.json();
-  //         setSurvey(data);
-  //       } catch (err) {
-  //         // setError(err.message);
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  //     if (id) {
-  //       fetchSurvey();
-  //     }
-  //   }, [id]);
+    const response = await fetch('/api/survey-questions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        surveyId,
+        questionText,
+        questionType,
+        options: options
+          ? options.split(',').map((option) => option.trim())
+          : null
+      })
+    });
 
-  //   if (loading) return <p>Loading...</p>;
-  //   if (error) return <p>Error: {error}</p>;
-  //   if (!survey) return <p>No survey found.</p>;
-
+    if (response.ok) {
+      // Refresh the page to show the new question
+      router.refresh();
+      // Clear the form
+      setQuestionText('');
+      setQuestionType('text');
+      setOptions('');
+    } else {
+      console.error('Failed to create question');
+    }
+  };
   return (
     <div>
       <h1 className="text-2xl font-bold">{surveyId}</h1>
@@ -63,7 +60,59 @@ export default function SurveyQuestionsManager({
             ))}
           </div>
         ))}
-      {/* <p className="mt-2">{surveyQuestions.id}</p> */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold mb-4">Add New Question</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="questionText" className="block mb-2">
+              Question Text:
+            </label>
+            <input
+              type="text"
+              id="questionText"
+              value={questionText}
+              onChange={(e) => setQuestionText(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="questionType" className="block mb-2">
+              Question Type:
+            </label>
+            <select
+              id="questionType"
+              value={questionType}
+              onChange={(e) => setQuestionType(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md"
+            >
+              <option value="text">Text</option>
+              <option value="multipleChoice">Multiple Choice</option>
+            </select>
+          </div>
+          {questionType === 'multipleChoice' && (
+            <div>
+              <label htmlFor="options" className="block mb-2">
+                Options (comma-separated):
+              </label>
+              <input
+                type="text"
+                id="options"
+                value={options}
+                onChange={(e) => setOptions(e.target.value)}
+                className="w-full px-3 py-2 border rounded-md"
+                placeholder="Option 1, Option 2, Option 3"
+              />
+            </div>
+          )}
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          >
+            Add Question
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
