@@ -1,9 +1,18 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
-
 import GitHub from '@/components/icons/GitHub';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Return an empty div if the current URL contains '/account'
+  if (pathname.includes('/account')) {
+    return <div />;
+  }
+
   return (
     <footer className="footer px-10 pt-12 pb-24 bg-zinc-900">
       <aside className="flex flex-col items-start">

@@ -14,50 +14,58 @@ interface NavlinksProps {
 
 export default function Navlinks({ user }: NavlinksProps) {
   const router = getRedirectMethod() === 'client' ? useRouter() : null;
+  const pathname = usePathname();
+
+  // Return an empty div if the current URL contains '/account'
+  if (pathname.includes('/account')) {
+    return <div />;
+  }
 
   return (
-    <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
-      <div className="flex items-center flex-1">
-        <Link href="/" className={s.logo} aria-label="Logo">
-          <Image
-            src="/logo-pdf500.svg"
-            alt="DocuQuote Logo"
-            width={32}
-            height={32}
-          />
-        </Link>
-        <Link href="/" className={s.link}>
-          <span className="ml-2 text-lg font-bold">DocuQuote</span>
-        </Link>
-        <nav className="ml-6 space-x-2 lg:block">
-          {user && (
-            <>
-              <Link href="/dashboard" className={s.link}>
-                Dashboard
-              </Link>
-              <Link href="/account" className={s.link}>
-                Account
-              </Link>
-            </>
+    <div className="max-w-6xl px-6 mx-auto">
+      <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
+        <div className="flex items-center flex-1">
+          <Link href="/" className={s.logo} aria-label="Logo">
+            <Image
+              src="/logo-pdf500.svg"
+              alt="DocuQuote Logo"
+              width={32}
+              height={32}
+            />
+          </Link>
+          <Link href="/" className={s.link}>
+            <span className="ml-2 text-lg font-bold">DocuQuote</span>
+          </Link>
+          <nav className="ml-6 space-x-2 lg:block">
+            {user && (
+              <>
+                <Link href="/dashboard" className={s.link}>
+                  Dashboard
+                </Link>
+                <Link href="/account" className={s.link}>
+                  Account
+                </Link>
+              </>
+            )}
+            <Link href="/#pricing" className={s.link}>
+              Pricing
+            </Link>
+          </nav>
+        </div>
+        <div className="flex justify-end space-x-8">
+          {user ? (
+            <form onSubmit={(e) => handleRequest(e, SignOut, router)}>
+              <input type="hidden" name="pathName" value={pathname} />
+              <button type="submit" className={s.link}>
+                Sign out
+              </button>
+            </form>
+          ) : (
+            <Link href="/signin/email_signin" className={s.link}>
+              Sign In
+            </Link>
           )}
-          <Link href="/#pricing" className={s.link}>
-            Pricing
-          </Link>
-        </nav>
-      </div>
-      <div className="flex justify-end space-x-8">
-        {user ? (
-          <form onSubmit={(e) => handleRequest(e, SignOut, router)}>
-            <input type="hidden" name="pathName" value={usePathname()} />
-            <button type="submit" className={s.link}>
-              Sign out
-            </button>
-          </form>
-        ) : (
-          <Link href="/signin/email_signin" className={s.link}>
-            Sign In
-          </Link>
-        )}
+        </div>
       </div>
     </div>
   );
