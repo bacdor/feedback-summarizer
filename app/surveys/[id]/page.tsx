@@ -5,8 +5,8 @@ import {
   getSurveys,
   getSurveyQuestions
 } from '@/utils/supabase/queries';
-import SurveySingleManager from '@/components/SurveyForms/SurveySingleManager';
-import SurveyQuestionsManager from '@/components/SurveyForms/SurveyQuestionsManager';
+import SurveySingleManager from '@/components/ui/SurveyForms/SurveySingleManager';
+import SurveyQuestionsManager from '@/components/ui/SurveyForms/SurveyQuestionsManager';
 
 export default async function SurveyDetailPage({
   params
