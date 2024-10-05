@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { UUID } from 'crypto';
 import QuestionCard from './QuestionCard';
@@ -27,8 +26,7 @@ export default function SurveyQuestionsManager({
       body: JSON.stringify({
         surveyId,
         questionText: '',
-        questionType: 'text',
-        options: ''
+        questionType: 'text'
       })
     });
 
@@ -42,7 +40,7 @@ export default function SurveyQuestionsManager({
   return (
     <div>
       {surveyQuestions &&
-        surveyQuestions.map((question, index) => (
+        surveyQuestions.map((question) => (
           <div>
             <div>
               <QuestionCard surveyQuestion={question} />
