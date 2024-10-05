@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 // import { Tables } from '@/types_db';
 
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function DashboardSurveyList({ userId }: Props) {
-  const router = useRouter();
+  // const router = useRouter();
   const [surveys, setSurveys] = useState<
     Array<{ id: string; name: string; description: string }>
   >([]);
@@ -28,9 +28,9 @@ export default function DashboardSurveyList({ userId }: Props) {
     fetchSurveys();
   }, []);
 
-  const handleSurveyClick = (surveyId: string) => {
-    router.push(`/surveys/${surveyId}`);
-  };
+  // const handleSurveyClick = (surveyId: string) => {
+  //   router.push(`/surveys/${surveyId}`);
+  // };
 
   return (
     <div>
