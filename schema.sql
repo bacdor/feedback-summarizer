@@ -179,8 +179,8 @@ create table survey_responses (
   id uuid primary key default gen_random_uuid(),
   -- The survey this response belongs to
   survey_id uuid references surveys(id) on delete cascade,
-  -- The user ID of the respondent (nullable if anonymous)
-  user_id uuid references users(id),
+  -- The email of the respondent (nullable if anonymous)
+  email text,
   -- Timestamp when the response was submitted
   submitted_at timestamp with time zone default now(),
   -- JSON data storing the responses (question_id: response)

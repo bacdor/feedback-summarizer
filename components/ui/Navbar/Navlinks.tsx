@@ -17,7 +17,7 @@ export default function Navlinks({ user }: NavlinksProps) {
   const pathname = usePathname();
 
   // Return an empty div if the current URL contains '/account'
-  if (pathname.includes('/account')) {
+  if (pathname.includes('/surveys/r')) {
     return <div />;
   }
 

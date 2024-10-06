@@ -5,8 +5,8 @@ import {
   getSurveys,
   getSurveyQuestions
 } from '@/utils/supabase/queries';
-import SurveySingleManager from '@/components/ui/SurveyForms/SurveySingleManager';
-import SurveyQuestionsManager from '@/components/ui/SurveyForms/SurveyQuestionsManager';
+import SurveyDetailsDisplayPage from '@/components/ui/ReposponseForms/SurveyDetailsDisplayPage';
+import SurveyResponseForm from '@/components/ui/ReposponseForms/SurveyResponsesManager';
 
 export default async function SurveyDetailPage({
   params
@@ -19,10 +19,6 @@ export default async function SurveyDetailPage({
     getSurveys(supabase),
     getSurveyQuestions(supabase)
   ]);
-
-  if (!user) {
-    return redirect('/signin');
-  }
 
   const { id } = params;
   const survey = surveys?.find((s) => s.id === id);
@@ -53,16 +49,16 @@ export default async function SurveyDetailPage({
       <div className="max-w-6xl px-4 py-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
         <div className="sm:align-center sm:flex sm:flex-col">
           <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
-            Surveys
+            Survey Responses
           </h1>
         </div>
       </div>
       <div className="p-4">
-        <SurveySingleManager
+        <SurveyDetailsDisplayPage
           surveyTitle={survey.name}
           surveyDescription={survey.description}
         />
-        <SurveyQuestionsManager
+        <SurveyResponseForm
           surveyId={survey.id}
           surveyQuestions={surveyQuestionsForId}
         />
