@@ -21,7 +21,8 @@ export default function SurveyResponsesManager({
   // Function to handle response update from ResponseCard
   const handleResponseChange = (
     questionId: string,
-    question: string,
+    question_type: string,
+    question_text: string,
     answer: string
   ) => {
     setResponses((prevResponses) => {
@@ -38,7 +39,7 @@ export default function SurveyResponsesManager({
         // Add a new response
         return [
           ...prevResponses,
-          { question_id: questionId, question, answer }
+          { question_id: questionId, question_type, question_text, answer }
         ];
       }
     });

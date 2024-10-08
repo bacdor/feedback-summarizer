@@ -4,7 +4,8 @@ interface Props {
   surveyQuestion: any;
   onResponseChange: (
     questionId: string,
-    question: string,
+    question_type: string,
+    question_text: string,
     answer: string
   ) => void; // Accept a callback
 }
@@ -23,6 +24,7 @@ export default function ResponseCard({
     setAnswer(newAnswer);
     onResponseChange(
       surveyQuestion.id,
+      surveyQuestion.question_type,
       surveyQuestion.question_text,
       newAnswer
     );
@@ -33,6 +35,7 @@ export default function ResponseCard({
     setAnswer(selectedAnswer);
     onResponseChange(
       surveyQuestion.id,
+      surveyQuestion.question_type,
       surveyQuestion.question_text,
       selectedAnswer
     );
