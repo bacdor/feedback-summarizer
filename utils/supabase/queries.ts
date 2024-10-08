@@ -49,3 +49,19 @@ export const getSurveyQuestions = cache(async (supabase: SupabaseClient) => {
     .select('*');
   return surveyQuestions;
 });
+
+export const getSurveyResponses = cache(async (supabase: SupabaseClient) => {
+  const { data: surveyResponses } = await supabase
+    .from('survey_responses')
+    .select('*');
+  return surveyResponses;
+});
+
+export const getSurveyIdFromResponses = cache(
+  async (supabase: SupabaseClient) => {
+    const { data: surveyId } = await supabase
+      .from('survey_responses')
+      .select('survey_id');
+    return surveyId;
+  }
+);

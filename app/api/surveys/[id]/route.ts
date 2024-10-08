@@ -23,3 +23,33 @@ export async function GET(
 
   return NextResponse.json(survey);
 }
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const supabase = createClient();
+  const id = params.id;
+
+  if (!id) {
+    return NextResponse.json(
+      { message: 'Missing question id' },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const { error } = await supabase.from('surveys').delete().eq('id', id);
+
+    if (error) {
+      throw error;
+    }
+
+    return NextResponse.json({ message: 'Survey deleted successfully' });
+  } catch (error) {
+    return NextResponse.json(
+      { message: 'Error deleting survey', error },
+      { status: 500 }
+    );
+  }
+}
