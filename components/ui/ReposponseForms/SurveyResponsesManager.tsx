@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { UUID } from 'crypto';
 import ResponseCard from './ResponseCard';
 import { useState } from 'react';
@@ -16,7 +15,8 @@ export default function SurveyResponsesManager({
 }: Props) {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [responses, setResponses] = useState<any[]>([]); // Track responses here
+  const [isSubmitted, setIsSubmitted] = useState(false); // Track submission state
+  const [responses, setResponses] = useState<any[]>([]);
 
   // Function to handle response update from ResponseCard
   const handleResponseChange = (
@@ -67,12 +67,25 @@ export default function SurveyResponsesManager({
 
       const data = await response.json();
       console.log('Survey submitted:', data);
+
+      // Set form as submitted
+      setIsSubmitted(true);
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
+
+  // Conditionally render the thank you message or the form
+  if (isSubmitted) {
+    return (
+      <div className="text-center p-6">
+        <h1 className="text-2xl font-bold">Thank you for your submission!</h1>
+        <p className="mt-4">We appreciate your feedback.</p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -99,7 +112,7 @@ export default function SurveyResponsesManager({
           <div key={question.id}>
             <ResponseCard
               surveyQuestion={question}
-              onResponseChange={handleResponseChange} // Pass the callback
+              onResponseChange={handleResponseChange}
             />
           </div>
         ))}
