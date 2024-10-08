@@ -42,6 +42,9 @@ export default function Navlinks({ user }: NavlinksProps) {
                 <Link href="/surveys" className={s.link}>
                   Surveys
                 </Link>
+                <Link href="/analyzer" className={s.link}>
+                  Analyzer
+                </Link>
                 <Link href="/account" className={s.link}>
                   Account
                 </Link>
