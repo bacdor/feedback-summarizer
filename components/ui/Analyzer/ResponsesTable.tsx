@@ -31,22 +31,36 @@ export default function ResponsesTable({ userId, surveyResponses }: Props) {
                 <tr key={response.id} className="border">
                   <td className="border p-2">{index + 1}</td>
                   <td className="border p-2">{response.email}</td>
-                  <td className="border p-2">Add Type handler</td>
                   <td className="border p-2">
                     {response.responses.map(
                       (
-                        resp: { question_id: string; question: string } // Map over the responses array
+                        resp: { question_type: string } // Map over the responses array
                       ) => (
-                        <div key={resp.question_id}>{resp.question}</div> // Display the question
+                        <div>
+                          {{
+                            text: 'T',
+                            rating: 'R',
+                            multiple_choice: 'M'
+                          }[resp.question_type] || ''}
+                        </div>
                       )
                     )}
                   </td>
                   <td className="border p-2">
                     {response.responses.map(
                       (
-                        resp: { question_id: string; answer: string } // Map over the responses array
+                        resp: { question_text: string } // Map over the responses array
                       ) => (
-                        <div key={resp.question_id}>{resp.answer}</div> // Display the question
+                        <div>{resp.question_text}</div> // Display the question
+                      )
+                    )}
+                  </td>
+                  <td className="border p-2">
+                    {response.responses.map(
+                      (
+                        resp: { answer: string } // Map over the responses array
+                      ) => (
+                        <div>{resp.answer}</div> // Display the question
                       )
                     )}
                   </td>
