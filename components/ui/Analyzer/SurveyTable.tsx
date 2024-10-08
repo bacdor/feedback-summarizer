@@ -52,6 +52,7 @@ export default function SurveyTable({ userId, surveyResponses }: Props) {
             <th className="border p-2">Survey Name</th>
             <th className="border p-2"># responses</th>
             <th className="border p-2">Last Submitted</th>
+            <th className="border p-2">Edit</th>
           </tr>
         </thead>
         <tbody>
@@ -64,7 +65,7 @@ export default function SurveyTable({ userId, surveyResponses }: Props) {
               return (
                 <tr key={survey.id} className="border">
                   <td className="border p-2">
-                    <Link href={`/surveys/${survey.id}`} passHref>
+                    <Link href={`/analyzer/${survey.id}`} passHref>
                       <h3 className="text-xl">
                         <b>{survey.name}</b> {survey.description}
                       </h3>
@@ -75,6 +76,11 @@ export default function SurveyTable({ userId, surveyResponses }: Props) {
                     {lastResponseDate
                       ? new Date(lastResponseDate).toLocaleString()
                       : 'No submissions yet'}
+                  </td>
+                  <td className="border p-2">
+                    <Link href={`/surveys/${survey.id}`} passHref>
+                      Edit
+                    </Link>
                   </td>
                 </tr>
               );
