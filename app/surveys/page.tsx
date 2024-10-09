@@ -9,7 +9,7 @@ import {
 import DashboardSurveyCreator from '@/components/ui/Dashboard/DashboardSurveyCreator';
 import DashboardSurveyList from '@/components/ui/Dashboard/DashbaordSurveyList';
 
-export default async function DashboardPage() {
+export default async function SurveysMainPage() {
   const supabase = createClient();
   const [user, userDetails, subscription, surveyResponses] = await Promise.all([
     getUser(supabase),
