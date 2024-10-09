@@ -6,8 +6,6 @@ import {
   getUser,
   getSurveyResponses
 } from '@/utils/supabase/queries';
-import DashboardSurveyCreator from '@/components/ui/Dashboard/DashboardSurveyCreator';
-import DashboardSurveyList from '@/components/ui/Dashboard/DashbaordSurveyList';
 import SurveyTable from '@/components/ui/Analyzer/SurveyTable';
 
 export default async function DashboardPage() {
