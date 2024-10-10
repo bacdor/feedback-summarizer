@@ -39,15 +39,15 @@ export default function AnalyzeCard({
   };
 
   const analysisItems = [
-    { title: 'Key Themes' },
-    { title: 'Secondary Themes' },
-    { title: 'Important Highlights' },
-    { title: 'Emerging Trends' },
-    { title: 'Strengths' },
-    { title: 'Weaknesses' },
-    { title: 'Opportunities' },
-    { title: 'Threats' },
-    { title: 'Summary' }
+    { title: 'Identify Key Themes' },
+    { title: 'Categorize Feedback by Type' },
+    { title: 'Assess the Feedback Source' },
+    { title: 'Look for Trends Over Time' },
+    { title: 'Quantitative vs. Qualitative Analysis' },
+    { title: 'Sentiment Analysis' },
+    { title: 'Compare Feedback with Your Goals' },
+    { title: 'Competitor Comparison' },
+    { title: 'Prioritize Based on Impact' }
   ];
 
   return (

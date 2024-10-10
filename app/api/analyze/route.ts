@@ -1,5 +1,15 @@
 // pages/api/analyze.js
-import { analyzeKeyThemes } from '@/utils/openai/chat';
+import {
+  analyzeKeyThemes,
+  categorizeFeedbackByType
+  // assessFeedbackSource,
+  // analyzeTrendsOverTime,
+  // quantQualAnalysis,
+  // performSentimentAnalysis,
+  // compareFeedbackWithGoals,
+  // compareWithCompetitors,
+  // prioritizeByImpact
+} from '@/utils/openai/chat';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -10,16 +20,35 @@ export async function POST(req: NextRequest) {
 
     // Call the appropriate function based on the title
     switch (title) {
-      case 'Key Themes':
+      case 'Identify Key Themes':
         analysisResult = await analyzeKeyThemes(questionsAndAnswersText);
         break;
-      //   case 'Secondary Themes':
-      //     analysisResult = await analyzeSecondaryThemes(questionsAndAnswersText);
-      //     break;
-      //   case 'Important Highlights':
-      //     analysisResult = await analyzeHighlights(questionsAndAnswersText);
-      //     break;
-      // Add more cases for other titles and their respective functions
+      case 'Categorize Feedback by Type':
+        analysisResult = await categorizeFeedbackByType(
+          questionsAndAnswersText
+        );
+        break;
+      // case 'Assess the Feedback Source':
+      //   analysisResult = await assessFeedbackSource(questionsAndAnswersText);
+      //   break;
+      // case 'Look for Trends Over Time':
+      //   analysisResult = await analyzeTrendsOverTime(questionsAndAnswersText);
+      //   break;
+      // case 'Quantitative vs. Qualitative Analysis':
+      //   analysisResult = await quantQualAnalysis(questionsAndAnswersText);
+      //   break;
+      // case 'Sentiment Analysis':
+      //   analysisResult = await performSentimentAnalysis(questionsAndAnswersText);
+      //   break;
+      // case 'Compare Feedback with Your Goals':
+      //   analysisResult = await compareFeedbackWithGoals(questionsAndAnswersText);
+      //   break;
+      // case 'Competitor Comparison':
+      //   analysisResult = await compareWithCompetitors(questionsAndAnswersText);
+      //   break;
+      // case 'Prioritize Based on Impact':
+      //   analysisResult = await prioritizeByImpact(questionsAndAnswersText);
+      //   break;
       default:
         throw new Error('Invalid analysis title.');
     }

@@ -16,48 +16,28 @@ export async function analyzeKeyThemes(text: string) {
         content: text
       }
     ],
-    max_tokens: 200
+    max_tokens: 800
   });
 
   return response.choices[0].message.content;
 }
 
-// export async function analyzeNegativeFeedback(text: string) {
-//   const response = await openai.chat.completions.create({
-//     model: 'gpt-4o-mini',
-//     messages: [
-//       {
-//         role: 'system',
-//         content:
-//           'Focus on identifying recurring negative feedback or complaints.'
-//       },
-//       {
-//         role: 'user',
-//         content: text
-//       }
-//     ],
-//     max_tokens: 800
-//   });
+export async function categorizeFeedbackByType(text: string) {
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    messages: [
+      {
+        role: 'system',
+        content:
+          'You are a feedback analyzer. You will be provided with users feedback about an app. Categorize feedback by type and provide summarization for each based on the following tips along with some examples. Product/Feature Feedback: What do people think about the features and usability of your app? Are there any feature requests or issues that are repeatedly mentioned? User Experience (UX): How easy is it for users to navigate your app? Are they frustrated by any specific parts of the interface or workflow? Performance Issues: Are users mentioning performance problems like speed, bugs, or crashes? Support and Communication: How do users feel about the level of support they are receiving? Are they satisfied with how quickly their issues are addressed?'
+      },
+      {
+        role: 'user',
+        content: text
+      }
+    ],
+    max_tokens: 800
+  });
 
-//   return response.choices[0].message.content;
-// }
-
-// export async function analyzeSuggestions(text: string) {
-//   const response = await openai.chat.completions.create({
-//     model: 'gpt-4o-mini',
-//     messages: [
-//       {
-//         role: 'system',
-//         content:
-//           'Focus on identifying user suggestions for improvement or new features.'
-//       },
-//       {
-//         role: 'user',
-//         content: text
-//       }
-//     ],
-//     max_tokens: 800
-//   });
-
-//   return response.choices[0].message.content;
-// }
+  return response.choices[0].message.content;
+}
