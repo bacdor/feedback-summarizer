@@ -1,14 +1,14 @@
 // pages/api/analyze.js
 import {
-  analyzeKeyThemes,
-  categorizeFeedbackByType
-  // assessFeedbackSource,
-  // analyzeTrendsOverTime,
-  // quantQualAnalysis,
-  // performSentimentAnalysis,
-  // compareFeedbackWithGoals,
-  // compareWithCompetitors,
-  // prioritizeByImpact
+  analyzePositiveThemes,
+  analyzeNegativeThemes,
+  categorizeFeedbackByType,
+  categorizeFeedbackByTone,
+  // performQuantitativeAnalysis, // later
+  // analyzeTrendsOverTime, // later
+  // compareWithCompetitors, // later
+  alignWithGoals
+  // assessActionability // later
 } from '@/utils/openai/chat';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -20,34 +20,36 @@ export async function POST(req: NextRequest) {
 
     // Call the appropriate function based on the title
     switch (title) {
-      case 'Identify Key Themes':
-        analysisResult = await analyzeKeyThemes(questionsAndAnswersText);
+      case 'Positive Themes':
+        analysisResult = await analyzePositiveThemes(questionsAndAnswersText);
         break;
-      case 'Categorize Feedback by Type':
+      case 'Negative Themes':
+        analysisResult = await analyzeNegativeThemes(questionsAndAnswersText);
+        break;
+      case 'Type Categorization':
         analysisResult = await categorizeFeedbackByType(
           questionsAndAnswersText
         );
         break;
-      // case 'Assess the Feedback Source':
-      //   analysisResult = await assessFeedbackSource(questionsAndAnswersText);
+      case 'Tone Categorization':
+        analysisResult = await categorizeFeedbackByTone(
+          questionsAndAnswersText
+        );
+        break;
+      // case 'Quantitative Analysis': // later
+      //   analysisResult = await performQuantitativeAnalysis(questionsAndAnswersText);
       //   break;
-      // case 'Look for Trends Over Time':
+      // case 'Trends Over Time': // later
       //   analysisResult = await analyzeTrendsOverTime(questionsAndAnswersText);
       //   break;
-      // case 'Quantitative vs. Qualitative Analysis':
-      //   analysisResult = await quantQualAnalysis(questionsAndAnswersText);
-      //   break;
-      // case 'Sentiment Analysis':
-      //   analysisResult = await performSentimentAnalysis(questionsAndAnswersText);
-      //   break;
-      // case 'Compare Feedback with Your Goals':
-      //   analysisResult = await compareFeedbackWithGoals(questionsAndAnswersText);
-      //   break;
-      // case 'Competitor Comparison':
+      // case 'Competitor Comparison': // later
       //   analysisResult = await compareWithCompetitors(questionsAndAnswersText);
       //   break;
-      // case 'Prioritize Based on Impact':
-      //   analysisResult = await prioritizeByImpact(questionsAndAnswersText);
+      case 'Goal Alignment':
+        analysisResult = await alignWithGoals(questionsAndAnswersText);
+        break;
+      // case 'Actionability': // later
+      //   analysisResult = await assessActionability(questionsAndAnswersText);
       //   break;
       default:
         throw new Error('Invalid analysis title.');

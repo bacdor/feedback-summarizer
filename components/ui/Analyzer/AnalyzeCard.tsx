@@ -39,15 +39,15 @@ export default function AnalyzeCard({
   };
 
   const analysisItems = [
-    { title: 'Identify Key Themes' },
-    { title: 'Categorize Feedback by Type' },
-    { title: 'Assess the Feedback Source' },
-    { title: 'Look for Trends Over Time' },
-    { title: 'Quantitative vs. Qualitative Analysis' },
-    { title: 'Sentiment Analysis' },
-    { title: 'Compare Feedback with Your Goals' },
+    { title: 'Positive Themes' },
+    { title: 'Negative Themes' },
+    { title: 'Type Categorization' },
+    { title: 'Tone Categorization' },
+    { title: 'Quantitative Analysis' },
+    { title: 'Trends Over Time' },
     { title: 'Competitor Comparison' },
-    { title: 'Prioritize Based on Impact' }
+    { title: 'Goal Alignment' },
+    { title: 'Actionability' }
   ];
 
   return (
