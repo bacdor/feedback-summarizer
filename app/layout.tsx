@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import Footer from '@/components/ui/Footer';
-import Navbar from '@/components/ui/Navbar';
+import Footer from '@/components/ui/Footer/Footer';
+import Navbar from '@/components/ui/Navbar/Navbar';
 import { Toaster } from '@/components/ui/Toasts/toaster';
 import { PropsWithChildren, Suspense } from 'react';
 import { getURL } from '@/utils/helpers';
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="bg-black">
+      <body>
         <Navbar />
         <main
           id="skip"

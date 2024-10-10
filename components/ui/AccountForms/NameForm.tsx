@@ -1,6 +1,6 @@
 'use client';
 
-import Card from '@/components/ui/Card';
+import Card from '@/components/ui/Card/Card';
 import { updateName } from '@/utils/auth-helpers/server';
 import { handleRequest } from '@/utils/auth-helpers/client';
 import { useRouter } from 'next/navigation';
