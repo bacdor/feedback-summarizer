@@ -1,7 +1,6 @@
 'use client';
 
 import GoogleIcon from '@/components/icons/GoogleIcon';
-import Button from '@/components/ui/Button';
 import { signInWithOAuth } from '@/utils/auth-helpers/client';
 import { type Provider } from '@supabase/supabase-js';
 import { useState } from 'react';
@@ -38,7 +37,7 @@ export default function OauthSignIn() {
           onSubmit={(e) => handleSubmit(e)}
         >
           <input type="hidden" name="provider" value={provider.name} />
-          <Button
+          {/* <Button
             variant="slim"
             type="submit"
             className="w-full"
@@ -46,7 +45,7 @@ export default function OauthSignIn() {
           >
             <span className="mr-2">{provider.icon}</span>
             <span>Log in with {provider.displayName}</span>
-          </Button>
+          </Button> */}
         </form>
       ))}
     </div>

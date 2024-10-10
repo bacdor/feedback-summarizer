@@ -1,5 +1,4 @@
 // components/ui/Hero.tsx
-import Button from '@/components/ui/Button';
 import Link from 'next/link';
 
 export default function Hero() {
@@ -26,9 +25,9 @@ export default function Hero() {
           <FeatureItem text="Unlimited interaction" />
         </div>
         <Link href="/#pricing">
-          <Button variant="slim" className="text-lg mb-8">
+          {/* <Button variant="slim" className="text-lg mb-8">
             Get Started
-          </Button>
+          </Button> */}
         </Link>
       </div>
     </section>

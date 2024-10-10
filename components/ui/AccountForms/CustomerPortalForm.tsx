@@ -1,6 +1,5 @@
 'use client';
 
-import Button from '@/components/ui/Button';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { createStripePortal } from '@/utils/stripe/server';
@@ -63,13 +62,13 @@ export default function CustomerPortalForm({ subscription, payment }: Props) {
           ) : (
             <p className="pb-4 sm:pb-0">Manage your subscription.</p>
           )}
-          <Button
+          {/* <Button
             variant="slim"
             onClick={handleStripePortalRequest}
             loading={isSubmitting}
           >
             Open customer portal
-          </Button>
+          </Button> */}
         </div>
       }
     >

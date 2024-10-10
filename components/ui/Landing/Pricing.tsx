@@ -1,6 +1,5 @@
 'use client';
 
-import Button from '@/components/ui/Button';
 import type { Tables } from '@/types_db';
 import { getStripe } from '@/utils/stripe/client';
 import { checkoutWithStripe } from '@/utils/stripe/server';
@@ -172,7 +171,7 @@ export default function Pricing({ user, products, subscription }: Props) {
                           {/* lifetime here */}
                         </span>
                       </p>
-                      <Button
+                      {/* <Button
                         variant="slim"
                         type="button"
                         loading={priceIdLoading === price.id}
@@ -180,7 +179,7 @@ export default function Pricing({ user, products, subscription }: Props) {
                         className="block w-full py-2 mt-8 text-sm font-semibold text-center text-white rounded-md hover:bg-indigo-900"
                       >
                         {subscription ? 'Manage' : 'Subscribe'}
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 );

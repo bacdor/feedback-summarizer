@@ -1,6 +1,5 @@
 'use client';
 
-import Button from '@/components/ui/Button';
 import Link from 'next/link';
 
 export default function CallToAction() {
@@ -10,9 +9,9 @@ export default function CallToAction() {
         <h2 className="text-4xl font-extrabold mb-4">Ready to Get Started?</h2>
         <p className="text-lg mb-8">Join others and save your time.</p>
         <Link href="/#pricing">
-          <Button variant="slim" className="text-lg">
+          {/* <Button variant="slim" className="text-lg">
             Sign Up Now
-          </Button>
+          </Button> */}
         </Link>
       </div>
     </section>
