@@ -9,7 +9,7 @@ export default function AnalyzeCard({
 }: {
   questionsAndAnswersText: string;
 }) {
-  const [keyThemes, setKeyThemes] = useState<string | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Modified handleAnalyzeClick to accept a title parameter
@@ -29,10 +29,10 @@ export default function AnalyzeCard({
       }
 
       const data = await response.json();
-      setKeyThemes(data.keyThemes);
+      setAnalysisResult(data.analysisResult);
     } catch (error) {
       console.error(error);
-      setKeyThemes('Error occurred while analyzing themes.');
+      setAnalysisResult('Error occurred while analyzing themes.');
     } finally {
       setLoading(false);
     }
@@ -67,7 +67,7 @@ export default function AnalyzeCard({
         <p>Analyzing...</p>
       ) : (
         <textarea
-          value={keyThemes || ''}
+          value={analysisResult || ''}
           readOnly
           className="w-full p-2 border rounded-md"
         />

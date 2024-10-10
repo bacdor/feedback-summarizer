@@ -34,6 +34,25 @@ export async function POST(req: NextRequest) {
   }
 }
 
+// // pages/api/analyze.js
+// import { analyzeKeyThemes } from '@/utils/openai/chat';
+// import { NextRequest, NextResponse } from 'next/server';
+
+// export async function POST(req: NextRequest) {
+//   const { questionsAndAnswersText, title } = await req.json();
+
+//   try {
+//     const analysisResult = await analyzeKeyThemes(questionsAndAnswersText);
+//     return NextResponse.json({ analysisResult }, { status: 200 });
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json(
+//       { error: 'Failed to analyze themes.' },
+//       { status: 500 }
+//     );
+//   }
+// }
+
 export async function GET() {
   return NextResponse.json({ error: 'Method Not Allowed' }, { status: 405 });
 }

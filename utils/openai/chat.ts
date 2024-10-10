@@ -16,7 +16,7 @@ export async function analyzeKeyThemes(text: string) {
         content: text
       }
     ],
-    max_tokens: 800
+    max_tokens: 200
   });
 
   return response.choices[0].message.content;
