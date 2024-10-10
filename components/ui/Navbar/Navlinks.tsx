@@ -23,20 +23,14 @@ export default function Navlinks({ user }: NavlinksProps) {
 
   return (
     <div className="max-w-6xl px-6 mx-auto">
-      <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
-        <div className="flex items-center flex-1">
+      <div className="relative flex flex-row justify-between py-1 align-center md:py-2">
+        <div className="flex items-center">
           <Link href="/" className={s.logo} aria-label="Logo">
-            <Image
-              src="/logo-pdf500.svg"
-              alt="DocuQuote Logo"
-              width={32}
-              height={32}
-            />
+            <Image src="/logo-pdf500.svg" alt="Logo" width={48} height={48} />
           </Link>
-          <Link href="/" className={s.link}>
-            <span className="ml-2 text-lg font-bold">DocuQuote</span>
-          </Link>
-          <nav className="ml-6 space-x-2 lg:block">
+        </div>
+        <div className="flex items-center flex-2">
+          <nav className="space-x-2 lg:block">
             {user && (
               <>
                 <Link href="/surveys" className={s.link}>

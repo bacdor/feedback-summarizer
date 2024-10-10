@@ -1,18 +1,14 @@
 .root {
-  @apply sticky top-0 bg-black z-40 transition-all duration-150 h-16 md:h-20;
-  background-color: rgba(0, 0, 0, 0.6);
+  @apply sticky top-0 z-40 transition-all duration-150 h-14 md:h-16;
+  background-color: rgb(245 246 244);
 }
 
 .link {
-  @apply inline-flex items-center leading-6 font-medium transition ease-in-out duration-75 cursor-pointer text-zinc-200 rounded-md p-1;
+  @apply inline-flex items-center leading-6 font-medium transition ease-in-out duration-75 cursor-pointer text-[#111] rounded-md p-1;
 }
 
 .link:hover {
-  @apply text-zinc-100;
-}
-
-.link:focus {
-  @apply outline-none text-zinc-100 ring-2 ring-indigo-500 ring-opacity-50;
+  @apply text-[#777];
 }
 
 .logo {

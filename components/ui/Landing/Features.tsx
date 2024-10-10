@@ -29,13 +29,13 @@ export default function Features() {
           </ul>
 
           {/* Carousel Section */}
-          <div className="carousel carousel-center rounded-box mx-auto max-w-full sm:max-w-6xl">
+          {/* <div className="carousel carousel-center rounded-box mx-auto max-w-full sm:max-w-6xl">
             <FeatureItem src="/car1.svg" />
             <FeatureItem src="/car2.svg" />
             <FeatureItem src="/car3.svg" />
             <FeatureItem src="/car4.svg" />
             <FeatureItem src="/car5.svg" />
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
