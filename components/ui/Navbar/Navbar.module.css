@@ -4,11 +4,11 @@
 }
 
 .link {
-  @apply inline-flex items-center leading-6 font-medium transition ease-in-out duration-75 cursor-pointer text-[#111] rounded-md p-1;
+  @apply inline-flex items-center leading-6 font-medium transition ease-in-out duration-75 cursor-pointer text-[#222] rounded-md p-1;
 }
 
 .link:hover {
-  @apply text-[#777];
+  @apply text-[#72a1fe];
 }
 
 .logo {

@@ -8,6 +8,30 @@
   box-sizing: inherit;
 }
 
+:root {
+  --color-primary: #72a1fe;
+  --color-secondary: #638c91;
+  --color-accent: #b63b58;
+  --color-dark: #231a2a;
+  --color-background: #f5f6f4;
+  --color-text: #222;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-100: #f7fafc;
+  --color-gray-200: #edf2f7;
+  --color-gray-300: #e2e8f0;
+  --color-gray-400: #cbd5e0;
+  --color-gray-500: #a0aec0;
+  --color-gray-600: #718096;
+  --color-gray-700: #4a5568;
+  --color-gray-800: #2d3748;
+  --color-gray-900: #1a202c;
+}
+
+/* You can use these colors in your CSS like this: */
+/* color: var(--color-primary); */
+/* background-color: var(--color-background); */
+
 html {
   height: 100%;
   box-sizing: border-box;
@@ -24,7 +48,7 @@ body {
     sans-serif;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  @apply text-[#111] bg-[#f5f6f4] antialiased;
+  @apply text-[#222] bg-[#f5f6f4] antialiased;
 }
 
 body {

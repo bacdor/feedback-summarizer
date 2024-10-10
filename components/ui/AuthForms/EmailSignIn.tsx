@@ -5,6 +5,7 @@ import { signInWithEmail } from '@/utils/auth-helpers/server';
 import { handleRequest } from '@/utils/auth-helpers/client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Button from '../Button/Button';
 
 // Define prop type with allowPassword boolean
 interface EmailSignInProps {
@@ -48,7 +49,7 @@ export default function EmailSignIn({
               className="w-full p-3 rounded-md bg-zinc-800"
             />
           </div>
-          {/* <Button
+          <Button
             variant="slim"
             type="submit"
             className="mt-1"
@@ -56,7 +57,7 @@ export default function EmailSignIn({
             disabled={disableButton}
           >
             Sign in
-          </Button> */}
+          </Button>
         </div>
       </form>
       {allowPassword && (
