@@ -58,31 +58,64 @@ export default function DashboardSurveyList({
   };
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold">Surveys</h2>
-      <ul className="space-y-4">
-        {surveys &&
-          surveys.map(
-            (survey: { id: string; name: string; description: string }) => (
-              <li key={survey.id} className="border p-4">
-                <div className="flex justify-between items-center">
-                  <div>
+    <div className="min-h-[calc(100dvh-8rem)] p-2 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4">Surveys</h2>
+      <table className="min-w-full table-auto border-collapse">
+        <thead>
+          <tr className="border-b bg-gray-100">
+            <th className="px-6 py-4 text-left font-medium">Survey</th>
+            <th className="px-6 py-4 text-left font-medium">Actions</th>
+            <th className="px-6 py-4 text-left font-medium">Edit</th>
+            <th className="px-6 py-4 text-left font-medium">Analyze</th>
+          </tr>
+        </thead>
+        <tbody>
+          {surveys &&
+            surveys.map(
+              (survey: { id: string; name: string; description: string }) => (
+                <tr key={survey.id} className="border-b hover:bg-gray-50">
+                  {/* Combined Name and Description */}
+                  <td className="px-6 py-4">
                     <Link href={`/surveys/${survey.id}`} passHref>
-                      <h3 className="text-xl">{survey.name}</h3>
-                      <p>{survey.description}</p>
+                      <h3 className="text-xl font-semibold text-indigo-600">
+                        {survey.name}
+                      </h3>
+                      <p className="text-gray-600">{survey.description}</p>
                     </Link>
-                  </div>
-                  <button
-                    onClick={() => handleDeleteSurvey(survey.id)}
-                    className="text-red-500 hover:underline"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            )
-          )}
-      </ul>
+                  </td>
+
+                  {/* Actions Column */}
+                  <td className="px-6 py-4">
+                    <button
+                      onClick={() => handleDeleteSurvey(survey.id)}
+                      className="text-red-500 hover:underline"
+                    >
+                      Delete
+                    </button>
+                  </td>
+
+                  {/* Edit Column */}
+                  <td className="px-6 py-4">
+                    <Link href={`/surveys/edit/${survey.id}`} passHref>
+                      <button className="text-blue-500 hover:underline">
+                        Edit
+                      </button>
+                    </Link>
+                  </td>
+
+                  {/* Analyze Column */}
+                  <td className="px-6 py-4">
+                    <Link href={`/surveys/analyze/${survey.id}`} passHref>
+                      <button className="text-green-500 hover:underline">
+                        Analyze
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              )
+            )}
+        </tbody>
+      </table>
     </div>
   );
 }
