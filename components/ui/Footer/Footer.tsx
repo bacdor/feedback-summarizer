@@ -8,9 +8,26 @@ import { usePathname } from 'next/navigation';
 export default function Footer() {
   const pathname = usePathname();
 
-  // Return an empty div if the current URL contains '/account'
-  if (pathname.includes('/surveys/r')) {
-    return <div />;
+  // Return an empty div if the current URL contains '/forms/r'
+  if (pathname.includes('/forms/r')) {
+    return (
+      <div className="flex justify-center items-center py-2">
+        <span className="text-xs text-[#999]">Powered by</span>
+        <Image
+          src="/logo-pdf500.svg"
+          alt="FeedScout Logo"
+          width={18}
+          height={18}
+          className="ml-2"
+        />
+        <Link
+          href="https://feedscout.co"
+          className="text-xs font-semibold text-[#777] ml-1 hover:text-[#555]"
+        >
+          FeedScout
+        </Link>
+      </div>
+    );
   }
 
   return (
@@ -22,7 +39,7 @@ export default function Footer() {
         >
           <Image
             src="/logo-pdf500.svg"
-            alt="Citing App Logo"
+            alt="FeedScout Logo"
             width={64}
             height={64}
           />

@@ -127,7 +127,7 @@ export default function SurveyQuestionsManager({
         <h2 className="text-xl font-semibold mb-4">Generate Survey Link</h2>
         <button
           onClick={() => {
-            const surveyLink = `${window.location.origin}/surveys/r/${surveyId}`;
+            const surveyLink = `${window.location.origin}/forms/r/${surveyId}`;
             navigator.clipboard.writeText(surveyLink);
             alert('Survey link copied to clipboard!');
           }}

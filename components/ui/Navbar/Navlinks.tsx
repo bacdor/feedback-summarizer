@@ -16,8 +16,8 @@ export default function Navlinks({ user }: NavlinksProps) {
   const router = getRedirectMethod() === 'client' ? useRouter() : null;
   const pathname = usePathname();
 
-  // Return an empty div if the current URL contains '/account'
-  if (pathname.includes('/surveys/r')) {
+  // Return an empty div if the current URL contains '/forms/r'
+  if (pathname.includes('/forms/r')) {
     return <div />;
   }
 
