@@ -42,13 +42,13 @@ export default function ResponseCard({
   };
 
   return (
-    <div className="mb-4">
+    <div className="w-full max-w-3xl m-auto my-1 border rounded-md bg-white">
       {/* Response input based on question type */}
       {surveyQuestion.question_type === 'text' && (
-        <div>
+        <div className="px-7 py-6">
           <label
             htmlFor={surveyQuestion.id}
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-[#222] pb-4"
           >
             {surveyQuestion.question_text}
           </label>
@@ -65,10 +65,10 @@ export default function ResponseCard({
       )}
 
       {surveyQuestion.question_type === 'multiple_choice' && (
-        <div>
+        <div className="px-7 py-6">
           <label
             htmlFor={surveyQuestion.id}
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-[#222] pb-4"
           >
             {surveyQuestion.question_text}
           </label>
@@ -76,14 +76,16 @@ export default function ResponseCard({
             id={surveyQuestion.id}
             value={answer}
             onChange={handleSelectChange}
-            className="w-full px-3 py-2 border rounded-md"
+            className={`w-full px-3 py-2 border rounded-md ${
+              answer === '' ? 'text-gray-400' : 'text-[#222]'
+            }`}
             required
           >
-            <option value="" disabled>
+            <option value="" disabled className="text-gray-400">
               Select an option
             </option>
             {options.map((option, index) => (
-              <option key={index} value={option}>
+              <option key={index} value={option} className="text-[#222]">
                 {option}
               </option>
             ))}
@@ -92,10 +94,10 @@ export default function ResponseCard({
       )}
 
       {surveyQuestion.question_type === 'rating' && (
-        <div>
+        <div className="px-7 py-6">
           <label
             htmlFor={surveyQuestion.id}
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-[#222] pb-4"
           >
             {surveyQuestion.question_text}
           </label>

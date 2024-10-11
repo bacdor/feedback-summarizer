@@ -3,6 +3,7 @@
 import { UUID } from 'crypto';
 import ResponseCard from './ResponseCard';
 import { useState } from 'react';
+import Button from '../Button/Button';
 
 interface Props {
   surveyId: UUID;
@@ -90,22 +91,25 @@ export default function SurveyResponsesManager({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="mb-4">
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-          placeholder="Enter your email"
-          required
-        />
+      <div className="w-full max-w-3xl m-auto my-1 border rounded-md bg-white">
+        <div className="px-7 py-6">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-[#222] pb-4"
+          >
+            Email*
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            // className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            className="w-full px-3 py-2 border rounded-md"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
       </div>
 
       {surveyQuestions &&
@@ -117,14 +121,17 @@ export default function SurveyResponsesManager({
             />
           </div>
         ))}
-
-      <button
-        type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-        disabled={isLoading}
-      >
-        {isLoading ? 'Submitting...' : 'Submit Survey'}
-      </button>
+      <div className="w-full max-w-3xl mx-auto">
+        <Button
+          variant="slim"
+          type="submit"
+          className="mt-1 w-full"
+          loading={isLoading}
+          disabled={isLoading}
+        >
+          Submit
+        </Button>
+      </div>
     </form>
   );
 }
