@@ -42,7 +42,7 @@ export default function DashboardSurveyCreator() {
       console.log('Survey created:', data);
 
       // Redirect to the survey editing page
-      router.push(`/surveys`);
+      router.push(`/forms`);
     } catch (error) {
       console.error(error);
     } finally {
