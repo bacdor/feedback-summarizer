@@ -10,9 +10,10 @@ interface SurveyQuestion {
 
 interface Props {
   surveyQuestion: SurveyQuestion | null;
+  moveHandle: any; // Add a prop to receive drag-and-drop listeners
 }
 
-export default function QuestionCard({ surveyQuestion }: Props) {
+export default function QuestionCard({ surveyQuestion, moveHandle }: Props) {
   const [questionText, setQuestionText] = useState(
     surveyQuestion?.question_text || ''
   );
@@ -183,6 +184,116 @@ export default function QuestionCard({ surveyQuestion }: Props) {
       >
         Delete Question
       </button>
+      {/* Move Button */}
+      <button
+        type="button"
+        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        {...moveHandle} // Apply drag-and-drop listeners to the button
+      >
+        Move
+      </button>
     </form>
   );
 }
+
+// import { useState } from 'react';
+
+// interface SurveyQuestion {
+//   id?: string;
+//   question_text?: string;
+//   question_type?: string;
+//   options?: string;
+// }
+
+// interface Props {
+//   surveyQuestion: SurveyQuestion | null;
+//   moveHandle: any; // Add a prop to receive drag-and-drop listeners
+// }
+
+// export default function QuestionCard({ surveyQuestion, moveHandle }: Props) {
+//   const [questionText, setQuestionText] = useState(
+//     surveyQuestion?.question_text || ''
+//   );
+//   const [questionType, setQuestionType] = useState(
+//     surveyQuestion?.question_type || 'text'
+//   );
+//   const [optionInput, setOptionInput] = useState(''); // Input for a single option
+//   const [options, setOptions] = useState<string[]>(
+//     surveyQuestion?.options ? JSON.parse(surveyQuestion.options) : []
+//   );
+
+//   const handleAddOption = () => {
+//     if (optionInput.trim()) {
+//       setOptions([...options, optionInput.trim()]); // Add option to list
+//       setOptionInput(''); // Clear input field
+//     }
+//   };
+
+//   return (
+//     <div className="border p-4 rounded-md mb-4">
+//       <form className="space-y-4">
+//         <div>
+//           <label htmlFor="questionText" className="block mb-2">
+//             Question Text:
+//           </label>
+//           <input
+//             type="text"
+//             id="questionText"
+//             value={questionText}
+//             onChange={(e) => setQuestionText(e.target.value)}
+//             className="w-full px-3 py-2 border rounded-md"
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="questionType" className="block mb-2">
+//             Question Type:
+//           </label>
+//           <select
+//             id="questionType"
+//             value={questionType}
+//             onChange={(e) => setQuestionType(e.target.value)}
+//             className="w-full px-3 py-2 border rounded-md"
+//           >
+//             <option value="text">Text</option>
+//             <option value="multiple_choice">Multiple Choice</option>
+//             <option value="rating">Rating</option>
+//           </select>
+//         </div>
+
+//         {questionType === 'multiple_choice' && (
+//           <div>
+//             <label htmlFor="optionInput" className="block mb-2">
+//               Add an Option:
+//             </label>
+//             <input
+//               type="text"
+//               id="optionInput"
+//               value={optionInput}
+//               onChange={(e) => setOptionInput(e.target.value)}
+//               className="w-full px-3 py-2 border rounded-md"
+//               placeholder="Enter option"
+//             />
+//             <button
+//               type="button"
+//               onClick={handleAddOption}
+//               className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+//             >
+//               Add
+//             </button>
+//           </div>
+//         )}
+
+//         {/* Move Button */}
+//         <button
+//           type="button"
+//           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+//           {...moveHandle} // Apply drag-and-drop listeners to the button
+//         >
+//           Move
+//         </button>
+//       </form>
+//     </div>
+//   );
+// }
