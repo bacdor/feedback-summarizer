@@ -81,7 +81,7 @@ export default function DashboardSurveyList({
                 >
                   {/* Combined Name and Description */}
                   <td className="px-6 py-4">
-                    <Link href={`/surveys/${survey.id}`} passHref>
+                    <Link href={`/forms/view/${survey.id}`} passHref>
                       <h3 className="text-xl font-semibold text-[#111]">
                         {survey.name}
                       </h3>
@@ -91,7 +91,7 @@ export default function DashboardSurveyList({
 
                   {/* Analyze Column - Centered */}
                   <td className="px-6 py-4 text-center">
-                    <Link href={`/surveys/analyze/${survey.id}`} passHref>
+                    <Link href={`/forms/scout/${survey.id}`} passHref>
                       <button>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +112,7 @@ export default function DashboardSurveyList({
 
                   {/* Edit Column - Centered */}
                   <td className="px-6 py-4 text-center">
-                    <Link href={`/surveys/edit/${survey.id}`} passHref>
+                    <Link href={`/forms/edit/${survey.id}`} passHref>
                       <button>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
