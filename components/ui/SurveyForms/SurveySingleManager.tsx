@@ -17,27 +17,39 @@ export default function SurveySingleManager({
   const [surveyDescription, setSurveyDescription] =
     useState(initialDescription);
 
+  const [stagedSurveyTitle, setStagedSurveyTitle] = useState(initialTitle);
+  const [stagedSurveyDescription, setStagedSurveyDescription] =
+    useState(initialDescription);
+
   const handleBlur = async () => {
-    try {
-      const response = await fetch('/api/surveys', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          id: initialId,
-          surveyTitle,
-          surveyDescription
-        })
-      });
+    if (
+      surveyTitle !== stagedSurveyTitle ||
+      surveyDescription !== stagedSurveyDescription
+    ) {
+      try {
+        const response = await fetch('/api/surveys', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: initialId,
+            surveyTitle,
+            surveyDescription
+          })
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to update survey');
+        if (!response.ok) {
+          throw new Error('Failed to update survey');
+        }
+
+        console.log('Survey updated successfully');
+        // Update staged values after successful update
+        setStagedSurveyTitle(surveyTitle);
+        setStagedSurveyDescription(surveyDescription);
+      } catch (error) {
+        console.error('Error updating survey:', error);
       }
-
-      console.log('Survey updated successfully');
-    } catch (error) {
-      console.error('Error updating survey:', error);
     }
   };
 
@@ -45,7 +57,7 @@ export default function SurveySingleManager({
     <div className="w-full max-w-3xl m-auto my-8">
       <div className="px-5 py-4">
         <input
-          className="text-3xl font-extrabold text-blue-600 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 transition-all duration-300 ease-in-out rounded-lg px-4 py-2 shadow-sm hover:shadow-md w-full h-14"
+          className="text-3xl font-extrabold text-[ver-(--color-dark)] border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 transition-all duration-300 ease-in-out rounded-lg px-4 py-2 shadow-sm hover:shadow-md w-full h-14"
           value={surveyTitle}
           onChange={(e) => setSurveyTitle(e.target.value)}
           onBlur={handleBlur}
