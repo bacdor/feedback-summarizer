@@ -31,7 +31,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="footer px-10 pt-12 pb-24 bg-zinc-900">
+    <footer className="footer px-10 pt-12 pb-24 bg-[var-(--color-secondary)]">
       <aside className="flex flex-col items-start">
         <Link
           href="/#main"
@@ -43,7 +43,7 @@ export default function Footer() {
             width={64}
             height={64}
           />
-          <h3 className="text-3xl font-bold text-zinc-200">DocuQuote.io</h3>
+          <h3 className="text-3xl font-bold text-[#222]">FeedScout</h3>
         </Link>
 
         <p>
@@ -59,7 +59,7 @@ export default function Footer() {
           <li className="py-3 md:py-0 md:pb-4">
             <Link
               href="/#main"
-              className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+              className="text-[#222] transition duration-150 ease-in-out hover:text-[var(--color-accent)]"
             >
               Main
             </Link>
@@ -67,7 +67,7 @@ export default function Footer() {
           <li className="py-3 md:py-0 md:pb-4">
             <Link
               href="/#features"
-              className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+              className="text-[#222] transition duration-150 ease-in-out hover:text-[var(--color-accent)]"
             >
               Features
             </Link>
@@ -75,7 +75,7 @@ export default function Footer() {
           <li className="py-3 md:py-0 md:pb-4">
             <Link
               href="/#pricing"
-              className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+              className="text-[#222] transition duration-150 ease-in-out hover:text-[var(--color-accent)]"
             >
               Pricing
             </Link>
@@ -83,7 +83,7 @@ export default function Footer() {
           <li className="py-3 md:py-0 md:pb-4">
             <Link
               href="/#faq"
-              className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+              className="text-[#222] transition duration-150 ease-in-out hover:text-[var(--color-accent)]"
             >
               FAQ
             </Link>
@@ -93,14 +93,14 @@ export default function Footer() {
       <nav>
         <ul className="flex flex-col flex-initial md:flex-1">
           <li className="py-3 md:py-0 md:pb-4">
-            <p className="font-bold text-white transition duration-150 ease-in-out hover:text-zinc-200">
+            <p className="font-bold text-[#222] transition duration-150 ease-in-out hover:text-[var(--color-accent)]">
               LEGAL
             </p>
           </li>
           <li className="py-3 md:py-0 md:pb-4">
             <Link
               href="/privacy-policy"
-              className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+              className="text-[#222] transition duration-150 ease-in-out hover:text-[var(--color-accent)]"
             >
               Privacy Policy
             </Link>
@@ -108,7 +108,7 @@ export default function Footer() {
           <li className="py-3 md:py-0 md:pb-4">
             <Link
               href="/tos"
-              className="text-white transition duration-150 ease-in-out hover:text-zinc-200"
+              className="text-[#222] transition duration-150 ease-in-out hover:text-[var(--color-accent)]"
             >
               Terms of Use
             </Link>
@@ -118,7 +118,7 @@ export default function Footer() {
       <nav>
         <ul className="flex flex-col flex-initial md:flex-1">
           <li className="py-3 md:py-0 md:pb-4">
-            <p className="font-bold text-white transition duration-150 ease-in-out hover:text-zinc-200">
+            <p className="font-bold text-[#222] transition duration-150 ease-in-out hover:text-[var(--color-accent)]">
               SOCIAL
             </p>
           </li>
