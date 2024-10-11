@@ -75,7 +75,10 @@ export default function DashboardSurveyList({
           {surveys &&
             surveys.map(
               (survey: { id: string; name: string; description: string }) => (
-                <tr key={survey.id} className="border-b hover:bg-gray-50">
+                <tr
+                  key={survey.id}
+                  className="border-b hover:bg-[var(--color-background)]"
+                >
                   {/* Combined Name and Description */}
                   <td className="px-6 py-4">
                     <Link href={`/surveys/${survey.id}`} passHref>
