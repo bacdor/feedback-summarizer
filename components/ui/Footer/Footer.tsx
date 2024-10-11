@@ -9,7 +9,7 @@ export default function Footer() {
   const pathname = usePathname();
 
   // Return an empty div if the current URL contains '/forms/r'
-  if (pathname.includes('/forms/r')) {
+  if (pathname.includes('/forms/r') || pathname.includes('/forms/view')) {
     return (
       <div className="flex justify-center items-center py-2">
         <span className="text-xs text-[#999]">Powered by</span>

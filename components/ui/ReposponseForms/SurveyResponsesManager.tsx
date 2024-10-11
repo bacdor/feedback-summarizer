@@ -2,7 +2,7 @@
 
 import { UUID } from 'crypto';
 import ResponseCard from './ResponseCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 
 interface Props {
@@ -17,7 +17,16 @@ export default function SurveyResponsesManager({
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false); // Track submission state
+  const [isViewMode, setIsViewMode] = useState(false);
   const [responses, setResponses] = useState<any[]>([]);
+
+  // Function to determine whether in view mode
+  useEffect(() => {
+    const pathname = window.location.pathname;
+    if (pathname.includes('/forms/view')) {
+      setIsViewMode(true);
+    }
+  }, []);
 
   // Function to handle response update from ResponseCard
   const handleResponseChange = (
@@ -48,6 +57,10 @@ export default function SurveyResponsesManager({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isViewMode) {
+      alert('This form is read-only and cannot be submitted.');
+      return;
+    }
     setIsLoading(true);
 
     try {
@@ -127,7 +140,7 @@ export default function SurveyResponsesManager({
           type="submit"
           className="mt-1 w-full"
           loading={isLoading}
-          disabled={isLoading}
+          disabled={isLoading || isViewMode}
         >
           Submit
         </Button>

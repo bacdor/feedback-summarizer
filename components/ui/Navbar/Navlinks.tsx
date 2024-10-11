@@ -17,7 +17,7 @@ export default function Navlinks({ user }: NavlinksProps) {
   const pathname = usePathname();
 
   // Return an empty div if the current URL contains '/forms/r'
-  if (pathname.includes('/forms/r')) {
+  if (pathname.includes('/forms/r') || pathname.includes('/forms/view')) {
     return <div />;
   }
 
