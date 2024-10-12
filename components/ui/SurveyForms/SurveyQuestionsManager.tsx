@@ -79,7 +79,7 @@ export default function SurveyQuestionsManager({
       body: JSON.stringify({
         surveyId,
         questionText: '',
-        questionType: 'text',
+        questionType: 'Text',
         position: questionsState.length
       })
     });
