@@ -176,17 +176,17 @@ export default function QuestionCard({
                 Add
               </button>
             </div>
-            <ul className="mt-4 space-y-2">
+            <ul className="mt-4 flex flex-wrap gap-2">
               {options.map((option, index) => (
                 <li
                   key={index}
-                  className="flex justify-between items-center p-2 border rounded-lg shadow-sm bg-gray-50"
+                  className="flex items-center p-2 border rounded-lg shadow-sm bg-gray-50"
                 >
                   <span>{option}</span>
                   <button
                     type="button"
                     onClick={() => handleRemoveOption(index)}
-                    className="px-2 py-1 text-[#111] rounded-lg hover:bg-[var(--color-accent)]  focus:outline-none"
+                    className="ml-2 px-2 py-1 text-[#111] rounded-lg hover:bg-[var(--color-accent)] focus:outline-none"
                   >
                     X
                   </button>
