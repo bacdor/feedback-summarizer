@@ -6,19 +6,17 @@ import { useRouter } from 'next/navigation';
 import Button from '../Button/Button';
 
 export default function DashboardSurveyCreator() {
-  const [formData, setFormData] = useState({
-    surveyTitle: '',
-    surveyDescription: ''
-  });
-
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,18 +29,18 @@ export default function DashboardSurveyCreator() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ id: crypto.randomUUID(), title, description })
       });
 
       if (!response.ok) {
         throw new Error('Something went wrong');
       }
 
-      const data = await response.json();
-      console.log('Survey created:', data);
+      const { survey } = await response.json();
+      console.log('Survey created:', survey);
 
       // Redirect to the survey editing page
-      router.push(`/forms`);
+      router.push(`/forms/edit/${survey.id}`);
     } catch (error) {
       console.error(error);
     } finally {
@@ -61,8 +59,8 @@ export default function DashboardSurveyCreator() {
             type="text"
             id="surveyTitle"
             name="surveyTitle"
-            value={formData.surveyTitle}
-            onChange={handleChange}
+            value={title}
+            onChange={handleTitleChange}
             className="border p-2 w-full"
             required
           />
@@ -76,8 +74,8 @@ export default function DashboardSurveyCreator() {
             type="text"
             id="surveyDescription"
             name="surveyDescription"
-            value={formData.surveyDescription}
-            onChange={handleChange}
+            value={description}
+            onChange={handleDescriptionChange}
             className="border p-2 w-full"
             required
           />
