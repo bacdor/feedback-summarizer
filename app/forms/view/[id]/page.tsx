@@ -58,6 +58,17 @@ export default async function FormResponsePage({
           </span>
         </Link>
       </div>
+      <div className="absolute top-4 right-4 sm:top-8 sm:right-8">
+        <Link
+          href={`/forms/edit/${id}`}
+          className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center bg-[var(--color-primary)] text-white rounded-md hover:bg-[var(--color-secondary)] transition-colors relative group"
+        >
+          <span className="text-2xl sm:text-4xl font-bold">&#9998;</span>
+          <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Edit Survey
+          </span>
+        </Link>
+      </div>
       <div className="p-4">
         <SurveyDetailsDisplayPage
           surveyTitle={survey.name}
