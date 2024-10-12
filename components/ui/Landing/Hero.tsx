@@ -4,54 +4,40 @@ import Link from 'next/link';
 export default function Hero() {
   return (
     <section
-      className="bg-black text-zinc-200 pb-20 pt-20 min-h-screen"
+      className="bg-gradient-to-r from-[#FAF0E6] via-[#FCE4D6] to-[#e0ebff] to-[#f0f8ff] pt-20"
       id="main"
     >
-      <div className="container mx-auto text-center">
-        <h1
-          className={`text-4xl sm:text-7xl font-extrabold mb-20 transition-transform duration-400 transform hover:scale-105`}
-        >
-          Get your quotes faster 🚀
-        </h1>
-        <p
-          className={`text-lg sm:text-2xl lg:w-1/2 mx-auto mb-8 transition-transform duration-400 transform hover:scale-105`}
-        >
-          Upload a <b>PDF document</b>, ask a question, and get the <b>quote</b>{' '}
-          you need.
-        </p>
-        <div className="flex flex-col items-center space-y-4 mb-8 ">
-          <FeatureItem text="AI powered tool" />
-          <FeatureItem text="Lifetime access" />
-          <FeatureItem text="Unlimited interaction" />
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          <div className="md:w-1/2 mb-8 md:mb-0 md:-mt-32">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">
+              Welcome to Feedback Summarizer
+            </h1>
+            <p className="text-xl text-[#948C88] mb-16">
+              Simplify your feedback process with AI-powered summaries
+            </p>
+            <Link
+              href="/signin/email_signin"
+              className="relative inline-flex items-center justify-center px-6 py-2 overflow-hidden font-medium text-white bg-orange-500 rounded-full shadow-md group"
+            >
+              <span className="absolute inset-0 w-full h-full transition-transform duration-300 ease-out transform translate-x-full group-hover:translate-x-0 bg-white opacity-20"></span>
+              <span className="relative z-10">bla bla call to action</span>
+            </Link>
+            <p className="text-sm text-[#948C88] mt-2">
+              I'll never share your info with anyone
+            </p>
+          </div>
+          <div className="md:w-1/2">
+            <img
+              src="/bear.webp"
+              alt="Friendly Bear"
+              className="w-full h-auto"
+            />
+          </div>
         </div>
-        <Link href="/#pricing">
-          {/* <Button variant="slim" className="text-lg mb-8">
-            Get Started
-          </Button> */}
-        </Link>
       </div>
     </section>
   );
 }
 
-function FeatureItem({ text }: { text: string }) {
-  return (
-    <div className="flex items-center space-x-2 transition-transform duration-400 transform hover:scale-105">
-      <svg
-        className="w-6 h-6 text-green-400"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M5 13l4 4L19 7"
-        ></path>
-      </svg>
-      <p className="text-lg">{text}</p>
-    </div>
-  );
-}
+// className="bg-[#FAF0E6] pb-20 pt-20"

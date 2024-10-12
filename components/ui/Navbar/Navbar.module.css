@@ -1,6 +1,5 @@
 .root {
-  @apply sticky top-0 z-40 transition-all duration-100;
-  background-color: rgb(245 246 244);
+  @apply sticky top-0 z-40 transition-all duration-100 bg-[var(--color-background)];
 }
 
 .link {

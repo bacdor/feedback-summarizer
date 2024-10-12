@@ -23,10 +23,10 @@ export default function Navlinks({ user }: NavlinksProps) {
 
   return (
     <div className="max-w-6xl px-6 mx-auto">
-      <div className="relative flex flex-row justify-between py-1 align-center md:py-2">
+      <div className="relative flex flex-row justify-between align-center">
         <div className="flex items-center">
           <Link href="/" className={s.logo} aria-label="Logo">
-            <Image src="/logo-pdf500.svg" alt="Logo" width={48} height={48} />
+            <Image src="/logo-pdf500.svg" alt="Logo" width={40} height={40} />
           </Link>
         </div>
         <div className="flex items-center flex-2">

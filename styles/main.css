@@ -13,8 +13,8 @@
   --color-secondary: #638c91;
   --color-accent: #b63b58;
   --color-dark: #231a2a;
-  --color-background: #f5f6f4;
-  --color-text: #222;
+  --color-background: #fafafa;
+  --color-text-1: #121314;
   --color-white: #ffffff;
   --color-black: #000000;
   --color-gray-100: #f7fafc;
@@ -48,7 +48,7 @@ body {
     sans-serif;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  @apply text-[#222] bg-[#f5f6f4] antialiased;
+  @apply text-[var(--color-text-1)] bg-[var(--color-background)] antialiased;
 }
 
 body {
