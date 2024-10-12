@@ -158,7 +158,11 @@ export default function DashboardSurveyList({
                     </td>
 
                     {/* Response Count */}
-                    <td className="px-6 py-4 text-center">{responseCount}</td>
+                    <td className="px-6 py-4 text-center">
+                      <Link href={`/forms/stats/${survey.id}`} passHref>
+                        {responseCount}
+                      </Link>
+                    </td>
 
                     {/* last Submission */}
                     <td className="px-6 py-4 text-center">
