@@ -3,7 +3,8 @@ import { createClient } from '@/utils/supabase/server';
 
 export async function POST(req: Request) {
   const supabase = createClient();
-  const { surveyId, questionText, questionType, options } = await req.json();
+  const { surveyId, questionText, questionType, options, position } =
+    await req.json();
 
   try {
     const { data, error } = await supabase.from('survey_questions').insert([
@@ -11,7 +12,8 @@ export async function POST(req: Request) {
         survey_id: surveyId,
         question_text: questionText,
         question_type: questionType,
-        options
+        options,
+        position
       }
     ]);
 

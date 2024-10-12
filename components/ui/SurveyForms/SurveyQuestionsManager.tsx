@@ -39,13 +39,34 @@ export default function SurveyQuestionsManager({
     })
   );
 
-  const handleDragEnd = (event: any) => {
+  const handleDragEnd = async (event: any) => {
     const { active, over } = event;
 
     if (active.id !== over.id) {
       const oldIndex = questionsState.findIndex((q) => q.id === active.id);
       const newIndex = questionsState.findIndex((q) => q.id === over.id);
-      setQuestionsState((items) => arrayMove(items, oldIndex, newIndex));
+      const newQuestionsState = arrayMove(questionsState, oldIndex, newIndex);
+
+      setQuestionsState(newQuestionsState);
+
+      // Make a POST request to save the new order to the backend
+      const response = await fetch('/api/update-question-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          surveyId,
+          updatedQuestions: newQuestionsState.map((q, index) => ({
+            id: q.id,
+            position: index
+          }))
+        })
+      });
+
+      if (!response.ok) {
+        console.error('Failed to update question order');
+      }
     }
   };
 
@@ -58,7 +79,8 @@ export default function SurveyQuestionsManager({
       body: JSON.stringify({
         surveyId,
         questionText: '',
-        questionType: 'text'
+        questionType: 'text',
+        position: questionsState.length
       })
     });
 
