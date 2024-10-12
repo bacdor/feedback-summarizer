@@ -11,9 +11,14 @@ interface SurveyQuestion {
 interface Props {
   surveyQuestion: SurveyQuestion | null;
   moveHandle: any; // Add a prop to receive drag-and-drop listeners
+  onDelete: (id: string) => void;
 }
 
-export default function QuestionCard({ surveyQuestion, moveHandle }: Props) {
+export default function QuestionCard({
+  surveyQuestion,
+  moveHandle,
+  onDelete
+}: Props) {
   const [questionText, setQuestionText] = useState(
     surveyQuestion?.question_text || ''
   );
@@ -35,34 +40,27 @@ export default function QuestionCard({ surveyQuestion, moveHandle }: Props) {
 
   const handleBlur = async (optionsUpdated?: boolean) => {
     if (
-      questionText !== stagedQuestionText ||
-      questionType !== stagedQuestionType ||
-      optionsUpdated
+      questionId &&
+      (questionText !== stagedQuestionText ||
+        questionType !== stagedQuestionType ||
+        optionsUpdated)
     ) {
-      const response = await fetch(
-        questionId
-          ? `/api/survey-questions/${questionId}`
-          : '/api/survey-questions',
-        {
-          method: questionId ? 'PUT' : 'POST', // Use PUT for updates
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            questionText,
-            questionType,
-            options: options.length > 0 ? JSON.stringify(options) : null
-          })
-        }
-      );
+      const response = await fetch(`/api/survey-questions/${questionId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          questionText,
+          questionType,
+          options: options.length > 0 ? JSON.stringify(options) : null
+        })
+      });
 
       if (response.ok) {
-        console.log('Questions successfully updated.');
+        console.log('Question successfully updated.');
         setStagedQuestionText(questionText);
         setStagedQuestionType(questionType);
-        // setStagedOptions(options);
-        // Refresh the page to show the new question
-        router.refresh();
       } else {
         console.error('Failed to update question');
       }
@@ -80,7 +78,7 @@ export default function QuestionCard({ surveyQuestion, moveHandle }: Props) {
 
       if (response.ok) {
         console.log('Question successfully deleted');
-        router.refresh();
+        onDelete(questionId); // Call the onDelete callback to remove the question from the parent state
       } else {
         console.error('Failed to delete question');
       }

@@ -19,6 +19,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import QuestionCard from './QuestionCard';
 import Button from '../Button/Button';
+import { REACT_LOADABLE_MANIFEST } from 'next/dist/shared/lib/constants';
 
 interface Props {
   surveyId: UUID;
@@ -72,6 +73,10 @@ export default function SurveyQuestionsManager({
     }
   };
 
+  const handleDeleteQuestion = (id: string) => {
+    setQuestionsState((prev) => prev.filter((q) => q.id !== id)); // Remove the question from the local state
+  };
+
   const handleAddQuestion = async () => {
     setIsLoading(true);
     try {
@@ -81,6 +86,7 @@ export default function SurveyQuestionsManager({
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          id: crypto.randomUUID(),
           surveyId,
           questionText: '',
           questionType: 'text',
@@ -89,8 +95,9 @@ export default function SurveyQuestionsManager({
       });
 
       if (response.ok) {
-        const newQuestion = await response.json(); // Assuming the API returns the new question
-        setQuestionsState((prev) => [...prev, newQuestion]); // Add the new question to the state
+        const { question } = await response.json();
+        setQuestionsState((prev) => [...prev, question]); // Add the new question to the state
+        console.log(question); // Display the message
       } else {
         console.error('Failed to create question');
       }
@@ -113,7 +120,11 @@ export default function SurveyQuestionsManager({
           strategy={verticalListSortingStrategy}
         >
           {questionsState.map((question, index) => (
-            <SortableItem key={question.id || index} question={question} />
+            <SortableItem
+              key={question.id || index}
+              question={question}
+              onDelete={handleDeleteQuestion} // Pass the delete function down to SortableItem
+            />
           ))}
         </SortableContext>
       </DndContext>
@@ -149,16 +160,12 @@ export default function SurveyQuestionsManager({
 
 interface SortableItemProps {
   question: any;
+  onDelete: (id: string) => void;
 }
 
-function SortableItem({ question }: SortableItemProps) {
-  const {
-    attributes,
-    listeners, // This is used to apply drag behavior to the button
-    setNodeRef,
-    transform,
-    transition
-  } = useSortable({ id: question.id });
+function SortableItem({ question, onDelete }: SortableItemProps) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: question.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -169,7 +176,8 @@ function SortableItem({ question }: SortableItemProps) {
     <div ref={setNodeRef} style={style} {...attributes}>
       <QuestionCard
         surveyQuestion={question}
-        moveHandle={listeners} // Pass listeners to the button in QuestionCard
+        moveHandle={listeners}
+        onDelete={onDelete} // Pass the onDelete function to QuestionCard
       />
     </div>
   );
