@@ -79,6 +79,22 @@ export default function DashboardSurveyList({
     }
   };
 
+  if (surveys.length === 0) {
+    return (
+      <div className="min-h-[calc(100dvh-8rem)] p-2 bg-white rounded-lg shadow-md">
+        <h1 className="text-2xl text-[#111] font-bold mb-4 text-center">
+          Feedback Forms List
+        </h1>
+        <div className="text-center py-8">
+          <p className="text-lg text-gray-600">No forms found.</p>
+          <p className="mt-2 text-sm text-gray-500">
+            Create a new survey to get started.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-[calc(100dvh-8rem)] p-2 bg-white rounded-lg shadow-md">
       <h1 className="text-2xl text-[#111] font-bold mb-4 text-center">
