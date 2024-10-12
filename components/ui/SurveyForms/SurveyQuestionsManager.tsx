@@ -18,6 +18,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import QuestionCard from './QuestionCard';
+import Button from '../Button/Button';
 
 interface Props {
   surveyId: UUID;
@@ -30,6 +31,7 @@ export default function SurveyQuestionsManager({
 }: Props) {
   const router = useRouter();
   const [questionsState, setQuestionsState] = useState(surveyQuestions || []);
+  const [isLoading, setIsLoading] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -71,23 +73,31 @@ export default function SurveyQuestionsManager({
   };
 
   const handleAddQuestion = async () => {
-    const response = await fetch('/api/survey-questions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        surveyId,
-        questionText: '',
-        questionType: 'Text',
-        position: questionsState.length
-      })
-    });
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/survey-questions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          surveyId,
+          questionText: '',
+          questionType: 'text',
+          position: questionsState.length
+        })
+      });
 
-    if (response.ok) {
-      router.refresh();
-    } else {
-      console.error('Failed to create question');
+      if (response.ok) {
+        const newQuestion = await response.json(); // Assuming the API returns the new question
+        setQuestionsState((prev) => [...prev, newQuestion]); // Add the new question to the state
+      } else {
+        console.error('Failed to create question');
+      }
+    } catch (error) {
+      console.error('Error adding question:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,28 +118,30 @@ export default function SurveyQuestionsManager({
         </SortableContext>
       </DndContext>
 
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">Add New Question</h2>
-        <button
+      <div className="w-full max-w-3xl mx-auto flex flex-col sm:flex-row gap-4">
+        <Button
+          variant="slim"
+          type="button"
           onClick={handleAddQuestion}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          className="w-full sm:w-1/2"
+          loading={isLoading}
+          disabled={isLoading}
         >
           Add Question
-        </button>
-      </div>
+        </Button>
 
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">Generate Survey Link</h2>
-        <button
+        <Button
+          variant="slim"
+          type="button"
           onClick={() => {
             const surveyLink = `${window.location.origin}/forms/r/${surveyId}`;
             navigator.clipboard.writeText(surveyLink);
             alert('Survey link copied to clipboard!');
           }}
-          className="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600"
+          className="w-full sm:w-1/2"
         >
           Generate and Copy Link
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -162,77 +174,3 @@ function SortableItem({ question }: SortableItemProps) {
     </div>
   );
 }
-
-// 'use client';
-
-// import { useState } from 'react';
-// import { useRouter } from 'next/navigation';
-// import { UUID } from 'crypto';
-// import QuestionCard from './QuestionCard';
-
-// interface Props {
-//   surveyId: UUID;
-//   surveyQuestions: any[] | null;
-// }
-
-// export default function SurveyQuestionsManager({
-//   surveyId,
-//   surveyQuestions
-// }: Props) {
-//   const router = useRouter();
-
-//   // Track the updated questions in a state
-//   // const [questionsState, setQuestionsState] = useState(surveyQuestions || []);
-
-//   const handleAddQuestion = async () => {
-//     const response = await fetch('/api/survey-questions', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//         surveyId,
-//         questionText: '',
-//         questionType: 'text'
-//       })
-//     });
-
-//     if (response.ok) {
-//       router.refresh();
-//     } else {
-//       console.error('Failed to create question');
-//     }
-//   };
-
-//   return (
-//     <div>
-//       {surveyQuestions?.map((question, index) => (
-//         <div key={question.id || index}>
-//           <QuestionCard surveyQuestion={question} />
-//         </div>
-//       ))}
-//       <div className="mt-8">
-//         <h2 className="text-xl font-semibold mb-4">Add New Question</h2>
-//         <button
-//           onClick={handleAddQuestion}
-//           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-//         >
-//           Add Question
-//         </button>
-//       </div>
-//       <div className="mt-8">
-//         <h2 className="text-xl font-semibold mb-4">Generate Survey Link</h2>
-//         <button
-//           onClick={() => {
-//             const surveyLink = `${window.location.origin}/forms/r/${surveyId}`;
-//             navigator.clipboard.writeText(surveyLink);
-//             alert('Survey link copied to clipboard!');
-//           }}
-//           className="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600"
-//         >
-//           Generate and Copy Link
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
