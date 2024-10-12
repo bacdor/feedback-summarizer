@@ -109,7 +109,7 @@ export default function DashboardSurveyList({
                     key={survey.id}
                     className="border-b hover:bg-[var(--color-background)]"
                   >
-                    {/* Response Count */}
+                    {/* Share */}
                     <td className="px-6 py-4 text-center">
                       <button
                         onClick={() => {
@@ -173,22 +173,9 @@ export default function DashboardSurveyList({
                     </td>
 
                     {/* Edit Column - Centered */}
-                    <td className="px-6 py-4 text-center">
+                    <td className="px-6 py-4 text-center text-2xl">
                       <Link href={`/forms/edit/${survey.id}`} passHref>
-                        <button>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            fill="none"
-                            id="edit"
-                          >
-                            <path
-                              fill="#111"
-                              d="M17.864 3.6a1 1 0 0 0-1.414 0l-1.414 1.415 4.242 4.242 1.414-1.414a1 1 0 0 0 0-1.414L17.864 3.6zm0 7.072-4.243-4.243-8.9 8.9a1 1 0 0 0-.292.706v2.829a1 1 0 0 0 1 1h2.828a1 1 0 0 0 .707-.293l8.9-8.9z"
-                            ></path>
-                          </svg>
-                        </button>
+                        <button>&#9998;</button>
                       </Link>
                     </td>
 
