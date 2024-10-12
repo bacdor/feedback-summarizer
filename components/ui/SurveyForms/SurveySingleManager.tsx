@@ -13,13 +13,17 @@ export default function SurveySingleManager({
   surveyTitle: initialTitle,
   surveyDescription: initialDescription
 }: Props) {
-  const [surveyTitle, setSurveyTitle] = useState(initialTitle);
-  const [surveyDescription, setSurveyDescription] =
-    useState(initialDescription);
+  const [surveyTitle, setSurveyTitle] = useState(initialTitle || '');
+  const [surveyDescription, setSurveyDescription] = useState(
+    initialDescription || ''
+  );
 
-  const [stagedSurveyTitle, setStagedSurveyTitle] = useState(initialTitle);
-  const [stagedSurveyDescription, setStagedSurveyDescription] =
-    useState(initialDescription);
+  const [stagedSurveyTitle, setStagedSurveyTitle] = useState(
+    initialTitle || ''
+  );
+  const [stagedSurveyDescription, setStagedSurveyDescription] = useState(
+    initialDescription || ''
+  );
 
   const handleBlur = async () => {
     if (
