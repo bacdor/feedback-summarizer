@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface SurveyQuestion {
   id?: string;
@@ -29,6 +29,9 @@ export default function QuestionCard({
   const [options, setOptions] = useState<string[]>(
     surveyQuestion?.options ? JSON.parse(surveyQuestion.options) : []
   );
+  useEffect(() => {
+    handleBlur(true);
+  }, [options]);
 
   const [stagedQuestionText, setStagedQuestionText] = useState(questionText);
   const [stagedQuestionType, setStagedQuestionType] = useState(questionType);
@@ -94,14 +97,14 @@ export default function QuestionCard({
     if (optionInput.trim()) {
       setOptions([...options, optionInput.trim()]); // Add option to list
       setOptionInput(''); // Clear input field
-      handleBlur(true);
+      // handleBlur(true);
     }
   };
 
   // Remove option from the list
   const handleRemoveOption = (index: number) => {
     setOptions(options.filter((_, i) => i !== index));
-    handleBlur(true);
+    // handleBlur(true);
   };
 
   return (

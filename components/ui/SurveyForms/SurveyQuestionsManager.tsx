@@ -19,7 +19,6 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import QuestionCard from './QuestionCard';
 import Button from '../Button/Button';
-import { REACT_LOADABLE_MANIFEST } from 'next/dist/shared/lib/constants';
 
 interface Props {
   surveyId: UUID;
@@ -97,7 +96,7 @@ export default function SurveyQuestionsManager({
       if (response.ok) {
         const { question } = await response.json();
         setQuestionsState((prev) => [...prev, question]); // Add the new question to the state
-        console.log(question); // Display the message
+        // console.log(question); // Display the message
       } else {
         console.error('Failed to create question');
       }
