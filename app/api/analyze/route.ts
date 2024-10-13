@@ -13,7 +13,7 @@ import {
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const { questionsAndAnswersText, title } = await req.json(); // Get title from request body
+  const { questionsAndAnswersJson, title } = await req.json(); // Get title from request body
 
   try {
     let analysisResult;
@@ -21,21 +21,32 @@ export async function POST(req: NextRequest) {
     // Call the appropriate function based on the title
     switch (title) {
       case 'Positive Themes':
-        analysisResult = await analyzePositiveThemes(questionsAndAnswersText);
-        break;
-      case 'Negative Themes':
-        analysisResult = await analyzeNegativeThemes(questionsAndAnswersText);
-        break;
-      case 'Type Categorization':
-        analysisResult = await categorizeFeedbackByType(
-          questionsAndAnswersText
+        const parsedJson = JSON.parse(questionsAndAnswersJson);
+        const simplifiedData = parsedJson.map((item: any) => ({
+          email: item.email,
+          responses: item.responses.map((response: any) => ({
+            question_text: response.question_text,
+            answer: response.answer,
+            question_type: response.question_type
+          }))
+        }));
+        analysisResult = await analyzePositiveThemes(
+          JSON.stringify(simplifiedData)
         );
         break;
-      case 'Tone Categorization':
-        analysisResult = await categorizeFeedbackByTone(
-          questionsAndAnswersText
-        );
-        break;
+      // case 'Negative Themes':
+      //   analysisResult = await analyzeNegativeThemes(questionsAndAnswersText);
+      //   break;
+      // case 'Type Categorization':
+      //   analysisResult = await categorizeFeedbackByType(
+      //     questionsAndAnswersText
+      //   );
+      //   break;
+      // case 'Tone Categorization':
+      //   analysisResult = await categorizeFeedbackByTone(
+      //     questionsAndAnswersText
+      //   );
+      //   break;
       // case 'Quantitative Analysis': // later
       //   analysisResult = await performQuantitativeAnalysis(questionsAndAnswersText);
       //   break;
@@ -45,9 +56,9 @@ export async function POST(req: NextRequest) {
       // case 'Competitor Comparison': // later
       //   analysisResult = await compareWithCompetitors(questionsAndAnswersText);
       //   break;
-      case 'Goal Alignment':
-        analysisResult = await alignWithGoals(questionsAndAnswersText);
-        break;
+      // case 'Goal Alignment':
+      //   analysisResult = await alignWithGoals(questionsAndAnswersText);
+      //   break;
       // case 'Actionability': // later
       //   analysisResult = await assessActionability(questionsAndAnswersText);
       //   break;

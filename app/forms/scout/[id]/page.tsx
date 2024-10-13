@@ -34,30 +34,42 @@ export default async function FormScoutPage({
 
   // Extract questions and answers from surveyResponses
   const extractQuestionsAndAnswers = (surveyResponsesForId: any[]) => {
-    let text = '';
+    const formattedResponses = surveyResponsesForId.map((response) => ({
+      email: response.email || 'No email provided',
+      submitted_at: response.submitted_at
+        ? new Date(response.submitted_at).toISOString().split('T')[0]
+        : 'No submission date provided',
+      responses:
+        response.responses?.map(
+          ({
+            question_text,
+            answer,
+            question_type
+          }: {
+            question_text: string;
+            answer: string | null;
+            question_type: string;
+          }) => ({
+            question_text,
+            answer: answer || 'No answer provided',
+            question_type
+          })
+        ) || []
+    }));
 
-    surveyResponsesForId.forEach(
-      (response: { responses?: { question: string; answer: string }[] }) => {
-        if (response.responses) {
-          const responses = response.responses;
-          responses.forEach(({ question, answer }) => {
-            text += `Question: ${question}\n`;
-            text += `Answer: ${answer || 'No answer provided'}\n\n`;
-          });
-        }
-      }
-    );
-
-    return text;
+    return JSON.stringify(formattedResponses);
   };
 
-  const questionsAndAnswersText = extractQuestionsAndAnswers(
+  const questionsAndAnswersJson = extractQuestionsAndAnswers(
     surveyResponsesForId || []
   );
 
   return (
     <section className="container mx-auto pb-32 p-4 bg-yellow">
-      <AnalyzeCard questionsAndAnswersText={questionsAndAnswersText} />
+      <AnalyzeCard questionsAndAnswersJson={questionsAndAnswersJson} />
+      <pre className="bg-gray-100 p-4 rounded-lg overflow-auto max-h-96">
+        <code>{questionsAndAnswersJson}</code>
+      </pre>
     </section>
   );
 }

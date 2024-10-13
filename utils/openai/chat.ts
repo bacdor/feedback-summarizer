@@ -1,3 +1,4 @@
+import { Json } from '@/types_db';
 import OpenAI from 'openai';
 
 const openai = new OpenAI();
@@ -11,17 +12,103 @@ const openai = new OpenAI();
 // compareWithCompetitors, // later
 // alignWithGoals,
 // assessActionability // later
+//       (dont count, just say "+" for every positive answer, "0" for every neutral and "-" for every negative one):
+//analyzePositiveFeedback
+export async function analyzePositiveThemes(data: Json) {
+  const parsedData = JSON.parse(data as string);
+  const ratingResponses: { [key: string]: { sum: number; count: number } } = {};
+  const otherResponses: any[] = [];
+  let totalAnswers = 0;
+  let highRatingCount = 0;
+  let positiveAnswersCount = 0;
+  const happyUsers: { [email: string]: { sum: number; count: number } } = {};
 
-export async function analyzePositiveThemes(text: string) {
-  const systemPrompt = `
-      You are an expert in sentiment analysis and thematic extraction. Your job is to analyze user feedback, focusing specifically on recurring positive themes.
-      
-      For each question-answer pair, identify:
-      1. Positive themes or elements.
-      2. Recurring positive themes across multiple responses.
-      
-      Your analysis should group similar responses and highlight what users repeatedly praise or appreciate.
-    `;
+  const analyzePositiveSentiment = async (text: string) => {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        {
+          role: 'system',
+          content:
+            'Rate the positivity of the following text on a scale from 1 to 5, where 1 is very negative, 3 is neutral, and 5 is very positive.'
+        },
+        {
+          role: 'user',
+          content: text
+        }
+      ],
+      temperature: 0,
+      max_tokens: 10
+    });
+    return parseInt(response.choices[0].message.content?.trim() || '0');
+  };
+
+  for (const item of parsedData) {
+    if (!happyUsers[item.email]) {
+      happyUsers[item.email] = { sum: 0, count: 0 };
+    }
+    for (const response of item.responses) {
+      totalAnswers++;
+      if (response.question_type === 'rating') {
+        if (!ratingResponses[response.question_text]) {
+          ratingResponses[response.question_text] = { sum: 0, count: 0 };
+        }
+        const rating = parseInt(response.answer);
+        ratingResponses[response.question_text].sum += rating;
+        ratingResponses[response.question_text].count++;
+        if (rating >= 4) {
+          highRatingCount++;
+          happyUsers[item.email].sum += rating;
+          happyUsers[item.email].count++;
+        }
+      } else {
+        otherResponses.push(response);
+        const sentimentScore = await analyzePositiveSentiment(response.answer);
+        if (sentimentScore >= 4) {
+          positiveAnswersCount++;
+          happyUsers[item.email].sum += sentimentScore;
+          happyUsers[item.email].count++;
+        }
+      }
+    }
+  }
+
+  const averageRatingResponses = Object.entries(ratingResponses).reduce(
+    (acc, [question, { sum, count }]) => {
+      acc[question] = sum / count;
+      return acc;
+    },
+    {} as { [key: string]: number }
+  );
+
+  const happyUsersAverage = Object.fromEntries(
+    Object.entries(happyUsers).map(([email, { sum, count }]) => [
+      email,
+      count > 0 ? sum / count : 0
+    ])
+  );
+
+  const updatedData = JSON.stringify({
+    ratingResponses: averageRatingResponses,
+    otherResponses,
+    happyUsers: happyUsersAverage
+  });
+
+  console.log(happyUsers);
+
+  // const systemPrompt = `
+  //     You are an expert in sentiment analysis and thematic extraction. Your job is to segregate user feedback based on tone.
+
+  //     You will provide output in format in json format like
+
+  //     {
+  //         "positive": positive answers,
+  //         "neutral": neutral answers,
+  //         "negative": negative answers
+  //     }
+  //   `;
+
+  const systemPrompt = `simply output exactly content you get`;
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
@@ -32,15 +119,45 @@ export async function analyzePositiveThemes(text: string) {
       },
       {
         role: 'user',
-        content: text
+        content: JSON.stringify(happyUsersAverage)
       }
     ],
-    temperature: 0.2,
+    temperature: 0,
     max_tokens: 800
   });
 
   return response.choices[0].message.content;
 }
+
+// export async function analyzePositiveThemes(text: string) {
+//   const systemPrompt = `
+//       You are an expert in sentiment analysis and thematic extraction. Your job is to analyze user feedback, focusing specifically on recurring positive themes.
+
+//       For each question-answer pair, identify:
+//       1. Positive themes or elements.
+//       2. Recurring positive themes across multiple responses.
+
+//       Your analysis should group similar responses and highlight what users repeatedly praise or appreciate.
+//     `;
+
+//   const response = await openai.chat.completions.create({
+//     model: 'gpt-4o-mini',
+//     messages: [
+//       {
+//         role: 'system',
+//         content: systemPrompt
+//       },
+//       {
+//         role: 'user',
+//         content: text
+//       }
+//     ],
+//     temperature: 0.2,
+//     max_tokens: 800
+//   });
+
+//   return response.choices[0].message.content;
+// }
 
 export async function analyzeNegativeThemes(text: string) {
   const systemPrompt = `

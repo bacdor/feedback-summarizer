@@ -3,11 +3,12 @@
 
 import { useState } from 'react';
 import Card from '@/components/ui/Analyzer/Card';
+import { Json } from '@/types_db';
 
 export default function AnalyzeCard({
-  questionsAndAnswersText
+  questionsAndAnswersJson
 }: {
-  questionsAndAnswersText: string;
+  questionsAndAnswersJson: Json;
 }) {
   const [analysisResult, setAnalysisResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,7 @@ export default function AnalyzeCard({
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ questionsAndAnswersText, title }) // Added title to the request body
+        body: JSON.stringify({ questionsAndAnswersJson, title }) // Updated to use questionsAndAnswersJson
       });
 
       if (!response.ok) {
@@ -53,45 +54,6 @@ export default function AnalyzeCard({
   // src="/public/bear.webp"
 
   return (
-    // <div className="flex flex-col lg:flex-row lg:space-x-6">
-    //   {/* Left Column: Cards in Two Columns */}
-    //   <div className="grid grid-cols-1 gap-1 lg:w-1/5">
-    //     {analysisItems.map((item, index) => (
-    //       <div
-    //         key={index}
-    //         onClick={() => handleAnalyzeClick(item.title)}
-    //         className="cursor-pointer transition-transform transform hover:scale-105"
-    //       >
-    //         <div className="bg-gradient-to-r from-[#231a2a] via-[#3b2d4a] to-[#53406a] text-white rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow">
-    //           <div className="flex items-center space-x-2">
-    //             <div className="bg-white p-1.5 rounded-full">
-    //               <img src={''} alt={item.title} className="h-6 w-6" />
-    //             </div>
-    //             <h3 className="text-sm font-bold">{item.title}</h3>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     ))}
-    //   </div>
-
-    //   {/* Right Column: Textarea */}
-    //   <div className="lg:w-4/5 mt-6 lg:mt-0">
-    //     {loading ? (
-    //       <p className="text-gray-500 italic">Analyzing...</p>
-    //     ) : (
-    //       <div className="w-full h-64 p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50 text-gray-700">
-    //         {analysisResult ? (
-    //           <p>{analysisResult}</p>
-    //         ) : (
-    //           <p className="text-gray-400 italic">
-    //             Analysis result will appear here...
-    //           </p>
-    //         )}
-    //       </div>
-    //     )}
-    //   </div>
-    // </div>
-
     <div className="flex flex-col lg:flex-row lg:space-x-6">
       {/* Left Column: Cards in Two Columns */}
       <div className="grid grid-cols-1 gap-1 lg:w-1/5">
