@@ -5,11 +5,10 @@ import { useState } from 'react';
 import Card from '@/components/ui/Analyzer/Card';
 import { Json } from '@/types_db';
 import PositiveFeedback from '../AnalyzeOutputUI/PositiveFeedback';
-
 export default function AnalyzeCard({
-  questionsAndAnswersJson
+  surveyResponsesForId
 }: {
-  questionsAndAnswersJson: Json;
+  surveyResponsesForId: any[] | undefined;
 }) {
   const [analysisResult, setAnalysisResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -23,7 +22,7 @@ export default function AnalyzeCard({
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ questionsAndAnswersJson, title }) // Updated to use questionsAndAnswersJson
+        body: JSON.stringify({ surveyResponsesForId, title }) // Updated to use questionsAndAnswersJson
       });
 
       if (!response.ok) {
@@ -37,6 +36,26 @@ export default function AnalyzeCard({
       setAnalysisResult('Error occurred while analyzing themes.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const updateSentiments = async (responses: any[]) => {
+    try {
+      const res = await fetch('/api/update_sentiment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ responses })
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to update sentiments');
+      }
+
+      console.log('Sentiments updated successfully');
+    } catch (error) {
+      console.error('Error updating sentiments:', error);
     }
   };
 
@@ -56,6 +75,14 @@ export default function AnalyzeCard({
 
   return (
     <div className="flex flex-col lg:flex-row lg:space-x-6">
+      <button
+        onClick={() =>
+          surveyResponsesForId && updateSentiments(surveyResponsesForId)
+        }
+        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+      >
+        Update Sentiments
+      </button>
       {/* Left Column: Cards in Two Columns */}
       <div className="grid grid-cols-1 gap-1 lg:w-1/5">
         {analysisItems.map((item, index) => (

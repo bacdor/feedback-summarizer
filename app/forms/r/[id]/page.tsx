@@ -32,10 +32,6 @@ export default async function FormResponsePage({
     throw new Error('Failed to fetch survey questions');
   }
 
-  if (!user) {
-    return redirect('/signin');
-  }
-
   if (!surveys) {
     throw new Error('Failed to fetch surveys');
   }

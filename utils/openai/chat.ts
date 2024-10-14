@@ -12,7 +12,8 @@ const openai = new OpenAI();
 // compareWithCompetitors, // later
 // alignWithGoals,
 // assessActionability // later
-const analyzeSentiment = async (text: string) => {
+
+export const analyzeSentiment = async (text: string) => {
   const response = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
     messages: [
@@ -35,7 +36,8 @@ const analyzeSentiment = async (text: string) => {
     temperature: 0,
     max_tokens: 10
   });
-  return parseInt(response.choices[0].message.content?.trim() || '0');
+
+  return response.choices[0].message.content?.trim() || '0';
 };
 
 export async function analyzePositiveFeedback(data: Json) {
@@ -71,7 +73,9 @@ export async function analyzePositiveFeedback(data: Json) {
         }
       } else {
         otherResponses.push(response);
-        const sentimentScore = await analyzeSentiment(response.answer);
+        const sentimentScore = parseInt(
+          await analyzeSentiment(response.answer)
+        );
         if (sentimentScore >= 4) {
           if (sentimentScore >= 4) {
             positiveAnswersCount++;

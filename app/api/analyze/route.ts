@@ -13,7 +13,7 @@ import {
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const { questionsAndAnswersJson, title } = await req.json(); // Get title from request body
+  const { surveyResponsesForId, title } = await req.json(); // Get title from request body
 
   try {
     let analysisResult;
@@ -21,8 +21,8 @@ export async function POST(req: NextRequest) {
     // Call the appropriate function based on the title
     switch (title) {
       case 'Positive Themes':
-        const parsedJson = JSON.parse(questionsAndAnswersJson);
-        const simplifiedData = parsedJson.map((item: any) => ({
+        // const parsedJson = JSON.parse(surveyResponsesForId);
+        const simplifiedData = surveyResponsesForId.map((item: any) => ({
           email: item.email,
           responses: item.responses.map((response: any) => ({
             question_text: response.question_text,
