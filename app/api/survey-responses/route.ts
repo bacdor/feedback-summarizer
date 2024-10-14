@@ -11,7 +11,10 @@ export async function POST(req: Request) {
       {
         survey_id: surveyId,
         email: email,
-        responses: responses
+        responses: responses.map((response: any) => ({
+          ...response,
+          sentiment: null // Adding a new field for sentiment
+        }))
       }
     ]);
 
