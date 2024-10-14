@@ -21,7 +21,9 @@ export async function analyzePositiveThemes(data: Json) {
   let totalAnswers = 0;
   let highRatingCount = 0;
   let positiveAnswersCount = 0;
-  const happyUsers: { [email: string]: { sum: number; count: number } } = {};
+  const happyUsers: {
+    [email: string]: { positiveCount: number; totalCount: number };
+  } = {};
 
   const analyzePositiveSentiment = async (text: string) => {
     const response = await openai.chat.completions.create({
@@ -30,7 +32,7 @@ export async function analyzePositiveThemes(data: Json) {
         {
           role: 'system',
           content:
-            'Rate the positivity of the following text on a scale from 1 to 5, where 1 is very negative, 3 is neutral, and 5 is very positive.'
+            'Analyze the positivity of the following text. If it\'s positive, respond with either "4" or "5" based on how positive it is. If it\'s not positive, respond with "0".'
         },
         {
           role: 'user',
@@ -45,10 +47,11 @@ export async function analyzePositiveThemes(data: Json) {
 
   for (const item of parsedData) {
     if (!happyUsers[item.email]) {
-      happyUsers[item.email] = { sum: 0, count: 0 };
+      happyUsers[item.email] = { positiveCount: 0, totalCount: 0 };
     }
     for (const response of item.responses) {
       totalAnswers++;
+      happyUsers[item.email].totalCount++;
       if (response.question_type === 'rating') {
         if (!ratingResponses[response.question_text]) {
           ratingResponses[response.question_text] = { sum: 0, count: 0 };
@@ -58,16 +61,14 @@ export async function analyzePositiveThemes(data: Json) {
         ratingResponses[response.question_text].count++;
         if (rating >= 4) {
           highRatingCount++;
-          happyUsers[item.email].sum += rating;
-          happyUsers[item.email].count++;
+          happyUsers[item.email].positiveCount++;
         }
       } else {
         otherResponses.push(response);
         const sentimentScore = await analyzePositiveSentiment(response.answer);
-        if (sentimentScore >= 4) {
+        if (sentimentScore > 0) {
           positiveAnswersCount++;
-          happyUsers[item.email].sum += sentimentScore;
-          happyUsers[item.email].count++;
+          happyUsers[item.email].positiveCount++;
         }
       }
     }
@@ -81,37 +82,43 @@ export async function analyzePositiveThemes(data: Json) {
     {} as { [key: string]: number }
   );
 
-  const happyUsersAverage = Object.fromEntries(
-    Object.entries(happyUsers).map(([email, { sum, count }]) => [
+  const happyUsersPercentage = Object.fromEntries(
+    Object.entries(happyUsers).map(([email, { positiveCount, totalCount }]) => [
       email,
-      count > 0 ? sum / count : 0
+      totalCount > 0 ? (positiveCount / totalCount) * 100 : 0
     ])
   );
 
   const updatedData = JSON.stringify({
     ratingResponses: averageRatingResponses,
     otherResponses,
-    happyUsers: happyUsersAverage
+    happyUsers: happyUsersPercentage
   });
 
-  console.log(happyUsers);
+  const systemPrompt = `
+      You are an expert in sentiment analysis and thematic extraction. Your job is to analyze user feedback based on tone focusing on positives.
+      You will be provided with set of questions and answers.
 
-  // const systemPrompt = `
-  //     You are an expert in sentiment analysis and thematic extraction. Your job is to segregate user feedback based on tone.
+      Based on the given feedback, you will provide output in format in json format like:
+      
 
-  //     You will provide output in format in json format like
+      {
+          "keyThemes": {
+            "1": "Key theme 1",
+            "2": "Key theme 2",
+            "3": "Key theme 3",
+            "4": "Key theme 4",
+            "5": "Key theme 5"
+          },
+          "summary": "Based on the analyzed feedback, provide a concise summary of the overall sentiment and key themes identified.
+          (Don't mention that overall feedback is positive, it's obious because you are analyzing only positives)",
+      }
 
-  //     {
-  //         "positive": positive answers,
-  //         "neutral": neutral answers,
-  //         "negative": negative answers
-  //     }
-  //   `;
-
-  const systemPrompt = `simply output exactly content you get`;
+      Do not wrap the json codes in JSON markers.
+    `;
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
+    model: 'gpt-4o',
     messages: [
       {
         role: 'system',
@@ -119,14 +126,43 @@ export async function analyzePositiveThemes(data: Json) {
       },
       {
         role: 'user',
-        content: JSON.stringify(happyUsersAverage)
+        content: JSON.stringify(data)
       }
     ],
     temperature: 0,
     max_tokens: 800
   });
 
-  return response.choices[0].message.content;
+  const chatResult = JSON.parse(response.choices[0].message.content || '{}');
+  const positivePercentage =
+    ((positiveAnswersCount + highRatingCount) / totalAnswers) * 100;
+
+  const highRatedQuestions = Object.entries(averageRatingResponses)
+    .filter(([_, rating]) => rating >= 3.6)
+    .sort((a, b) => b[1] - a[1]);
+
+  const happiestUsers = Object.entries(happyUsersPercentage)
+    .filter(([_, score]) => score >= 50)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3);
+
+  const result = JSON.stringify({
+    positivePercentage: positivePercentage.toFixed(2),
+    keyThemes: chatResult.keyThemes,
+    summary: chatResult.summary,
+    highRatedQuestions: highRatedQuestions.map(([question, rating]) => ({
+      question,
+      rating: rating.toFixed(2)
+    })),
+    happiestUsers: happiestUsers.map(([email, score]) => ({
+      email,
+      score: score.toFixed(2)
+    }))
+  });
+
+  return result;
+
+  // return response.choices[0].message.content;
 }
 
 // export async function analyzePositiveThemes(text: string) {
