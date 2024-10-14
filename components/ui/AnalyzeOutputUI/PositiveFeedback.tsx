@@ -54,7 +54,16 @@ const PositiveFeedback: React.FC<PositiveFeedbackProps> = ({
         </ul>
       </div>
       <div className="bg-yellow-100 p-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-2">Summary</h2>
+        <div className="flex items-center mb-2">
+          <h2 className="text-xl font-bold">Summary</h2>
+          <div className="relative ml-1 group">
+            <span className="text-yellow-500 cursor-pointer">🛈</span>
+            <div className="absolute hidden group-hover:block bg-white border border-gray-200 p-2 rounded shadow-lg z-10 w-64 bottom-full left-0 text-sm">
+              Concise overview of the overall sentiment and key themes
+              identified
+            </div>
+          </div>
+        </div>
         <p className="text-gray-700">{parsedResult.summary}</p>
       </div>
       <div className="bg-purple-100 p-4 rounded-lg">

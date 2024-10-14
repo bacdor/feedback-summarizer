@@ -12,8 +12,32 @@ const openai = new OpenAI();
 // compareWithCompetitors, // later
 // alignWithGoals,
 // assessActionability // later
-//       (dont count, just say "+" for every positive answer, "0" for every neutral and "-" for every negative one):
-//analyzePositiveFeedback
+const analyzeSentiment = async (text: string) => {
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    messages: [
+      {
+        role: 'system',
+        content:
+          'Analyze the positivity of the following text. Assign a score from 1 to 5, where:\n' +
+          '1: Very negative\n' +
+          '2: Somewhat negative\n' +
+          '3: Neutral\n' +
+          '4: Somewhat positive\n' +
+          '5: Very positive' +
+          'Your responses should be only a number'
+      },
+      {
+        role: 'user',
+        content: text
+      }
+    ],
+    temperature: 0,
+    max_tokens: 10
+  });
+  return parseInt(response.choices[0].message.content?.trim() || '0');
+};
+
 export async function analyzePositiveFeedback(data: Json) {
   const parsedData = JSON.parse(data as string);
   const ratingResponses: { [key: string]: { sum: number; count: number } } = {};
@@ -24,26 +48,6 @@ export async function analyzePositiveFeedback(data: Json) {
   const happyUsers: {
     [email: string]: { positiveCount: number; totalCount: number };
   } = {};
-
-  const analyzePositiveSentiment = async (text: string) => {
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        {
-          role: 'system',
-          content:
-            'Analyze the positivity of the following text. If it\'s positive, respond with either "4" or "5" based on how positive it is. If it\'s not positive, respond with "0".'
-        },
-        {
-          role: 'user',
-          content: text
-        }
-      ],
-      temperature: 0,
-      max_tokens: 10
-    });
-    return parseInt(response.choices[0].message.content?.trim() || '0');
-  };
 
   for (const item of parsedData) {
     if (!happyUsers[item.email]) {
@@ -60,14 +64,18 @@ export async function analyzePositiveFeedback(data: Json) {
         ratingResponses[response.question_text].sum += rating;
         ratingResponses[response.question_text].count++;
         if (rating >= 4) {
-          highRatingCount++;
+          if (rating >= 4) {
+            highRatingCount++;
+          }
           happyUsers[item.email].positiveCount++;
         }
       } else {
         otherResponses.push(response);
-        const sentimentScore = await analyzePositiveSentiment(response.answer);
-        if (sentimentScore > 0) {
-          positiveAnswersCount++;
+        const sentimentScore = await analyzeSentiment(response.answer);
+        if (sentimentScore >= 4) {
+          if (sentimentScore >= 4) {
+            positiveAnswersCount++;
+          }
           happyUsers[item.email].positiveCount++;
         }
       }
