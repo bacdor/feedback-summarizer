@@ -12,7 +12,16 @@ const PositiveFeedback: React.FC<PositiveFeedbackProps> = ({
   return (
     <div className="space-y-4">
       <div className="bg-blue-100 p-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-2">Positive Percentage</h2>
+        <div className="flex items-center mb-2">
+          <h2 className="text-xl font-bold">Positive Percentage</h2>
+          <div className="relative ml-1 group">
+            <span className="text-blue-500 cursor-pointer">🛈</span>
+            <div className="absolute hidden group-hover:block bg-white border border-gray-200 p-2 rounded shadow-lg z-10 w-64 top-full left-0 text-sm">
+              Percentage of responses with ratings of 4 or 5, or positive
+              sentiment in answers
+            </div>
+          </div>
+        </div>
         <div className="relative pt-1">
           <div className="overflow-hidden h-8 mb-4 text-xs flex rounded bg-blue-200">
             <div
@@ -27,7 +36,15 @@ const PositiveFeedback: React.FC<PositiveFeedbackProps> = ({
         </div>
       </div>
       <div className="bg-green-100 p-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-2">Key Themes</h2>
+        <div className="flex items-center mb-2">
+          <h2 className="text-xl font-bold">Key Themes</h2>
+          <div className="relative ml-1 group">
+            <span className="text-green-500 cursor-pointer">🛈</span>
+            <div className="absolute hidden group-hover:block bg-white border border-gray-200 p-2 rounded shadow-lg z-10 w-64 bottom-full left-0 text-sm">
+              Main positive topics identified from user feedback
+            </div>
+          </div>
+        </div>
         <ul className="list-disc list-inside">
           {Object.values(parsedResult.keyThemes).map((theme, index) => (
             <li key={index} className="text-green-700">
@@ -41,7 +58,15 @@ const PositiveFeedback: React.FC<PositiveFeedbackProps> = ({
         <p className="text-gray-700">{parsedResult.summary}</p>
       </div>
       <div className="bg-purple-100 p-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-2">High Rated Questions</h2>
+        <div className="flex items-center mb-2">
+          <h2 className="text-xl font-bold">High Rated Questions</h2>
+          <div className="relative ml-1 group">
+            <span className="text-purple-500 cursor-pointer">🛈</span>
+            <div className="absolute hidden group-hover:block bg-white border border-gray-200 p-2 rounded shadow-lg z-10 w-64 bottom-full left-0 text-sm">
+              Questions with average ratings of 3.6 or higher
+            </div>
+          </div>
+        </div>
         <ul className="space-y-4">
           {parsedResult.highRatedQuestions.map(
             (
@@ -69,7 +94,15 @@ const PositiveFeedback: React.FC<PositiveFeedbackProps> = ({
         </ul>
       </div>
       <div className="bg-pink-100 p-4 rounded-lg">
-        <h2 className="text-xl font-bold mb-2">Happiest Users</h2>
+        <div className="flex items-center mb-2">
+          <h2 className="text-xl font-bold">Happiest Users</h2>
+          <div className="relative ml-1 group">
+            <span className="text-pink-500 cursor-pointer">🛈</span>
+            <div className="absolute hidden group-hover:block bg-white border border-gray-200 p-2 rounded shadow-lg z-10 w-64 bottom-full left-0 text-sm">
+              Three top users with 50% or more positive responses
+            </div>
+          </div>
+        </div>
         <ul className="space-y-2">
           {parsedResult.happiestUsers.map(
             (
