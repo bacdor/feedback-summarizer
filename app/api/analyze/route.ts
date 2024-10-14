@@ -1,6 +1,6 @@
 // pages/api/analyze.js
 import {
-  analyzePositiveThemes,
+  analyzePositiveFeedback,
   analyzeNegativeThemes,
   categorizeFeedbackByType,
   categorizeFeedbackByTone,
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
             question_type: response.question_type
           }))
         }));
-        analysisResult = await analyzePositiveThemes(
+        analysisResult = await analyzePositiveFeedback(
           JSON.stringify(simplifiedData)
         );
         break;

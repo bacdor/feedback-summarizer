@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import Card from '@/components/ui/Analyzer/Card';
 import { Json } from '@/types_db';
+import PositiveFeedback from '../AnalyzeOutputUI/PositiveFeedback';
 
 export default function AnalyzeCard({
   questionsAndAnswersJson
@@ -94,7 +95,7 @@ export default function AnalyzeCard({
             style={{ maxHeight: '100%' }} // Ensure it fills the available space
           >
             {analysisResult ? (
-              <p>{analysisResult}</p>
+              <PositiveFeedback analysisResult={analysisResult} />
             ) : (
               <p className="text-gray-400 italic">
                 Analysis result will appear here...

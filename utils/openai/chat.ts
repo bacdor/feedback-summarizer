@@ -3,7 +3,7 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI();
 
-// analyzePositiveThemes,
+// analyzePositiveFeedback,
 // analyzeNegativeThemes,
 // categorizeFeedbackByType,
 // categorizeFeedbackByTone,
@@ -14,7 +14,7 @@ const openai = new OpenAI();
 // assessActionability // later
 //       (dont count, just say "+" for every positive answer, "0" for every neutral and "-" for every negative one):
 //analyzePositiveFeedback
-export async function analyzePositiveThemes(data: Json) {
+export async function analyzePositiveFeedback(data: Json) {
   const parsedData = JSON.parse(data as string);
   const ratingResponses: { [key: string]: { sum: number; count: number } } = {};
   const otherResponses: any[] = [];
@@ -76,16 +76,22 @@ export async function analyzePositiveThemes(data: Json) {
 
   const averageRatingResponses = Object.entries(ratingResponses).reduce(
     (acc, [question, { sum, count }]) => {
-      acc[question] = sum / count;
+      acc[question] = {
+        average: sum / count,
+        count: count
+      };
       return acc;
     },
-    {} as { [key: string]: number }
+    {} as { [key: string]: { average: number; count: number } }
   );
 
   const happyUsersPercentage = Object.fromEntries(
     Object.entries(happyUsers).map(([email, { positiveCount, totalCount }]) => [
       email,
-      totalCount > 0 ? (positiveCount / totalCount) * 100 : 0
+      {
+        percentage: totalCount > 0 ? (positiveCount / totalCount) * 100 : 0,
+        totalCount: totalCount
+      }
     ])
   );
 
@@ -138,12 +144,12 @@ export async function analyzePositiveThemes(data: Json) {
     ((positiveAnswersCount + highRatingCount) / totalAnswers) * 100;
 
   const highRatedQuestions = Object.entries(averageRatingResponses)
-    .filter(([_, rating]) => rating >= 3.6)
-    .sort((a, b) => b[1] - a[1]);
+    .filter(([_, rating]) => rating.average >= 3.6)
+    .sort((a, b) => b[1].average - a[1].average);
 
   const happiestUsers = Object.entries(happyUsersPercentage)
-    .filter(([_, score]) => score >= 50)
-    .sort((a, b) => b[1] - a[1])
+    .filter(([_, score]) => score.percentage >= 50)
+    .sort((a, b) => b[1].percentage - a[1].percentage)
     .slice(0, 3);
 
   const result = JSON.stringify({
@@ -152,11 +158,13 @@ export async function analyzePositiveThemes(data: Json) {
     summary: chatResult.summary,
     highRatedQuestions: highRatedQuestions.map(([question, rating]) => ({
       question,
-      rating: rating.toFixed(2)
+      rating: rating.average.toFixed(2),
+      count: rating.count
     })),
     happiestUsers: happiestUsers.map(([email, score]) => ({
       email,
-      score: score.toFixed(2)
+      score: score.percentage.toFixed(2),
+      count: score.totalCount
     }))
   });
 
@@ -164,36 +172,6 @@ export async function analyzePositiveThemes(data: Json) {
 
   // return response.choices[0].message.content;
 }
-
-// export async function analyzePositiveThemes(text: string) {
-//   const systemPrompt = `
-//       You are an expert in sentiment analysis and thematic extraction. Your job is to analyze user feedback, focusing specifically on recurring positive themes.
-
-//       For each question-answer pair, identify:
-//       1. Positive themes or elements.
-//       2. Recurring positive themes across multiple responses.
-
-//       Your analysis should group similar responses and highlight what users repeatedly praise or appreciate.
-//     `;
-
-//   const response = await openai.chat.completions.create({
-//     model: 'gpt-4o-mini',
-//     messages: [
-//       {
-//         role: 'system',
-//         content: systemPrompt
-//       },
-//       {
-//         role: 'user',
-//         content: text
-//       }
-//     ],
-//     temperature: 0.2,
-//     max_tokens: 800
-//   });
-
-//   return response.choices[0].message.content;
-// }
 
 export async function analyzeNegativeThemes(text: string) {
   const systemPrompt = `
