@@ -34,6 +34,17 @@ export async function POST(req: Request) {
       if (error) {
         throw error;
       }
+
+      // Update is_ready in surveys to true
+      const { error: updateError } = await supabase
+        .from('surveys')
+        .update({ is_ready: true })
+        .eq('id', response.survey_id);
+
+      if (updateError) {
+        console.error('Error updating survey is_ready status:', updateError);
+        // We're not throwing an error here to ensure the process continues
+      }
     }
 
     return NextResponse.json({ message: 'Sentiments updated successfully' });

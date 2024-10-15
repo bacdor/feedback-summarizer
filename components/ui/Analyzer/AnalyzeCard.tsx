@@ -5,13 +5,26 @@ import { useState } from 'react';
 import Card from '@/components/ui/Analyzer/Card';
 import { Json } from '@/types_db';
 import PositiveFeedback from '../AnalyzeOutputUI/PositiveFeedback';
+import Button from '../Button/Button';
 export default function AnalyzeCard({
-  surveyResponsesForId
+  surveyResponsesForId,
+  survey
 }: {
   surveyResponsesForId: any[] | undefined;
+  survey: Json;
 }) {
   const [analysisResult, setAnalysisResult] = useState<string | null>(null);
+  const [isSurveyReady, setIsSurveyReady] = useState(
+    typeof survey === 'object' && survey !== null && 'is_ready' in survey
+      ? survey.is_ready
+      : false
+  );
+  const surveyId =
+    typeof survey === 'object' && survey !== null && 'id' in survey
+      ? survey.id
+      : null;
   const [loading, setLoading] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(false);
 
   // Modified handleAnalyzeClick to accept a title parameter
   const handleAnalyzeClick = async (title: string) => {
@@ -41,6 +54,7 @@ export default function AnalyzeCard({
 
   const updateSentiments = async (responses: any[]) => {
     try {
+      setLoadingButton(true);
       const res = await fetch('/api/update_sentiment', {
         method: 'POST',
         headers: {
@@ -54,8 +68,11 @@ export default function AnalyzeCard({
       }
 
       console.log('Sentiments updated successfully');
+      setIsSurveyReady(true);
     } catch (error) {
       console.error('Error updating sentiments:', error);
+    } finally {
+      setLoadingButton(false);
     }
   };
 
@@ -75,14 +92,6 @@ export default function AnalyzeCard({
 
   return (
     <div className="flex flex-col lg:flex-row lg:space-x-6">
-      {/* <button
-        onClick={() =>
-          surveyResponsesForId && updateSentiments(surveyResponsesForId)
-        }
-        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-      >
-        Update Sentiments
-      </button> */}
       {/* Left Column: Cards in Two Columns */}
       <div className="grid grid-cols-1 gap-1 lg:w-1/5">
         {analysisItems.map((item, index) => (
@@ -123,6 +132,19 @@ export default function AnalyzeCard({
           >
             {analysisResult ? (
               <PositiveFeedback analysisResult={analysisResult} />
+            ) : !isSurveyReady ? (
+              <Button
+                variant="slim"
+                type="button"
+                onClick={() =>
+                  surveyResponsesForId && updateSentiments(surveyResponsesForId)
+                }
+                className="mt-1 w-full"
+                loading={loadingButton}
+                disabled={loadingButton}
+              >
+                Click this button to prepare data.
+              </Button>
             ) : (
               <p className="text-gray-400 italic">
                 Analysis result will appear here...

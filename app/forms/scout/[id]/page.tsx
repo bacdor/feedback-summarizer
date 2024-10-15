@@ -4,7 +4,8 @@ import {
   getUserDetails,
   getSubscription,
   getUser,
-  getSurveyResponses
+  getSurveyResponses,
+  getSurveys
 } from '@/utils/supabase/queries';
 import AnalyzeCard from '@/components/ui/Analyzer/AnalyzeCard';
 
@@ -14,12 +15,14 @@ export default async function FormScoutPage({
   params: { id: string };
 }) {
   const supabase = createClient();
-  const [user, userDetails, subscription, surveyResponses] = await Promise.all([
-    getUser(supabase),
-    getUserDetails(supabase),
-    getSubscription(supabase),
-    getSurveyResponses(supabase)
-  ]);
+  const [user, userDetails, subscription, surveyResponses, surveys] =
+    await Promise.all([
+      getUser(supabase),
+      getUserDetails(supabase),
+      getSubscription(supabase),
+      getSurveyResponses(supabase),
+      getSurveys(supabase)
+    ]);
 
   if (!user) {
     return redirect('/signin');
@@ -32,9 +35,16 @@ export default async function FormScoutPage({
     (response) => response.survey_id === id
   );
 
+  const surveyForId = surveys?.filter((s) => s.id === id);
+
   return (
     <section className="container mx-auto pb-32 p-4 bg-yellow">
-      <AnalyzeCard surveyResponsesForId={surveyResponsesForId} />
+      {surveyForId && surveyForId.length > 0 && (
+        <AnalyzeCard
+          surveyResponsesForId={surveyResponsesForId}
+          survey={surveyForId[0]}
+        />
+      )}
     </section>
   );
 }
