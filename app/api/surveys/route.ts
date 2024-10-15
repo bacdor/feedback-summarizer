@@ -21,6 +21,7 @@ export async function POST(req: Request) {
         id: id,
         name: title,
         description: description || null,
+        is_ready: false,
         user_id: user.id
       }
     ]);

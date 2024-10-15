@@ -18,6 +18,17 @@ export async function POST(req: Request) {
       }
     ]);
 
+    // Update the survey's is_ready field to false
+    const { error: updateError } = await supabase
+      .from('surveys')
+      .update({ is_ready: false })
+      .eq('id', surveyId);
+
+    if (updateError) {
+      console.error('Error updating survey is_ready status:', updateError);
+      // Note: We're not throwing an error here to ensure the response is still saved
+    }
+
     if (error) {
       throw error;
     }

@@ -75,14 +75,14 @@ export default function AnalyzeCard({
 
   return (
     <div className="flex flex-col lg:flex-row lg:space-x-6">
-      <button
+      {/* <button
         onClick={() =>
           surveyResponsesForId && updateSentiments(surveyResponsesForId)
         }
         className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
       >
         Update Sentiments
-      </button>
+      </button> */}
       {/* Left Column: Cards in Two Columns */}
       <div className="grid grid-cols-1 gap-1 lg:w-1/5">
         {analysisItems.map((item, index) => (
