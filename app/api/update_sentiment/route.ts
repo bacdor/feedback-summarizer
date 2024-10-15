@@ -11,9 +11,12 @@ export async function POST(req: Request) {
       ...response,
       responses: await Promise.all(
         response.responses.map(async (r: any) => {
-          if (r.question_type !== 'rating' && r.sentiment === null) {
-            const sentiment = await analyzeSentiment(r.answer);
-            return { ...r, sentiment };
+          if (r.question_type !== 'rating') {
+            if (!['1', '2', '3', '4', '5'].includes(r.sentiment)) {
+              const sentiment = await analyzeSentiment(r.answer);
+              return { ...r, sentiment };
+            }
+            return r;
           } else {
             return { ...r, sentiment: null };
           }

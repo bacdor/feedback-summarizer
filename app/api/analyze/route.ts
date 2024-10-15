@@ -27,7 +27,8 @@ export async function POST(req: NextRequest) {
           responses: item.responses.map((response: any) => ({
             question_text: response.question_text,
             answer: response.answer,
-            question_type: response.question_type
+            question_type: response.question_type,
+            sentiment: response.sentiment
           }))
         }));
         analysisResult = await analyzePositiveFeedback(

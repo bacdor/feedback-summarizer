@@ -73,8 +73,17 @@ export async function analyzePositiveFeedback(data: Json) {
         }
       } else {
         otherResponses.push(response);
-        const sentimentScore = parseInt(
-          await analyzeSentiment(response.answer)
+        // const sentimentScore = parseInt(
+        //   await analyzeSentiment(response.answer)
+        // );
+        let sentimentScore;
+        if (response.sentiment === undefined) {
+          sentimentScore = parseInt(await analyzeSentiment(response.answer));
+        } else {
+          sentimentScore = parseInt(response.sentiment);
+        }
+        console.log(
+          response.answer + ' : ' + sentimentScore + ' || ' + response.sentiment
         );
         if (sentimentScore >= 4) {
           if (sentimentScore >= 4) {

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     responses.map(async (r: any) => {
       if (r.question_type !== 'rating') {
         const sentiment = await analyzeSentiment(r.answer);
-        return { ...r, sentiment };
+        return { ...r, sentiment: sentiment };
       } else {
         return { ...r, sentiment: null };
       }
