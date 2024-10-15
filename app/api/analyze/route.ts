@@ -1,13 +1,13 @@
 // pages/api/analyze.js
 import {
   analyzePositiveFeedback,
-  analyzeNegativeThemes,
-  categorizeFeedbackByType,
-  categorizeFeedbackByTone,
+  analyzeComplaints
+  // categorizeFeedbackByType,
+  // categorizeFeedbackByTone,
   // performQuantitativeAnalysis, // later
   // analyzeTrendsOverTime, // later
   // compareWithCompetitors, // later
-  alignWithGoals
+  // alignWithGoals
   // assessActionability // later
 } from '@/utils/openai/chat';
 import { NextRequest, NextResponse } from 'next/server';
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
     // Call the appropriate function based on the title
     switch (title) {
-      case 'Positive Themes':
+      case 'Positive Feedback':
         // const parsedJson = JSON.parse(surveyResponsesForId);
         const simplifiedData = surveyResponsesForId.map((item: any) => ({
           email: item.email,
@@ -35,9 +35,20 @@ export async function POST(req: NextRequest) {
           JSON.stringify(simplifiedData)
         );
         break;
-      // case 'Negative Themes':
-      //   analysisResult = await analyzeNegativeThemes(questionsAndAnswersText);
-      //   break;
+      case 'Complaints':
+        const simplifiedData2 = surveyResponsesForId.map((item: any) => ({
+          email: item.email,
+          responses: item.responses.map((response: any) => ({
+            question_text: response.question_text,
+            answer: response.answer,
+            question_type: response.question_type,
+            sentiment: response.sentiment
+          }))
+        }));
+        analysisResult = await analyzeComplaints(
+          JSON.stringify(simplifiedData2)
+        );
+        break;
       // case 'Type Categorization':
       //   analysisResult = await categorizeFeedbackByType(
       //     questionsAndAnswersText

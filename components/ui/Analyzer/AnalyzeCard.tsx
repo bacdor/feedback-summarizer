@@ -14,6 +14,7 @@ export default function AnalyzeCard({
   survey: Json;
 }) {
   const [analysisResult, setAnalysisResult] = useState<string | null>(null);
+  const [title, setTitle] = useState<string>('Positive Feedback');
   const [isSurveyReady, setIsSurveyReady] = useState(
     typeof survey === 'object' && survey !== null && 'is_ready' in survey
       ? survey.is_ready
@@ -44,6 +45,7 @@ export default function AnalyzeCard({
 
       const data = await response.json();
       setAnalysisResult(data.analysisResult);
+      setTitle(title);
     } catch (error) {
       console.error(error);
       setAnalysisResult('Error occurred while analyzing themes.');
@@ -77,8 +79,8 @@ export default function AnalyzeCard({
   };
 
   const analysisItems = [
-    { title: 'Positive Themes' },
-    { title: 'Negative Themes' },
+    { title: 'Positive Feedback' },
+    { title: 'Complaints' },
     { title: 'Type Categorization' },
     { title: 'Tone Categorization' },
     { title: 'Quantitative Analysis' },
@@ -131,7 +133,22 @@ export default function AnalyzeCard({
             style={{ maxHeight: '100%' }} // Ensure it fills the available space
           >
             {analysisResult ? (
-              <PositiveFeedback analysisResult={analysisResult} />
+              (() => {
+                switch (title) {
+                  case 'Positive Feedback':
+                    return <PositiveFeedback analysisResult={analysisResult} />;
+                  // case 'Complaints':
+                  //   return <ComplaintsFeedback analysisResult={analysisResult} />;
+                  // case 'Feedback Categorization':
+                  //   return <FeedbackCategorization analysisResult={analysisResult} />;
+                  // case 'Tone Analysis':
+                  //   return <ToneAnalysis analysisResult={analysisResult} />;
+                  // case 'Goal Alignment':
+                  //   return <GoalAlignment analysisResult={analysisResult} />;
+                  default:
+                    return <p>Analysis type not recognized</p>;
+                }
+              })()
             ) : !isSurveyReady ? (
               <Button
                 variant="slim"
