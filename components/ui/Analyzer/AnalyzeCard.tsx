@@ -6,6 +6,7 @@ import Card from '@/components/ui/Analyzer/Card';
 import { Json } from '@/types_db';
 import PositiveFeedback from '../AnalyzeOutputUI/PositiveFeedback';
 import Button from '../Button/Button';
+import Complaints from '../AnalyzeOutputUI/Complaints';
 export default function AnalyzeCard({
   surveyResponsesForId,
   survey
@@ -137,8 +138,8 @@ export default function AnalyzeCard({
                 switch (title) {
                   case 'Positive Feedback':
                     return <PositiveFeedback analysisResult={analysisResult} />;
-                  // case 'Complaints':
-                  //   return <ComplaintsFeedback analysisResult={analysisResult} />;
+                  case 'Complaints':
+                    return <Complaints analysisResult={analysisResult} />;
                   // case 'Feedback Categorization':
                   //   return <FeedbackCategorization analysisResult={analysisResult} />;
                   // case 'Tone Analysis':

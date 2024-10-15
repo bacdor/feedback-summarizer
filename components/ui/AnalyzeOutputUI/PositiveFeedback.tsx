@@ -102,13 +102,13 @@ const PositiveFeedback: React.FC<PositiveFeedbackProps> = ({
           )}
         </ul>
       </div>
-      <div className="bg-pink-100 p-4 rounded-lg">
+      <div className="bg-lime-100 p-4 rounded-lg">
         <div className="flex items-center mb-2">
           <h2 className="text-xl font-bold">Happiest Users</h2>
           <div className="relative ml-1 group">
-            <span className="text-pink-500 cursor-pointer">🛈</span>
+            <span className="text-lime-500 cursor-pointer">🛈</span>
             <div className="absolute hidden group-hover:block bg-white border border-gray-200 p-2 rounded shadow-lg z-10 w-64 bottom-full left-0 text-sm">
-              Three top users with 50% or more positive responses
+              Three top users with the most percentage of non-negative responses
             </div>
           </div>
         </div>
@@ -119,7 +119,7 @@ const PositiveFeedback: React.FC<PositiveFeedbackProps> = ({
               index: number
             ) => (
               <li key={index} className="flex flex-col">
-                <span className="text-pink-700 font-semibold">
+                <span className="text-lime-700 font-semibold">
                   {user.email}
                 </span>
                 <div className="flex items-center mt-1">
