@@ -2,11 +2,11 @@
 'use client';
 
 import { useState } from 'react';
-import Card from '@/components/ui/Analyzer/Card';
 import { Json } from '@/types_db';
 import PositiveFeedback from '../AnalyzeOutputUI/PositiveFeedback';
 import Button from '../Button/Button';
 import Complaints from '../AnalyzeOutputUI/Complaints';
+import SolutionRequests from '../AnalyzeOutputUI/SolutionRequests';
 export default function AnalyzeCard({
   surveyResponsesForId,
   survey
@@ -82,7 +82,7 @@ export default function AnalyzeCard({
   const analysisItems = [
     { title: 'Positive Feedback' },
     { title: 'Complaints' },
-    { title: 'Type Categorization' },
+    { title: 'Solution Requests' },
     { title: 'Tone Categorization' },
     { title: 'Quantitative Analysis' },
     { title: 'Trends Over Time' },
@@ -131,7 +131,7 @@ export default function AnalyzeCard({
         ) : (
           <div
             className="w-full h-full p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50 text-gray-700 overflow-y-auto"
-            style={{ maxHeight: '100%' }} // Ensure it fills the available space
+            style={{ maxHeight: 'calc(100vh - 100px)', overflowY: 'auto' }} // Allow scrolling for exceeding content on bigger screens
           >
             {analysisResult ? (
               (() => {
@@ -140,8 +140,9 @@ export default function AnalyzeCard({
                     return <PositiveFeedback analysisResult={analysisResult} />;
                   case 'Complaints':
                     return <Complaints analysisResult={analysisResult} />;
-                  // case 'Feedback Categorization':
-                  //   return <FeedbackCategorization analysisResult={analysisResult} />;
+                  case 'Solution Requests':
+                    // return <p>{analysisResult}</p>;
+                    return <SolutionRequests analysisResult={analysisResult} />;
                   // case 'Tone Analysis':
                   //   return <ToneAnalysis analysisResult={analysisResult} />;
                   // case 'Goal Alignment':

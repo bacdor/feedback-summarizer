@@ -1,8 +1,8 @@
 // pages/api/analyze.js
 import {
   analyzePositiveFeedback,
-  analyzeComplaints
-  // categorizeFeedbackByType,
+  analyzeComplaints,
+  solutionRequests
   // categorizeFeedbackByTone,
   // performQuantitativeAnalysis, // later
   // analyzeTrendsOverTime, // later
@@ -49,11 +49,28 @@ export async function POST(req: NextRequest) {
           JSON.stringify(simplifiedData2)
         );
         break;
-      // case 'Type Categorization':
-      //   analysisResult = await categorizeFeedbackByType(
-      //     questionsAndAnswersText
-      //   );
-      //   break;
+      case 'Solution Requests':
+        const daysAgo = new Date();
+        daysAgo.setDate(daysAgo.getDate() - 14);
+
+        let responseCount = 0;
+
+        const simplifiedData3 = surveyResponsesForId
+          .filter((item: any) => new Date(item.submitted_at) >= daysAgo)
+          .map((item: any) => {
+            responseCount += item.responses.length;
+            return {
+              responses: item.responses.map((response: any) => ({
+                question: response.question_text,
+                answer: response.answer
+              }))
+            };
+          });
+        analysisResult = await solutionRequests(
+          JSON.stringify(simplifiedData3),
+          responseCount
+        );
+        break;
       // case 'Tone Categorization':
       //   analysisResult = await categorizeFeedbackByTone(
       //     questionsAndAnswersText

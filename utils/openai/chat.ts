@@ -323,3 +323,59 @@ export async function analyzeComplaints(data: Json) {
 
   return result;
 }
+export async function solutionRequests(data: Json, responseCount: number) {
+  const systemPrompt = `
+      You are an expert in sentiment analysis and thematic extraction. Your job is to analyze user feedback looking for request and complaints.
+      Find most frequently occuring requests and complaints. Don't cite, just collect them and then categorize by type.
+
+      Based on the given feedback, provide user with detailed solution ideas using easy-to-read language. 
+      Rate impact for each in a scale 1-3.
+      You will provide output in format in json format like:
+      
+      {
+        "responses": {
+          "request": [request or complaint: short comment],
+          "solution": [solution],
+          "impact": [impact]
+        }
+      }
+
+      Don't change responses, request, solution, impact names even if you add a complaint.
+      You will be provided with set of questions and answers.
+      No more than 7 responses.
+      Do not wrap the json codes in JSON markers.
+    `;
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o',
+    messages: [
+      {
+        role: 'system',
+        content: systemPrompt
+      },
+      {
+        role: 'user',
+        content: JSON.stringify(data)
+      }
+    ],
+    temperature: 0,
+    max_tokens: 800
+  });
+
+  const chatResult = JSON.parse(response.choices[0].message.content || '{}');
+
+  const result = JSON.stringify({
+    responses: chatResult.responses.map(
+      (response: { request: string; solution: string; impact: number }) => ({
+        request: response.request,
+        solution: response.solution,
+        impact: response.impact
+      })
+    ),
+    count: responseCount
+  });
+
+  return result;
+
+  return response.choices[0].message.content;
+}
