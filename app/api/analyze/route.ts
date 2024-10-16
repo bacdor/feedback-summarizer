@@ -3,8 +3,8 @@ import {
   analyzePositiveFeedback,
   analyzeComplaints,
   solutionRequests,
-  analyzeResponders
-  // performQuantitativeAnalysis, // later
+  analyzeResponders,
+  quantitativeAnalysis // later
   // analyzeTrendsOverTime, // later
   // compareWithCompetitors, // later
   // alignWithGoals
@@ -85,11 +85,34 @@ export async function POST(req: NextRequest) {
           JSON.stringify(simplifiedData4)
         );
         break;
-      // case 'Quantitative Analysis': // later
-      //   analysisResult = await performQuantitativeAnalysis(questionsAndAnswersText);
-      //   break;
+      case 'Quantitative Analysis': // later
+        const simplifiedData5 = surveyResponsesForId.map((item: any) => ({
+          email: item.email,
+          responses: item.responses.map((response: any) => ({
+            question_text: response.question_text,
+            answer: response.answer,
+            question_type: response.question_type,
+            sentiment: response.sentiment
+          }))
+        }));
+        analysisResult = await quantitativeAnalysis(
+          JSON.stringify(simplifiedData5)
+        );
+        break;
       // case 'Trends Over Time': // later
-      //   analysisResult = await analyzeTrendsOverTime(questionsAndAnswersText);
+      //           const simplifiedData5 = surveyResponsesForId.map((item: any) => ({
+      //   email: item.email,
+      //   date: item.submitted_at,
+      //   responses: item.responses.map((response: any) => ({
+      //     question_text: response.question_text,
+      //     answer: response.answer,
+      //     question_type: response.question_type,
+      //     sentiment: response.sentiment
+      //   }))
+      // }));
+      // analysisResult = await quantitativeAnalysis(
+      //   JSON.stringify(simplifiedData5)
+      // );
       //   break;
       // case 'Competitor Comparison': // later
       //   analysisResult = await compareWithCompetitors(questionsAndAnswersText);

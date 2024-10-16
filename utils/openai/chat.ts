@@ -512,3 +512,137 @@ export async function analyzeResponders(data: Json) {
 
   return result;
 }
+
+export async function quantitativeAnalysis(data: Json) {
+  const parsedData = JSON.parse(data as string);
+
+  const responderMap = new Map();
+
+  parsedData.forEach((item: any) => {
+    let nonNegativeCount = 0;
+    let sentimentSum = 0;
+    let sentimentCount = 0;
+    let ratingSum = 0;
+    let ratingCount = 0;
+    let questionAnswerPairs: { question: string; answer: string }[] = [];
+
+    item.responses.forEach((response: any) => {
+      if (['text', 'multiple_choice'].includes(response.question_type)) {
+        if (parseInt(response.sentiment) >= 3) nonNegativeCount++;
+        sentimentSum += parseInt(response.sentiment);
+        sentimentCount++;
+      } else if (response.question_type === 'rating') {
+        if (parseInt(response.answer) >= 3) nonNegativeCount++;
+        ratingSum += parseInt(response.answer);
+        ratingCount++;
+      }
+      questionAnswerPairs.push({
+        question: response.question_text,
+        answer: response.answer
+      });
+    });
+
+    const responder = responderMap.get(item.email) || {
+      email: item.email,
+      nonNegativeCount: 0,
+      responseCount: 0,
+      sentimentSum: 0,
+      sentimentCount: 0,
+      ratingSum: 0,
+      ratingCount: 0,
+      questionAnswerPairs: []
+    };
+
+    responder.nonNegativeCount += nonNegativeCount;
+    responder.responseCount += item.responses.length;
+    responder.sentimentSum += sentimentSum;
+    responder.sentimentCount += sentimentCount;
+    responder.ratingSum += ratingSum;
+    responder.ratingCount += ratingCount;
+    responder.questionAnswerPairs =
+      responder.questionAnswerPairs.concat(questionAnswerPairs);
+
+    responderMap.set(item.email, responder);
+  });
+
+  const responders = Array.from(responderMap.values()).map((responder) => ({
+    email: responder.email,
+    nonNegativePercentage:
+      (responder.nonNegativeCount / responder.responseCount) * 100,
+    responseCount: responder.responseCount,
+    averageSentiment:
+      responder.sentimentCount > 0
+        ? responder.sentimentSum / responder.sentimentCount
+        : null,
+    averageRating:
+      responder.ratingCount > 0
+        ? responder.ratingSum / responder.ratingCount
+        : null,
+    questionAnswerPairs: responder.questionAnswerPairs
+  }));
+
+  console.log(JSON.stringify({ responders }));
+
+  // Extract emails and question-answer pairs from responders
+  const extractedData = responders.map((responder) => ({
+    email: responder.email,
+    questionAnswerPairs: responder.questionAnswerPairs
+  }));
+
+  console.log(JSON.stringify(extractedData));
+
+  const systemPrompt = `
+    You are an expert in psychological sentiment analysis. 
+    Your job is to analyze user feedback to determine what was the overall sentiment, main issues and other main themes.
+    Your answer should consist of text, 2 sentences.
+
+    For each email, based on the user's feedback, provide informations using easy-to-read language. Don't use direct referance.
+    You will provide output in format in json format like:
+    
+    {
+      "responses": [
+        {
+          "email": [email],
+          "analysis": [analysis]
+        }
+      ]
+    }
+
+    You will be provided with set of questions and answers.
+    Do not wrap the json codes in JSON markers.
+  `;
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4o',
+    messages: [
+      {
+        role: 'system',
+        content: systemPrompt
+      },
+      {
+        role: 'user',
+        content: JSON.stringify(extractedData)
+      }
+    ],
+    temperature: 0,
+    max_tokens: 800
+  });
+
+  const chatResult = JSON.parse(response.choices[0].message.content || '{}');
+  const result = JSON.stringify({
+    responders: responders
+      .map((responder) => {
+        const aiAnalysis = chatResult.responses.find(
+          (r: { email: string }) => r.email === responder.email
+        );
+        return {
+          ...responder,
+          analysis: aiAnalysis ? aiAnalysis.analysis : null,
+          questionAnswerPairs: undefined // Remove questionAnswerPairs
+        };
+      })
+      .sort((a, b) => b.nonNegativePercentage - a.nonNegativePercentage)
+  });
+
+  return result;
+}

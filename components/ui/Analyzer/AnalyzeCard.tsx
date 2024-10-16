@@ -89,7 +89,7 @@ export default function AnalyzeCard({
     { title: 'Trends Over Time' },
     { title: 'Competitor Comparison' },
     { title: 'Goal Alignment' },
-    { title: 'Actionability' }
+    { title: 'Chat' }
   ];
 
   // src="/public/bear.webp"
@@ -144,10 +144,18 @@ export default function AnalyzeCard({
                   case 'Solution Requests':
                     return <SolutionRequests analysisResult={analysisResult} />;
                   case 'Responders':
-                    // return <p>{analysisResult}</p>;
                     return <Responders analysisResult={analysisResult} />;
+                  case 'Quantitative Analysis':
+                    return <p>{analysisResult}</p>;
+                  // return <quantitativeAnalysis analysisResult={analysisResult} />;
+                  // case 'Trends Over Time':
+                  //   return <TrendsOverTime analysisResult={analysisResult} />;
+                  // case 'Competitor Comparison':
+                  //   return <CompetitorComparison analysisResult={analysisResult} />;
                   // case 'Goal Alignment':
                   //   return <GoalAlignment analysisResult={analysisResult} />;
+                  // case 'Chat':
+                  //   return <Chat analysisResult={analysisResult} />;
                   default:
                     return <p>Analysis type not recognized</p>;
                 }
