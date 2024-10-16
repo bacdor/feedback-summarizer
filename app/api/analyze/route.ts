@@ -2,8 +2,8 @@
 import {
   analyzePositiveFeedback,
   analyzeComplaints,
-  solutionRequests
-  // categorizeFeedbackByTone,
+  solutionRequests,
+  analyzeResponders
   // performQuantitativeAnalysis, // later
   // analyzeTrendsOverTime, // later
   // compareWithCompetitors, // later
@@ -71,11 +71,20 @@ export async function POST(req: NextRequest) {
           responseCount
         );
         break;
-      // case 'Tone Categorization':
-      //   analysisResult = await categorizeFeedbackByTone(
-      //     questionsAndAnswersText
-      //   );
-      //   break;
+      case 'Responders':
+        const simplifiedData4 = surveyResponsesForId.map((item: any) => ({
+          email: item.email,
+          responses: item.responses.map((response: any) => ({
+            question_text: response.question_text,
+            answer: response.answer,
+            question_type: response.question_type,
+            sentiment: response.sentiment
+          }))
+        }));
+        analysisResult = await analyzeResponders(
+          JSON.stringify(simplifiedData4)
+        );
+        break;
       // case 'Quantitative Analysis': // later
       //   analysisResult = await performQuantitativeAnalysis(questionsAndAnswersText);
       //   break;

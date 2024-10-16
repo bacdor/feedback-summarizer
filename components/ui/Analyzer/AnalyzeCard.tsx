@@ -7,6 +7,7 @@ import PositiveFeedback from '../AnalyzeOutputUI/PositiveFeedback';
 import Button from '../Button/Button';
 import Complaints from '../AnalyzeOutputUI/Complaints';
 import SolutionRequests from '../AnalyzeOutputUI/SolutionRequests';
+import Responders from '../AnalyzeOutputUI/Responders';
 export default function AnalyzeCard({
   surveyResponsesForId,
   survey
@@ -83,7 +84,7 @@ export default function AnalyzeCard({
     { title: 'Positive Feedback' },
     { title: 'Complaints' },
     { title: 'Solution Requests' },
-    { title: 'Tone Categorization' },
+    { title: 'Responders' },
     { title: 'Quantitative Analysis' },
     { title: 'Trends Over Time' },
     { title: 'Competitor Comparison' },
@@ -141,10 +142,10 @@ export default function AnalyzeCard({
                   case 'Complaints':
                     return <Complaints analysisResult={analysisResult} />;
                   case 'Solution Requests':
-                    // return <p>{analysisResult}</p>;
                     return <SolutionRequests analysisResult={analysisResult} />;
-                  // case 'Tone Analysis':
-                  //   return <ToneAnalysis analysisResult={analysisResult} />;
+                  case 'Responders':
+                    // return <p>{analysisResult}</p>;
+                    return <Responders analysisResult={analysisResult} />;
                   // case 'Goal Alignment':
                   //   return <GoalAlignment analysisResult={analysisResult} />;
                   default:
