@@ -107,8 +107,12 @@ export default function AnalyzeCard({
             {/* Card Background */}
             <div className="bg-[#231a2a] text-white p-4 rounded-lg w-full h-full flex items-center justify-between transition-transform duration-300">
               <div className="flex items-center space-x-2">
-                <div className="bg-white p-1.5 rounded-full">
-                  <img src={''} alt={item.title} className="h-6 w-6" />
+                <div className="p-1.5 rounded-full">
+                  <img
+                    src={`/${index + 1}.svg`}
+                    alt={item.title}
+                    className="h-6 w-6"
+                  />
                 </div>
                 <h3 className="text-sm">{item.title}</h3>
               </div>
