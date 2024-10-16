@@ -4,10 +4,10 @@ import {
   analyzeComplaints,
   solutionRequests,
   analyzeResponders,
-  quantitativeAnalysis // later
+  quantitativeAnalysis
   // analyzeTrendsOverTime, // later
   // compareWithCompetitors, // later
-  // alignWithGoals
+  // alignWithGoals // later
   // assessActionability // later
 } from '@/utils/openai/chat';
 import { NextRequest, NextResponse } from 'next/server';
@@ -99,28 +99,28 @@ export async function POST(req: NextRequest) {
           JSON.stringify(simplifiedData5)
         );
         break;
-      // case 'Trends Over Time': // later
-      //           const simplifiedData5 = surveyResponsesForId.map((item: any) => ({
-      //   email: item.email,
-      //   date: item.submitted_at,
-      //   responses: item.responses.map((response: any) => ({
-      //     question_text: response.question_text,
-      //     answer: response.answer,
-      //     question_type: response.question_type,
-      //     sentiment: response.sentiment
-      //   }))
-      // }));
-      // analysisResult = await quantitativeAnalysis(
-      //   JSON.stringify(simplifiedData5)
-      // );
-      //   break;
-      // case 'Competitor Comparison': // later
-      //   analysisResult = await compareWithCompetitors(questionsAndAnswersText);
-      //   break;
-      // case 'Goal Alignment':
-      //   analysisResult = await alignWithGoals(questionsAndAnswersText);
-      //   break;
-      // case 'Actionability': // later
+      case 'Trends Over Time': // later
+        // const simplifiedData6 = surveyResponsesForId.map((item: any) => ({
+        //   email: item.email,
+        //   date: item.submitted_at,
+        //   responses: item.responses.map((response: any) => ({
+        //     question_text: response.question_text,
+        //     answer: response.answer,
+        //     question_type: response.question_type,
+        //     sentiment: response.sentiment
+        //   }))
+        // }));
+        // analysisResult = await quantitativeAnalysis(
+        //   JSON.stringify(simplifiedData6)
+        // );
+        break;
+      case 'Competitor Comparison': // later
+        // analysisResult = await compareWithCompetitors(questionsAndAnswersText);
+        break;
+      case 'Goal Alignment':
+        // analysisResult = await alignWithGoals(questionsAndAnswersText);
+        break;
+      // case 'Chat': // later
       //   analysisResult = await assessActionability(questionsAndAnswersText);
       //   break;
       default:

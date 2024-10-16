@@ -152,12 +152,15 @@ export default function AnalyzeCard({
                   case 'Quantitative Analysis':
                     return <p>{analysisResult}</p>;
                   // return <quantitativeAnalysis analysisResult={analysisResult} />;
-                  // case 'Trends Over Time':
-                  //   return <TrendsOverTime analysisResult={analysisResult} />;
-                  // case 'Competitor Comparison':
-                  //   return <CompetitorComparison analysisResult={analysisResult} />;
-                  // case 'Goal Alignment':
-                  //   return <GoalAlignment analysisResult={analysisResult} />;
+                  case 'Trends Over Time':
+                    return <p>Function not ready yet...</p>;
+                  // return <TrendsOverTime analysisResult={analysisResult} />;
+                  case 'Competitor Comparison':
+                    return <p>Function not ready yet...</p>;
+                  // return <CompetitorComparison analysisResult={analysisResult} />;
+                  case 'Goal Alignment':
+                    return <p>Function not ready yet...</p>;
+                  // return <GoalAlignment analysisResult={analysisResult} />;
                   // case 'Chat':
                   //   return <Chat analysisResult={analysisResult} />;
                   default:
