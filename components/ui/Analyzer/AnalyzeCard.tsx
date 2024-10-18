@@ -8,6 +8,7 @@ import Button from '../Button/Button';
 import Complaints from '../AnalyzeOutputUI/Complaints';
 import SolutionRequests from '../AnalyzeOutputUI/SolutionRequests';
 import Responders from '../AnalyzeOutputUI/Responders';
+import QuantitativeAnalysis from '../AnalyzeOutputUI/QuantitativeAnalysis';
 export default function AnalyzeCard({
   surveyResponsesForId,
   survey
@@ -150,8 +151,11 @@ export default function AnalyzeCard({
                   case 'Responders':
                     return <Responders analysisResult={analysisResult} />;
                   case 'Quantitative Analysis':
-                    return <p>{analysisResult}</p>;
-                  // return <quantitativeAnalysis analysisResult={analysisResult} />;
+                    // return <p>{analysisResult}</p>;
+                    return (
+                      <QuantitativeAnalysis analysisResult={analysisResult} />
+                    );
+
                   case 'Trends Over Time':
                     return <p>Function not ready yet...</p>;
                   // return <TrendsOverTime analysisResult={analysisResult} />;
