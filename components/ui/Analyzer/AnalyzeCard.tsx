@@ -9,6 +9,7 @@ import Complaints from '../AnalyzeOutputUI/Complaints';
 import SolutionRequests from '../AnalyzeOutputUI/SolutionRequests';
 import Responders from '../AnalyzeOutputUI/Responders';
 import QuantitativeAnalysis from '../AnalyzeOutputUI/QuantitativeAnalysis';
+import ChatAI from '../AnalyzeOutputUI/ChatAI';
 export default function AnalyzeCard({
   surveyResponsesForId,
   survey
@@ -34,20 +35,24 @@ export default function AnalyzeCard({
   const handleAnalyzeClick = async (title: string) => {
     setLoading(true);
     try {
-      const response = await fetch('/api/analyze', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ surveyResponsesForId, title }) // Updated to use questionsAndAnswersJson
-      });
+      if (title === 'Chat') {
+        setAnalysisResult('test');
+      } else {
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ surveyResponsesForId, title })
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to analyze themes');
+        if (!response.ok) {
+          throw new Error('Failed to analyze themes');
+        }
+
+        const data = await response.json();
+        setAnalysisResult(data.analysisResult);
       }
-
-      const data = await response.json();
-      setAnalysisResult(data.analysisResult);
       setTitle(title);
     } catch (error) {
       console.error(error);
@@ -165,8 +170,8 @@ export default function AnalyzeCard({
                   case 'Goal Alignment':
                     return <p>Function not ready yet...</p>;
                   // return <GoalAlignment analysisResult={analysisResult} />;
-                  // case 'Chat':
-                  //   return <Chat analysisResult={analysisResult} />;
+                  case 'Chat':
+                    return <ChatAI analysisResult={analysisResult} />;
                   default:
                     return <p>Analysis type not recognized</p>;
                 }

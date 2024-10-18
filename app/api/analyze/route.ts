@@ -4,11 +4,11 @@ import {
   analyzeComplaints,
   solutionRequests,
   analyzeResponders,
-  quantitativeAnalysis
+  quantitativeAnalysis,
   // analyzeTrendsOverTime, // later
   // compareWithCompetitors, // later
   // alignWithGoals // later
-  // assessActionability // later
+  chatAI // later
 } from '@/utils/openai/chat';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -120,9 +120,18 @@ export async function POST(req: NextRequest) {
       case 'Goal Alignment':
         // analysisResult = await alignWithGoals(questionsAndAnswersText);
         break;
-      // case 'Chat': // later
-      //   analysisResult = await assessActionability(questionsAndAnswersText);
-      //   break;
+      case 'Chat': // later
+        const simplifiedDataX = surveyResponsesForId.map((item: any) => ({
+          email: item.email,
+          responses: item.responses.map((response: any) => ({
+            question_text: response.question_text,
+            answer: response.answer,
+            question_type: response.question_type,
+            sentiment: response.sentiment
+          }))
+        }));
+        analysisResult = await chatAI(JSON.stringify(simplifiedDataX), 'hihi');
+        break;
       default:
         throw new Error('Invalid analysis title.');
     }
@@ -135,27 +144,4 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-}
-
-// // pages/api/analyze.js
-// import { analyzeKeyThemes } from '@/utils/openai/chat';
-// import { NextRequest, NextResponse } from 'next/server';
-
-// export async function POST(req: NextRequest) {
-//   const { questionsAndAnswersText, title } = await req.json();
-
-//   try {
-//     const analysisResult = await analyzeKeyThemes(questionsAndAnswersText);
-//     return NextResponse.json({ analysisResult }, { status: 200 });
-//   } catch (error) {
-//     console.error(error);
-//     return NextResponse.json(
-//       { error: 'Failed to analyze themes.' },
-//       { status: 500 }
-//     );
-//   }
-// }
-
-export async function GET() {
-  return NextResponse.json({ error: 'Method Not Allowed' }, { status: 405 });
 }
