@@ -79,7 +79,7 @@ export default function DashboardSurveyList({
 
   if (surveys.length === 0) {
     return (
-      <div className="min-h-[calc(100dvh-8rem)] p-2 bg-white rounded-lg shadow-md">
+      <div className="min-h-[calc(100vh-8rem)] w-full h-full p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50 text-gray-700 overflow-y-auto">
         <h1 className="text-2xl text-[#111] font-bold mb-4 text-center">
           Feedback Forms List
         </h1>
@@ -88,8 +88,8 @@ export default function DashboardSurveyList({
           <p className="mt-2 text-sm text-gray-500">
             Create a new survey to get started.
           </p>
-          <DashboardSurveyCreator />
         </div>
+        <DashboardSurveyCreator />
       </div>
     );
   }
