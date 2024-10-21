@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import DashboardSurveyCreator from './DashboardSurveyCreator';
 
 interface Props {
   userId: string | null;
@@ -87,154 +88,125 @@ export default function DashboardSurveyList({
           <p className="mt-2 text-sm text-gray-500">
             Create a new survey to get started.
           </p>
+          <DashboardSurveyCreator />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-[calc(100dvh-8rem)] p-2 bg-white rounded-lg shadow-md overflow-x-auto">
-      <h1 className="text-2xl text-[#111] font-bold mb-4 text-center">
+    <div className="min-h-[calc(100vh-8rem)] w-full h-full p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50 text-gray-700 overflow-y-auto">
+      <div className=" m-4 md:m-0 md:float-right">
+        <DashboardSurveyCreator />
+      </div>
+      <h1 className="text-3xl text-[var(--color-dark)] font-bold mb-6 text-center mx-auto">
         Feedback Forms List
       </h1>
-      <table className="min-w-full table-auto border-collapse text-sm md:text-base">
+
+      <table className="min-w-full table-auto border-collapse text-base">
         <thead>
-          <tr className="border-b bg-[var(--color-primary)] text-xs md:text-sm">
-            <th className="px-3 md:px-6 py-4 text-center font-medium">Share</th>
-            <th className="px-3 md:px-6 py-4 text-left font-medium w-1/2"></th>
-            <th className="px-3 md:px-6 py-4 text-center font-medium">
-              Responses
+          <tr className="border-b bg-[var(--color-dark)] text-white">
+            <th className="px-4 py-3 text-center font-medium">Share</th>
+            <th className="px-4 py-3 text-left font-medium w-1/2">
+              Name & Description
             </th>
-            <th className="px-3 md:px-6 py-4 text-center font-medium">
+            <th className="px-4 py-3 text-center font-medium">Responses</th>
+            <th className="px-4 py-3 text-center font-medium">
               Last Submission
             </th>
-            <th className="px-3 md:px-6 py-4 text-center font-medium">
-              Analyze
-            </th>
-            <th className="px-3 md:px-6 py-4 text-center font-medium">Edit</th>
-            <th className="px-3 md:px-6 py-4 text-center font-medium">
-              Delete
-            </th>
+            <th className="px-4 py-3 text-center font-medium">Analyze</th>
+            <th className="px-4 py-3 text-center font-medium">Edit</th>
+            <th className="px-4 py-3 text-center font-medium">Delete</th>
           </tr>
         </thead>
         <tbody>
           {surveys &&
-            surveys.map(
-              (survey: { id: string; name: string; description: string }) => {
-                const { responseCount, lastResponseDate } =
-                  getSurveyResponseData(surveyResponses || [], survey.id);
-                return (
-                  <tr
-                    key={survey.id}
-                    className="border-b hover:bg-[var(--color-background)]"
-                  >
-                    {/* Share */}
-                    <td className="px-3 md:px-6 py-4 text-center">
-                      <button
-                        className="w-6 h-6 md:w-8 md:h-8"
-                        onClick={() => {
-                          const surveyLink = `${window.location.origin}/forms/r/${survey.id}`;
-                          navigator.clipboard.writeText(surveyLink);
-                          alert('Survey link copied to clipboard!');
-                        }}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-full h-full"
-                        >
-                          <path fill="none" d="M0 0h24v24H0V0z"></path>
-                          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path>
-                        </svg>
-                      </button>
-                    </td>
+            surveys.map((survey) => {
+              const { responseCount, lastResponseDate } = getSurveyResponseData(
+                surveyResponses || [],
+                survey.id
+              );
+              return (
+                <tr
+                  key={survey.id}
+                  className="border-b hover:bg-gray-200 transition-all"
+                >
+                  <td className="px-4 py-4 text-center">
+                    <button
+                      className="p-2 bg-green-500 text-white rounded-full hover:bg-green-600"
+                      onClick={() => {
+                        const surveyLink = `${window.location.origin}/forms/r/${survey.id}`;
+                        navigator.clipboard.writeText(surveyLink);
+                        // Replace alert with a notification/toast library for better UX
+                        alert('Survey link copied to clipboard!');
+                      }}
+                      title="Copy Share Link" // Tooltip
+                    >
+                      🔗
+                    </button>
+                  </td>
 
-                    {/* Name and Description */}
-                    <td className="px-3 md:px-6 py-4">
-                      <Link href={`/forms/view/${survey.id}`} passHref>
-                        <h2 className="text-sm md:text-lg font-semibold text-[#111]">
-                          {survey.name}
-                        </h2>
-                        <p className="text-xs md:text-sm text-[#666]">
-                          {survey.description}
-                        </p>
-                      </Link>
-                    </td>
+                  <td className="px-4 py-4">
+                    <a
+                      href={`/forms/view/${survey.id}`}
+                      className="block hover:underline"
+                    >
+                      <h2 className="font-semibold text-gray-800">
+                        {survey.name}
+                      </h2>
+                      <p className="text-gray-600 text-sm">
+                        {survey.description}
+                      </p>
+                    </a>
+                  </td>
 
-                    {/* Response Count */}
-                    <td className="px-3 md:px-6 py-4 text-center">
-                      <Link href={`/forms/stats/${survey.id}`} passHref>
-                        {responseCount}
-                      </Link>
-                    </td>
+                  <td className="px-4 py-4 text-center">
+                    <a
+                      href={`/forms/stats/${survey.id}`}
+                      className="hover:underline"
+                    >
+                      {responseCount}
+                    </a>
+                  </td>
 
-                    {/* Last Submission */}
-                    <td className="px-3 md:px-6 py-4 text-center">
-                      {lastResponseDate
-                        ? new Date(lastResponseDate).toLocaleString()
-                        : 'No submissions'}
-                    </td>
+                  <td className="px-4 py-4 text-center">
+                    {lastResponseDate
+                      ? new Date(lastResponseDate).toLocaleString()
+                      : 'No submissions'}
+                  </td>
 
-                    {/* Analyze Column */}
-                    <td className="px-3 md:px-6 py-4 text-center">
-                      <Link href={`/forms/scout/${survey.id}`} passHref>
-                        <button className="w-6 h-6 md:w-8 md:h-8">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="var(--color-primary)"
-                            className="w-full h-full"
-                          >
-                            <path
-                              fill="var(--color-primary)"
-                              d="M15.6207067,15.6542822 C16.0072308,15.270377 16.6268293,15.270377 17.0133534,15.6542822 L17.0133534,15.6542822 L19.5680176,17.7164156 L19.6123694,17.7164156 C20.1292102,18.2388171 20.1292102,19.0857973 19.6123694,19.6081989 C19.0955285,20.1306004 18.2361982,20.1306004 17.7193573,19.6081989 L15.143935,17.4494738 L15.143935,17.4051219 C14.7574109,17.0212167 14.7574109,16.4055414 15.143935,16.0216362 C15.143935,16.0216362 15.6207067,15.6542822 15.6207067,15.6542822 Z M6.80114286,5.55057647 L6.80114286,5.55057647 L6.80114286,5.59492829 C6.80114286,5.03804454 7.25088547,4.58375497 7.799643,4.58375497 C8.34840053,4.58375497 8.79814314,5.03804454 8.79814314,5.59492829 C8.79814314,6.15181203 8.34840053,6.60610161 7.799643,6.60610161 C7.25088547,6.60610161 6.80114286,6.15181203 6.80114286,5.59492829 Z M7.799643,11.3981996 C11.106957,11.3981996 13.7981431,8.73224746 13.7981431,5.59492829 C13.7981431,2.45760912 11.106957,0 7.799643,0 C4.49232904,0 1.79814314,2.45760912 1.79814314,5.59492829 C1.79814314,8.73224746 4.49232904,11.3981996 7.799643,11.3981996 Z"
-                            ></path>
-                          </svg>
-                        </button>
-                      </Link>
-                    </td>
+                  <td className="px-4 py-4 text-center">
+                    <a
+                      href={`/forms/scout/${survey.id}`}
+                      className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
+                      title="Analyze"
+                    >
+                      📊
+                    </a>
+                  </td>
 
-                    {/* Edit Column */}
-                    <td className="px-3 md:px-6 py-4 text-center">
-                      <Link href={`/forms/edit/${survey.id}`} passHref>
-                        <button className="w-6 h-6 md:w-8 md:h-8">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="w-full h-full"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M14.06 2.93999C14.55 2.44999 15.26 2.44999 15.75 2.93999L17.06 4.24999C17.55 4.73999 17.55 5.44999 17.06 5.93999L15.75 7.24999L13.75 5.24999L14.06 2.93999ZM12.34 6.65999L2 16.9999V20.9999H6L16.34 10.6599L12.34 6.65999Z"
-                            ></path>
-                          </svg>
-                        </button>
-                      </Link>
-                    </td>
+                  <td className="px-4 py-4 text-center">
+                    <a
+                      href={`/forms/edit/${survey.id}`}
+                      className="p-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-600"
+                      title="Edit"
+                    >
+                      ✏️
+                    </a>
+                  </td>
 
-                    {/* Delete Column */}
-                    <td className="px-3 md:px-6 py-4 text-center">
-                      <button
-                        className="w-6 h-6 md:w-8 md:h-8"
-                        onClick={() => handleDeleteSurvey(survey.id)}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="w-full h-full"
-                        >
-                          <path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"></path>
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
+                  <td className="px-4 py-4 text-center">
+                    <button
+                      className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600"
+                      onClick={() => handleDeleteSurvey(survey.id)}
+                      title="Delete"
+                    >
+                      🗑️
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

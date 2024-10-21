@@ -28,17 +28,14 @@ export default async function FormsMainPage() {
 
   return (
     <section className="pb-32 pt-4 px-4">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-        <div className="lg:col-span-1">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        {/* <div className="lg:col-span-1">
           <DashboardSurveyCreator />
-        </div>
-        <div className="lg:col-span-3">
-          <DashboardSurveyList
-            userId={user.id}
-            surveyResponses={surveyResponses}
-          />
-        </div>
-      </div>
+        </div> */}
+      {/* <div className="lg:col-span-3"> */}
+      <DashboardSurveyList userId={user.id} surveyResponses={surveyResponses} />
+      {/* </div> */}
+      {/* </div> */}
     </section>
   );
 }
