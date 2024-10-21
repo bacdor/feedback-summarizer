@@ -4,11 +4,11 @@ import {
   analyzeComplaints,
   solutionRequests,
   analyzeResponders,
-  quantitativeAnalysis,
+  quantitativeAnalysis
   // analyzeTrendsOverTime, // later
   // compareWithCompetitors, // later
   // alignWithGoals // later
-  chatAI // later
+  // chatAI -> handled in api/chat
 } from '@/utils/openai/chat';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -119,18 +119,6 @@ export async function POST(req: NextRequest) {
         break;
       case 'Goal Alignment':
         // analysisResult = await alignWithGoals(questionsAndAnswersText);
-        break;
-      case 'Chat': // later
-        const simplifiedDataX = surveyResponsesForId.map((item: any) => ({
-          email: item.email,
-          responses: item.responses.map((response: any) => ({
-            question_text: response.question_text,
-            answer: response.answer,
-            question_type: response.question_type,
-            sentiment: response.sentiment
-          }))
-        }));
-        analysisResult = await chatAI(JSON.stringify(simplifiedDataX), 'hihi');
         break;
       default:
         throw new Error('Invalid analysis title.');

@@ -36,7 +36,7 @@ export default function AnalyzeCard({
     setLoading(true);
     try {
       if (title === 'Chat') {
-        setAnalysisResult('test');
+        setAnalysisResult(JSON.stringify({ surveyResponsesForId }));
       } else {
         const response = await fetch('/api/analyze', {
           method: 'POST',
