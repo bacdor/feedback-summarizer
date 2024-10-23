@@ -6,6 +6,7 @@ import { createStripePortal } from '@/utils/stripe/server';
 import Link from 'next/link';
 import Card from '@/components/ui/Card/Card';
 import { Tables } from '@/types_db';
+import Button from '../Button/Button';
 
 type Subscription = Tables<'subscriptions'>;
 type Price = Tables<'prices'>;
@@ -62,13 +63,13 @@ export default function CustomerPortalForm({ subscription, payment }: Props) {
           ) : (
             <p className="pb-4 sm:pb-0">Manage your subscription.</p>
           )}
-          {/* <Button
+          <Button
             variant="slim"
             onClick={handleStripePortalRequest}
             loading={isSubmitting}
           >
             Open customer portal
-          </Button> */}
+          </Button>
         </div>
       }
     >
