@@ -79,7 +79,9 @@ export default function CustomerPortalForm({ subscription, payment }: Props) {
         ) : payment ? (
           ''
         ) : (
-          <Link href="/#pricing">Choose your plan</Link>
+          <Link href="/#pricing" className="hover:text-[var(--color-primary)]">
+            Choose your plan
+          </Link>
         )}
       </div>
     </Card>

@@ -23,10 +23,10 @@ export default async function Account() {
 
   return (
     <section className="pb-32">
-      <div className="max-w-6xl px-4 py-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
-        <div className="sm:align-center sm:flex sm:flex-col">
-          <h1 className="text-4xl font-extrabold text-green sm:text-center sm:text-6xl">
-            Account
+      <div className="max-w-3xl px-4 py-8 mx-auto sm:px-6 sm:pt-24 sm:pb-0 lg:px-8">
+        <div className="sm:align-left sm:flex sm:flex-col">
+          <h1 className="text-2xl font-extrabold text-[var(--color-dark)] sm:text-left sm:text-4xl">
+            Your Account
           </h1>
         </div>
       </div>
@@ -36,7 +36,7 @@ export default async function Account() {
           payment={userDetails?.avatar_url}
         />
         {/* <NameForm userName={userDetails?.full_name ?? ''} /> */}
-        <EmailForm userEmail={user.email} />
+        {/* <EmailForm userEmail={user.email} /> */}
       </div>
     </section>
   );
