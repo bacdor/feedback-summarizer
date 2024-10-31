@@ -22,7 +22,7 @@ export default function Navlinks({ user }: NavlinksProps) {
   }
 
   return (
-    <div className="max-w-6xl px-6 mx-auto">
+    <div className="max-w-8xl px-6 mx-auto">
       <div className="relative flex flex-row justify-between align-center">
         <div className="flex items-center">
           <Link href="/" className={s.logo} aria-label="Logo">

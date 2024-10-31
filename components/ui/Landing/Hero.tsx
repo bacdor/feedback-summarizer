@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function Hero() {
   return (
     <section
-      className="bg-gradient-to-r from-[#FAF0E6] via-[#FCE4D6] to-[#e0ebff] to-[#f0f8ff] pt-20"
+      className="bg-gradient-to-tr from-[#FAF0E6] via-[#FCE4D6] to-[#e0ebff] to-[#f0f8ff] pt-40 mt-[-64]"
       id="main"
     >
       <div className="container mx-auto px-4">
