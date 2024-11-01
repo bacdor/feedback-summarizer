@@ -12,22 +12,28 @@ export default function Hero() {
       <div className="container max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 mb-8 md:mb-0 md:-mt-32">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Welcome to Feedback Summarizer
+            <h1 className="text-5xl md:text-8xl font-bold mb-4">
+              UNDERSTAND & GROW
             </h1>
-            <p className="text-xl text-[#948C88] mb-16">
-              Simplify your feedback process with AI-powered summaries
+            <p className="text-xl text-[#948C88] mb-16 leading-none">
+              Create surveys, collect valuable feedback insights, and leverage
+              AI-powered analysis to grow your business and customer
+              satisfaction.
             </p>
-            <Link
-              href="/signin/email_signin"
-              className="relative inline-flex items-center justify-center px-6 py-2 overflow-hidden font-medium text-white bg-orange-500 rounded-full shadow-md group"
-            >
-              <span className="absolute inset-0 w-full h-full transition-transform duration-300 ease-out transform translate-x-full group-hover:translate-x-0 bg-white opacity-20"></span>
-              <span className="relative z-10">bla bla call to action</span>
-            </Link>
-            <p className="text-sm text-[#948C88] mt-2">
-              I'll never share your info with anyone
-            </p>
+            <div className="flex flex-col items-center justify-center">
+              <Link
+                href="/signin/email_signin"
+                className="relative inline-flex items-center justify-center px-6 py-2 overflow-hidden font-medium text-white bg-orange-500 rounded-full shadow-md group"
+              >
+                <span className="absolute inset-0 w-full h-full transition-transform duration-300 ease-out transform translate-x-full group-hover:translate-x-0 bg-white opacity-20"></span>
+                <span className="relative z-10 font-semibold">
+                  Subscribe for free
+                </span>
+              </Link>
+              <p className="text-xs text-[#948C88] mt-2 text-center">
+                I'll never share your info with anyone
+              </p>
+            </div>
           </div>
           <div className="md:w-1/2">
             <img
