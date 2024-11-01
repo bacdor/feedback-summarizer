@@ -44,8 +44,7 @@ html {
 
 html,
 body {
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Lato', 'Verdana',
-    sans-serif;
+  font-family: system-ui, sans-serif;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   @apply text-[var(--color-text-1)] bg-[var(--color-background)] antialiased;
@@ -55,6 +54,15 @@ body {
   position: relative;
   min-height: 100%;
   margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-odor-mean-chey);
 }
 
 a {

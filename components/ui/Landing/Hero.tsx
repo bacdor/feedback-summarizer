@@ -1,13 +1,15 @@
 // components/ui/Hero.tsx
 import Link from 'next/link';
+import s from './Hero.module.css';
 
 export default function Hero() {
   return (
     <section
-      className="bg-gradient-to-tr from-[#FAF0E6] via-[#FCE4D6] to-[#e0ebff] to-[#f0f8ff] pt-40 mt-[-64]"
+      // className="bg-gradient-to-tr from-[#FAF0E6] to-[#f0f8ff] pt-40 mt-[-64]"
+      className={s.root}
       id="main"
     >
-      <div className="container mx-auto px-4">
+      <div className="container max-w-6xl mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 mb-8 md:mb-0 md:-mt-32">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
