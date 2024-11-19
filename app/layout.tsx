@@ -6,6 +6,9 @@ import { Poppins, Odor_Mean_Chey } from 'next/font/google';
 import { PropsWithChildren, Suspense } from 'react';
 import { getURL } from '@/utils/helpers';
 import 'styles/main.css';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'; // Import the CSS for styles
+config.autoAddCss = false; // Tell Font Awesome to skip adding the CSS automatically since it is already imported
 
 const title = 'Feedback Summarizer';
 const description = '';
