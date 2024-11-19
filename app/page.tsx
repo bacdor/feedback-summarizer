@@ -21,14 +21,14 @@ export default async function PricingPage() {
   return (
     <>
       <Hero />
-      {/* <Features />
-      <Pricing
+      <Features />
+      {/* <Pricing
         user={user}
         products={products ?? []}
         subscription={subscription}
-      />
-      <FAQ />
-      <CallToAction /> */}
+      /> */}
+      {/* <FAQ /> */}
+      {/* <CallToAction /> */}
     </>
   );
 }
